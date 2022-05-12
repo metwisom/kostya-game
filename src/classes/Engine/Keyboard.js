@@ -1,4 +1,5 @@
 import intersectRect from "../../utils/intersectRect";
+import Physics from "./Physics";
 
 class Keyboard {
     constructor() {
@@ -30,66 +31,33 @@ class Keyboard {
         if (this.slave == undefined) {
             return;
         }
-        if (this.slave.may_ground) {
-            this.slave.state = 'idle'
-            this.slave.inertion = 0
-        } else {
-            let new_x = this.slave.x + this.slave.inertion * delta
-            let inter = []/*this.objects.filter(e => {
-                if (e == this.slave) {
-                    return;
-                }
-                return intersectRect(
-                    { left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height },
-                    { left: new_x, top: this.slave.y, right: new_x + this.slave.width, bottom: this.slave.y + this.slave.height },
-                )
-
-            })*/
-            if (inter.length == 0) {
-                this.slave.x += this.slave.inertion * delta;
-            }
-        }
         if (this.a && this.slave.may_ground) {
             this.slave.faced = 0;
 
             let new_x = this.slave.x - this.slave.speed * delta
-            let inter = []/*this.objects.filter(e => {
-                if (e == this.slave) {
-                    return;
-                }
-                return intersectRect(
-                    { left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height },
-                    { left: new_x, top: this.slave.y, right: new_x + this.slave.width, bottom: this.slave.y + this.slave.height },
-                )
+            const hit_box = { left: new_x, top: this.slave.y, right: new_x + this.slave.width, bottom: this.slave.y + this.slave.height }
+            const inter = Physics.checkCollision(hit_box, this.slave.id);
 
-            })*/
             if (inter.length == 0) {
                 this.slave.state = 'run';
-                this.slave.x -= this.slave.speed * delta;
                 this.slave.inertion = -this.slave.speed
             }
 
 
         }
+
         if (this.d && this.slave.may_ground) {
             this.slave.faced = 1;
             let new_x = this.slave.x + this.slave.speed * delta
-            let inter = []/*this.objects.filter(e => {
-                if (e == this.slave) {
-                    return;
-                }
-                return intersectRect(
-                    { left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height },
-                    { left: new_x, top: this.slave.y, right: new_x + this.slave.width, bottom: this.slave.y + this.slave.height },
-                )
+            const hit_box = { left: new_x, top: this.slave.y, right: new_x + this.slave.width, bottom: this.slave.y + this.slave.height }
+            const inter = Physics.checkCollision(hit_box, this.slave.id);
 
-            })*/
             if (inter.length == 0) {
                 this.slave.state = 'run';
-                this.slave.x += this.slave.speed * delta;
                 this.slave.inertion = this.slave.speed
             }
         }
+
         if (this.space && this.slave.may_ground) {
             this.slave.e_down = -10;
             this.slave.may_ground = false;

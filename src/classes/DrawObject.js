@@ -9,7 +9,6 @@ class DrawObject {
         let sprite = this.sprites[this.state];
         scene.fillStyle = '#000'
         scene.imageSmoothingEnabled = false;
-
         let coef = this.height / sprite.image.height;
 
         let sizeW = sprite.image.width * coef / sprite.max

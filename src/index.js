@@ -31,7 +31,6 @@ Display.addObject(plx4, 0);
 let plx5 = new Parallax('resources/plx-5.png', 5);
 Display.addObject(plx5, 0);
 
-
 const keyboard_controller = new Keyboard();
 
 for (let i = 0; i < 100; i++) {
