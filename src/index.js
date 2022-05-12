@@ -31,8 +31,6 @@ Display.addObject(plx4, 0);
 let plx5 = new Parallax('resources/plx-5.png', 5);
 Display.addObject(plx5, 0);
 
-const keyboard_controller = new Keyboard();
-
 for (let i = 0; i < 100; i++) {
     let box = new Structure(50 + i * 250, 300)
     Display.addObject(box, 1)
@@ -43,5 +41,5 @@ let Kostya = new Character(100, 100);
 Display.addObject(Kostya, 1)
 Physics.addObject(Kostya)
 
-Kostya.setController(keyboard_controller)
+Kostya.setController(Keyboard)
 Camera.attach(Kostya);
