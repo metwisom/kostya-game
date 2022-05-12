@@ -4,9 +4,6 @@ class _Camera {
     }
 }
 
-
-
 let Camera = new _Camera()
-
 
 export default Camera;

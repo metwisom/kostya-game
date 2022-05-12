@@ -1,34 +1,46 @@
-import Camera from "./classes/Camera";
+import Camera from "./classes/Engine/Camera";
 import Character from "./classes/Character";
-import Keyboard from "./classes/Keyboard";
+import Display from "./classes/Engine/Display";
+import Keyboard from "./classes/Engine/Keyboard";
+import Parallax from "./classes/Parallax";
+import Physics from "./classes/Engine/Physics";
 import Structure from "./classes/Structure";
-import draw from "./draw";
-import gravity from "./gravity";
 import recalcSceneSize from "./utils/recalcSceneSize";
 
-var display;
-var scene;
-const objects = []
-
-
 document.addEventListener('DOMContentLoaded', () => {
-    display = document.getElementById('display');
-    scene = display.getContext('2d');
-    recalcSceneSize();
-    draw(display, scene, objects);
-    gravity(objects)
+
+    Display.attach('display');
+    Display.startDrawing();
+    Physics.start();
+
+    window.addEventListener('resize', () => {
+        recalcSceneSize(Display);
+    })
 })
 
-window.addEventListener('resize', () => {
-    recalcSceneSize();
-})
+let plx1 = new Parallax('resources/plx-1.png', 1);
+Display.addObject(plx1, 0);
+let plx2 = new Parallax('resources/plx-2.png', 2);
+Display.addObject(plx2, 0);
+let plx3 = new Parallax('resources/plx-3.png', 3);
+Display.addObject(plx3, 0);
+let plx4 = new Parallax('resources/plx-4.png', 4);
+Display.addObject(plx4, 0);
+let plx5 = new Parallax('resources/plx-5.png', 5);
+Display.addObject(plx5, 0);
 
 
-const keyboard_controller = new Keyboard(objects);
+const keyboard_controller = new Keyboard();
 
-for (let i = 0; i < 100; i++)
-    new Structure(50 + i * 250, 300, objects)
+for (let i = 0; i < 100; i++) {
+    let box = new Structure(50 + i * 250, 300)
+    Display.addObject(box, 1)
+    Physics.addObject(box);
+}
 
-let Kostya = new Character(100, 100, objects);
+let Kostya = new Character(100, 100);
+Display.addObject(Kostya, 1)
+Physics.addObject(Kostya)
+
 Kostya.setController(keyboard_controller)
 Camera.attach(Kostya);

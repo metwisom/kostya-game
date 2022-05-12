@@ -1,15 +1,14 @@
-import Camera from "./Camera";
+import Camera from "./Engine/Camera";
 import Character from "./Character";
 
 class DrawObject {
-    constructor(objects) {
-        objects.push(this)
+    constructor() {
+        this.id = Math.random().toString(16).slice(2);
     }
     draw(scene) {
         let sprite = this.sprites[this.state];
         scene.fillStyle = '#000'
-        scene.imageSmoothingEnabled = false
-            ;
+        scene.imageSmoothingEnabled = false;
 
         let coef = this.height / sprite.image.height;
 
