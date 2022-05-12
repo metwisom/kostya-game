@@ -1,5 +1,6 @@
 import Camera from "./classes/Camera";
 import Character from "./classes/Character";
+import Display from "./classes/Display";
 import Keyboard from "./classes/Keyboard";
 import Structure from "./classes/Structure";
 import draw from "./draw";
@@ -12,15 +13,15 @@ const objects = []
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    display = document.getElementById('display');
-    scene = display.getContext('2d');
-    recalcSceneSize();
+    display = new Display('display');
+    scene = display.createScene();
+    recalcSceneSize(display);
     draw(display, scene, objects);
     gravity(objects)
 })
 
 window.addEventListener('resize', () => {
-    recalcSceneSize();
+    recalcSceneSize(display);
 })
 
 
