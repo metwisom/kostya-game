@@ -1,8 +1,7 @@
-import intersectRect from "../utils/intersectRect";
+import intersectRect from "../../utils/intersectRect";
 
 class Keyboard {
-    constructor(objects) {
-        this.objects = objects;
+    constructor() {
         this.a = false;
         this.d = false;
         this.space = false;
@@ -36,7 +35,7 @@ class Keyboard {
             this.slave.inertion = 0
         } else {
             let new_x = this.slave.x + this.slave.inertion * delta
-            let inter = this.objects.filter(e => {
+            let inter = []/*this.objects.filter(e => {
                 if (e == this.slave) {
                     return;
                 }
@@ -45,7 +44,7 @@ class Keyboard {
                     { left: new_x, top: this.slave.y, right: new_x + this.slave.width, bottom: this.slave.y + this.slave.height },
                 )
 
-            })
+            })*/
             if (inter.length == 0) {
                 this.slave.x += this.slave.inertion * delta;
             }
@@ -54,7 +53,7 @@ class Keyboard {
             this.slave.faced = 0;
 
             let new_x = this.slave.x - this.slave.speed * delta
-            let inter = this.objects.filter(e => {
+            let inter = []/*this.objects.filter(e => {
                 if (e == this.slave) {
                     return;
                 }
@@ -63,7 +62,7 @@ class Keyboard {
                     { left: new_x, top: this.slave.y, right: new_x + this.slave.width, bottom: this.slave.y + this.slave.height },
                 )
 
-            })
+            })*/
             if (inter.length == 0) {
                 this.slave.state = 'run';
                 this.slave.x -= this.slave.speed * delta;
@@ -75,7 +74,7 @@ class Keyboard {
         if (this.d && this.slave.may_ground) {
             this.slave.faced = 1;
             let new_x = this.slave.x + this.slave.speed * delta
-            let inter = this.objects.filter(e => {
+            let inter = []/*this.objects.filter(e => {
                 if (e == this.slave) {
                     return;
                 }
@@ -84,7 +83,7 @@ class Keyboard {
                     { left: new_x, top: this.slave.y, right: new_x + this.slave.width, bottom: this.slave.y + this.slave.height },
                 )
 
-            })
+            })*/
             if (inter.length == 0) {
                 this.slave.state = 'run';
                 this.slave.x += this.slave.speed * delta;

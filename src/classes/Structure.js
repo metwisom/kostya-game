@@ -2,8 +2,8 @@ import DrawObject from "./DrawObject";
 import Sprite from "./Sprite";
 
 class Structure extends DrawObject {
-    constructor(x, y, objects) {
-        super(objects)
+    constructor(x, y) {
+        super();
         this.faced = 1;
         this.state = 'idle';
         this.sprites = {
