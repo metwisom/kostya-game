@@ -6,10 +6,12 @@ import Parallax from "./classes/Parallax";
 import Physics from "./classes/Engine/Physics";
 import Structure from "./classes/Structure";
 import recalcSceneSize from "./utils/recalcSceneSize";
+import fps_Meter from "./addons/fps";
 
 document.addEventListener('DOMContentLoaded', () => {
 
     Display.attach('display');
+    Display.addons.add(fps_Meter)
     Display.startDrawing();
     Physics.start();
 

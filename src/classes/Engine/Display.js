@@ -1,12 +1,13 @@
 import Layer from "./Layer";
-import Camera from "./Camera";
 import requestAnimationFrame from "../../utils/requestAnimationFrame";
 import recalcSceneSize from "../../utils/recalcSceneSize";
+import DisplayAddons from "./DisplayAddons";
 
 class _Display {
 
   constructor() {
     this.layers = [];
+    this.addons = new DisplayAddons();
   }
 
   get height() {
@@ -32,22 +33,20 @@ class _Display {
 
   startDrawing() {
 
-    let fps = 0, gfps = 0;
-    setInterval(() => { gfps = fps; fps = 0 }, 1000)
-
-    const { scene, display, layers } = this;
+    const { scene, display, layers, addons } = this;
 
     const draw = () => {
       scene.fillStyle = '#f00'
       scene.fillRect(0, 0, display.width, display.height);
+
       layers.map(layer => {
         layer.objects.map(object => object.draw(scene))
       })
 
-      scene.fillText(gfps, 20, 20);
+      addons.postWork(scene);
 
       requestAnimationFrame(() => draw())
-      fps++;
+
     }
 
     draw()
