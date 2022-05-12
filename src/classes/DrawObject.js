@@ -35,12 +35,8 @@ class DrawObject {
             sprite.image.width * coef / (sprite.max),
             this.height
         );
-        if (this instanceof Character)
-            //scene.fillRect(x,y,this.width,this.height)
-            this.width = sprite.image.width * coef / (sprite.max);
         scene.resetTransform()
         sprite.update()
-        //scene.fillRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h)
     }
 }
 

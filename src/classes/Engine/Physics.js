@@ -33,7 +33,6 @@ class _Physics {
                 hit_box = { left: new_x, top: new_y, right: new_x + object.width, bottom: new_y + object.height }
                 inter = this.checkCollision(hit_box, object.id)
                 if (inter.length == 0) {
-                    console.log(object.may_ground)
                     object.y += object.e_down
                     object.state = 'fall';
                 } else {
@@ -43,11 +42,11 @@ class _Physics {
                     object.state = 'idle';
                 }
 
-
                 new_y = object.y
                 new_x = object.x + object.inertion * delta;
                 hit_box = { left: new_x, top: new_y, right: new_x + object.width, bottom: new_y + object.height }
                 inter = this.checkCollision(hit_box, object.id)
+
                 if (inter.length == 0) {
                     object.state = 'run';
                     object.x += object.inertion * delta;
@@ -68,7 +67,6 @@ class _Physics {
                     }
                 }
 
-                console.log(object.inertion)
             })
 
             requestAnimationFrame(() => calc())
