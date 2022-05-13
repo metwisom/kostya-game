@@ -19,7 +19,7 @@ class DrawObject {
             scene.scale(-1, 1);
         }
         let x = this.x - Camera.attached.x - sizeW / 2
-        let y = this.y - Camera.attached.y
+        let y = this.y - Camera.attached.y - Camera.attached.height / 2
         scene.drawImage(
             sprite.image,
 

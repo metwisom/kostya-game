@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src='./dist/main.js'></script>
     <title>Document</title>
@@ -18,5 +19,15 @@
             height: 100vh;
         }
     </style>
+    <script>
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+            document.getElementById('display').width = window.innerWidth;
+            document.getElementById('display').height = window.innerHeight;
+
+            document.getElementById('display').addEventListener('click',() => {
+                document.getElementById('display').requestFullscreen()
+            })
+        }
+    </script>
 </body>
 </html>

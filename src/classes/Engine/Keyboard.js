@@ -4,6 +4,45 @@ class _Keyboard {
         this.a = false;
         this.d = false;
         this.space = false;
+
+        this.timeTouch = 0;
+
+
+        this.timerEvent = undefined;
+
+
+        window.addEventListener('touchstart', (e) => {
+            this.timeTouch = new Date().valueOf();
+            if (this.timerEvent == undefined) {
+                this.timerEvent = setTimeout(() => {
+                    let key = 'KeyA'
+                    if (e.touches[0].clientX > window.innerWidth / 2) {
+                        key = 'KeyD'
+                    }
+                    this.codeReaction(key, true)
+                }, 100)
+            }
+        })
+
+        window.addEventListener('touchend', (e) => {
+            this.timeTouch = new Date().valueOf() - this.timeTouch;
+            if (this.timeTouch <= 100) {
+                clearTimeout(this.timerEvent);
+                this.timerEvent = undefined;
+                this.codeReaction('Space', true)
+                setTimeout(() => this.codeReaction('Space', false), 50)
+            } else {
+                if (this.d || this.a) {
+                    let key = 'KeyA'
+                    if (e.touches[0].clientX > window.innerWidth / 2) {
+                        key = 'KeyD'
+                    }
+                    this.codeReaction(key, false)
+                }
+            }
+        })
+
+
         document.addEventListener('keydown', e => this.codeReaction(e.code, true))
         document.addEventListener('keyup', e => this.codeReaction(e.code, false))
     }
