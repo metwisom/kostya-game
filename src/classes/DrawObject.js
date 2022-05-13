@@ -9,30 +9,30 @@ class DrawObject {
         let sprite = this.sprites[this.state];
         scene.fillStyle = '#000'
         scene.imageSmoothingEnabled = false;
-        let coef = this.height / sprite.image.height;
+        let coef = this.height / sprite.image[this.faced].height;
 
-        let sizeW = sprite.image.width * coef / sprite.max
+        let sizeW = sprite.image[this.faced].width * coef / sprite.max
         let sizeH = this.height
 
         scene.translate(display.width / 2, display.height / 2);
-        if (this.faced == 0) {
-            scene.scale(-1, 1);
-        }
-        let x = this.x - Camera.attached.x - sizeW / 2
-        let y = this.y - Camera.attached.y - Camera.attached.height / 2
-        scene.drawImage(
-            sprite.image,
+        scene.translate(-Camera.attached.x, -Camera.attached.y);
 
-            sprite.image.width / (sprite.max) * Math.floor(sprite.cur),
+        let x = this.x - sizeW / 2
+        let y = this.y - Camera.attached.height / 2
+        
+        scene.drawImage(
+            sprite.image[this.faced],
+
+            sprite.image[this.faced].width / (sprite.max) * Math.floor(sprite.cur),
             0,
 
-            sprite.image.width / (sprite.max),
-            sprite.image.height,
+            sprite.image[this.faced].width / (sprite.max),
+            sprite.image[this.faced].height,
 
             x,
             y,
 
-            sprite.image.width * coef / (sprite.max),
+            sprite.image[this.faced].width * coef / (sprite.max),
             this.height
         );
         scene.resetTransform()

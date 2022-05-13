@@ -7,7 +7,7 @@ class Character extends DrawObject {
         this.faced = 1;
         this.state = 'idle';
         this.sprites = {
-            'idle': new Sprite(12, 'idle.png', 0.2),
+            'idle': new Sprite(12, 'idle.png', 0.30),
             'run': new Sprite(8, 'run.png', 0.2),
             'jump': new Sprite(1, 'jump.png', 0),
             'fall': new Sprite(2, 'fall.png', 0.1),
