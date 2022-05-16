@@ -1,5 +1,10 @@
+import GameObject from "../GameObject";
+
 class _Camera {
-    attach(obj) {
+
+    attached: GameObject;
+
+    attach(obj: GameObject) {
         this.attached = obj
     }
 }

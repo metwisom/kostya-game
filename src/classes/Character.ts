@@ -1,8 +1,10 @@
-import DrawObject from "./DrawObject";
+import GameObject from "./GameObject";
+import { _Keyboard } from "./Engine/Keyboard";
 import Sprite from "./Sprite";
 
-class Character extends DrawObject {
-    constructor(x, y) {
+class Character extends GameObject {
+
+    constructor(x: number, y: number) {
         super();
         this.faced = 1;
         this.state = 'idle';
@@ -23,7 +25,8 @@ class Character extends DrawObject {
         this.may_ground = false;
         this.inertion = 0;
     }
-    setController(controller) {
+
+    setController(controller: _Keyboard) {
         controller.slave = this;
     }
 }

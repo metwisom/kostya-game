@@ -1,11 +1,29 @@
 import Camera from "./Engine/Camera";
 import Character from "./Character";
+import Sprite from "./Sprite";
+import Display from "./Engine/Display";
 
-class DrawObject {
+class GameObject {
+
+    id: string;
+    state: string;
+    sprites: Record<string, Sprite>;
+    height: number;
+    width: number;
+    x: number;
+    y: number;
+    faced: number;
+    may_ground: boolean;
+    speed: number;
+    inertion: number;
+    e_down: number;
+    mass: number
+
     constructor() {
         this.id = Math.random().toString(16).slice(2);
     }
-    draw(scene) {
+
+    draw(scene: CanvasRenderingContext2D) {
         let sprite = this.sprites[this.state];
         scene.fillStyle = '#000'
         scene.imageSmoothingEnabled = false;
@@ -14,12 +32,12 @@ class DrawObject {
         let sizeW = sprite.image[this.faced].width * coef / sprite.max
         let sizeH = this.height
 
-        scene.translate(display.width / 2, display.height / 2);
+        scene.translate(Display.width / 2, Display.height / 2);
         scene.translate(-Camera.attached.x, -Camera.attached.y);
 
         let x = this.x - sizeW / 2
         let y = this.y - Camera.attached.height / 2
-        
+
         scene.drawImage(
             sprite.image[this.faced],
 
@@ -40,4 +58,4 @@ class DrawObject {
     }
 }
 
-export default DrawObject;
+export default GameObject;

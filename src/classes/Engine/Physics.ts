@@ -1,15 +1,15 @@
 import requestAnimationFrame from "../../utils/requestAnimationFrame";
 import intersectRect from "../../utils/intersectRect";
 import Keyboard from "./Keyboard";
+import GameObject from "../GameObject";
 
 class _Physics {
 
-    constructor() {
-        this.objects = [];
-        this.last_time = new Date().valueOf()
-    }
+    objects: GameObject[] = []
+    last_time: number = new Date().valueOf()
 
-    addObject(obj) {
+
+    addObject(obj: GameObject) {
         this.objects.push(obj)
     }
 
@@ -26,7 +26,7 @@ class _Physics {
                 }
                 object.e_down += object.mass
 
-                let new_y = 0, new_x = 0, hit_box = undefined, inter = true;
+                let new_y = 0, new_x = 0, hit_box = undefined, inter = [];
 
                 new_y = object.y + object.e_down;
                 new_x = object.x;
@@ -76,7 +76,7 @@ class _Physics {
         calc();
     }
 
-    checkCollision(hit_box, ignore = '') {
+    checkCollision(hit_box: any, ignore = '') {
         let inter = this.objects.map(e => {
             if (e.id == ignore) {
                 return undefined;

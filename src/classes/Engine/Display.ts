@@ -1,30 +1,31 @@
 import Layer from "./Layer";
 import requestAnimationFrame from "../../utils/requestAnimationFrame";
 import recalcSceneSize from "../../utils/recalcSceneSize";
+import GameObject from "../GameObject";
 import DisplayAddons from "./DisplayAddons";
 
 class _Display {
 
-  constructor() {
-    this.layers = [];
-    this.addons = new DisplayAddons();
-  }
+  layers: Layer[] = [];
+  addons: DisplayAddons = new DisplayAddons();;
+  display: HTMLCanvasElement;
+  scene: CanvasRenderingContext2D;
 
   get height() {
     return this.display.height;
   }
 
-  attach(id) {
-    this.display = document.getElementById(id);
+  get width() {
+    return this.display.width;
+  }
+
+  attach(id: string) {
+    this.display = <HTMLCanvasElement>document.getElementById(id);
     recalcSceneSize(this);
-    this.scene = this.createScene();
+    this.scene = this.display.getContext('2d');
   }
 
-  createScene() {
-    return this.display.getContext('2d');
-  }
-
-  addObject(obj, layer) {
+  addObject(obj: GameObject, layer: number) {
     if (this.layers[layer] == undefined) {
       this.layers[layer] = new Layer()
     }
@@ -56,3 +57,6 @@ class _Display {
 const Display = new _Display()
 
 export default Display;
+
+
+export { _Display };

@@ -1,8 +1,8 @@
-import DrawObject from "./DrawObject";
+import GameObject from "./GameObject";
 import Sprite from "./Sprite";
 
-class Structure extends DrawObject {
-    constructor(x, y) {
+class Structure extends GameObject {
+    constructor(x: number, y: number) {
         super();
         this.faced = 1;
         this.state = 'idle';
