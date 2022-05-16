@@ -1,3 +1,5 @@
 npm install
 
-npx webpack -w
+npm run dev
+
+npm run build
