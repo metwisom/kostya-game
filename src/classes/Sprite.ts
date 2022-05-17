@@ -1,4 +1,3 @@
-
 class Sprite {
 
   cur: number = 0;
@@ -14,7 +13,6 @@ class Sprite {
     tmp_img.src = 'resources/' + src;
     tmp_img.onload = () => {
       this.image[1] = tmp_img;
-
       const canvasTmp = document.createElement("canvas");
       canvasTmp.width = tmp_img.width
       canvasTmp.height = tmp_img.height
@@ -22,7 +20,6 @@ class Sprite {
       secondaryCtx.scale(-1, 1);
       secondaryCtx.translate(-tmp_img.width, 0);
       secondaryCtx.drawImage(tmp_img, 0, 0);
-
       this.image[0] = <HTMLImageElement><unknown>canvasTmp;
     }
   }

@@ -4,7 +4,7 @@ import Sprite from "./Sprite";
 class GameObject {
 
   id: string;
-  state: string;
+  state: string = 'idle';
   sprites: Record<string, Sprite>;
   height: number;
   width: number;
@@ -12,40 +12,43 @@ class GameObject {
   y: number;
   faced: number;
   may_ground: boolean;
-  speed: number;
-  inertion: number;
-  e_down: number;
-  mass: number
+  speed: number = 0;
+  inertion: number = 0;
+  e_down: number = 0;
+  mass: number = 0;
 
   constructor() {
     this.id = Math.random().toString(16).slice(2);
   }
 
   draw(scene: CanvasRenderingContext2D) {
-    let sprite = this.sprites[this.state];
-    let coef = this.height / sprite.image[this.faced].height;
+    const { faced } = this;
+    const sprite = this.sprites[this.state];
+    const image = sprite.image[faced];
+    const coef = this.height / image.height;
 
-    let sizeW = sprite.image[this.faced].width * coef / sprite.max
-    let sizeH = this.height
+    const sizeW = image.width * coef / sprite.max
+    const sizeH = this.height
 
-    let x = this.x - sizeW / 2
-    let y = this.y - Camera.attached.height / 2
+    const x = this.x - sizeW / 2
+    const y = this.y - Camera.attached.height / 2
 
     scene.drawImage(
-      sprite.image[this.faced],
+      image,
 
-      sprite.image[this.faced].width / (sprite.max) * Math.floor(sprite.cur),
+      image.width / (sprite.max) * Math.floor(sprite.cur),
       0,
 
-      sprite.image[this.faced].width / (sprite.max),
-      sprite.image[this.faced].height,
+      image.width / (sprite.max),
+      image.height,
 
       x,
       y,
 
-      sprite.image[this.faced].width * coef / (sprite.max),
+      image.width * coef / (sprite.max),
       this.height
     );
+
     sprite.update()
   }
 }

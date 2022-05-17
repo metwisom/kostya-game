@@ -5,9 +5,10 @@ import Sprite from "./Sprite";
 class Character extends GameObject {
 
   constructor(x: number, y: number) {
+
     super();
+
     this.faced = 1;
-    this.state = 'idle';
     this.sprites = {
       'idle': new Sprite(12, 'idle.png', 0.30),
       'run': new Sprite(8, 'run.png', 0.2),
@@ -21,9 +22,7 @@ class Character extends GameObject {
     this.width = 100;
     this.speed = 0.25
     this.mass = .5;
-    this.e_down = 0;
     this.may_ground = false;
-    this.inertion = 0;
   }
 }
 
