@@ -2,6 +2,7 @@ import requestAnimationFrame from "../../utils/requestAnimationFrame";
 import intersectRect from "../../utils/intersectRect";
 import Keyboard from "./Keyboard";
 import GameObject from "../GameObject";
+import GameKeyboard from "./GameKeyboard";
 
 class _Physics {
 
@@ -17,12 +18,10 @@ class _Physics {
     const { objects } = this;
 
     const calc = () => {
-      Keyboard.update();
+      GameKeyboard.update();
       let delta = new Date().valueOf() - this.last_time;
       objects.map(object => {
-        if (object.mass == 0) {
-          return;
-        }
+
         object.e_down += object.mass
 
         let new_y = 0, new_x = 0, hit_box = undefined, inter = [];
@@ -77,7 +76,7 @@ class _Physics {
 
   checkCollision(hit_box: any, ignore = '') {
     let inter = this.objects.map(e => {
-      if (e.id == ignore) {
+      if (e.id == ignore || !e.has_collision) {
         return undefined;
       }
       if (intersectRect({ left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height }, hit_box,)) {

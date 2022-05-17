@@ -1,55 +1,38 @@
 import GameObject from "../GameObject";
+import { _Camera } from "./Camera";
+import GameKeyboard, { _GameKeyboard } from "./GameKeyboard";
 
 class _Keyboard {
 
-  a: Boolean = false;
-  d: Boolean = false;
-  space: Boolean = false;
-  slave: GameObject;
+  slave: _GameKeyboard;
+
+  virtualKeys: Record<string, KeyboardEvent> = {};
 
   constructor() {
-    document.addEventListener('keydown', e => this.codeReaction(e.code, true))
-    document.addEventListener('keyup', e => this.codeReaction(e.code, false))
+    document.addEventListener('keydown', e => this.codeReaction(e.code, true, e))
+    document.addEventListener('keyup', e => this.codeReaction(e.code, false, e))
   }
 
   attach(slave: GameObject) {
-    this.slave = slave
+    GameKeyboard.master = this;
+    GameKeyboard.slave = slave;
+    this.slave = GameKeyboard
   }
 
-  codeReaction(code: string, bool: Boolean) {
-    switch (code) {
-      case 'KeyA':
-        this.a = bool
-        break;
-      case 'KeyD':
-        this.d = bool
-        break;
-      case 'Space':
-        this.space = bool
-        break;
-      default:
-        break;
-    }
+  unAttach() {
+    GameKeyboard.master = undefined;
+    GameKeyboard.slave = undefined;
+    this.slave = undefined;
   }
 
-  update() {
-    if (this.slave == undefined) {
-      return;
+  codeReaction(code: string, bool: Boolean, event: KeyboardEvent) {
+    if (bool) {
+      this.virtualKeys[code] = event;
+    } else {
+      delete this.virtualKeys[code];
     }
-    if (this.a && this.slave.may_ground) {
-      this.slave.faced = 0;
-      this.slave.inertion = -this.slave.speed
-    }
-
-    if (this.d && this.slave.may_ground) {
-      this.slave.faced = 1;
-      this.slave.inertion = this.slave.speed
-    }
-
-    if (this.space && this.slave.may_ground) {
-      this.slave.e_down = -10;
-      this.slave.may_ground = false;
-      this.slave.state = 'jump';
+    if (this.slave) {
+      this.slave.updateState();
     }
   }
 }

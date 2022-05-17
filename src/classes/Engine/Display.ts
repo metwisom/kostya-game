@@ -53,7 +53,7 @@ class _Display {
       parallax.objects.map(object => object.draw(scene))
 
       scene.translate(Display.width / 2, Display.height / 2);
-      scene.translate(-Camera.attached.x, -Camera.attached.y);
+      scene.translate(-Camera.x, -Camera.y);
 
       layers.map(layer => {
         layer.objects.map(object => object.draw(scene))

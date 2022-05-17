@@ -11,11 +11,12 @@ class GameObject {
   x: number;
   y: number;
   faced: number;
-  may_ground: boolean;
+  may_ground: boolean = true;
   speed: number = 0;
   inertion: number = 0;
   e_down: number = 0;
   mass: number = 0;
+  has_collision: boolean = true;
 
   constructor() {
     this.id = Math.random().toString(16).slice(2);
