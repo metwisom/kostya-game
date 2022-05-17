@@ -22,7 +22,7 @@ class Character extends GameObject {
     this.width = 100;
     this.speed = 0.25
     this.mass = .5;
-    this.may_ground = false;
+    this.hasGround = false;
   }
 }
 

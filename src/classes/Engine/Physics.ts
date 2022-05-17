@@ -1,6 +1,5 @@
 import requestAnimationFrame from "../../utils/requestAnimationFrame";
 import intersectRect from "../../utils/intersectRect";
-import Keyboard from "./Keyboard";
 import GameObject from "../GameObject";
 import GameKeyboard from "./GameKeyboard";
 
@@ -22,21 +21,21 @@ class _Physics {
       let delta = new Date().valueOf() - this.last_time;
       objects.map(object => {
 
-        object.e_down += object.mass
+        object.eDown += object.mass
 
         let new_y = 0, new_x = 0, hit_box = undefined, inter = [];
 
-        new_y = object.y + object.e_down;
+        new_y = object.y + object.eDown;
         new_x = object.x;
         hit_box = { left: new_x, top: new_y, right: new_x + object.width, bottom: new_y + object.height }
         inter = this.checkCollision(hit_box, object.id)
         if (inter.length == 0) {
-          object.y += object.e_down
+          object.y += object.eDown
           object.state = 'fall';
         } else {
           object.y = inter[0].top - object.height
-          object.e_down = 0
-          object.may_ground = true;
+          object.eDown = 0
+          object.hasGround = true;
           object.state = 'idle';
         }
 
@@ -48,7 +47,7 @@ class _Physics {
         if (inter.length == 0) {
           object.state = 'run';
           object.x += object.inertion * delta;
-          if (object.may_ground) {
+          if (object.hasGround) {
             object.inertion -= (object.inertion * 0.7);
           }
         } else {

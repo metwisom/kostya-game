@@ -20,19 +20,19 @@ class _GameKeyboard {
         if (this.master == undefined || this.slave == undefined) {
             return;
         }
-        if (this.a && this.slave.may_ground) {
+        if (this.a && this.slave.hasGround) {
             this.slave.faced = 0;
             this.slave.inertion = -this.slave.speed
         }
 
-        if (this.d && this.slave.may_ground) {
+        if (this.d && this.slave.hasGround) {
             this.slave.faced = 1;
             this.slave.inertion = this.slave.speed
         }
 
-        if (this.space && this.slave.may_ground) {
-            this.slave.e_down = -10;
-            this.slave.may_ground = false;
+        if (this.space && this.slave.hasGround) {
+            this.slave.eDown = -10;
+            this.slave.hasGround = false;
             this.slave.state = 'jump';
         }
     }
