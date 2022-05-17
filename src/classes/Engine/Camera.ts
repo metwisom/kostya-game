@@ -2,11 +2,11 @@ import GameObject from "../GameObject";
 
 class _Camera {
 
-    attached: GameObject;
+  attached: GameObject;
 
-    attach(obj: GameObject) {
-        this.attached = obj
-    }
+  attach(obj: GameObject) {
+    this.attached = obj
+  }
 }
 
 let Camera = new _Camera()
