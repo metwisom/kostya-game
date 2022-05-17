@@ -25,15 +25,11 @@ class GameObject {
 
     draw(scene: CanvasRenderingContext2D) {
         let sprite = this.sprites[this.state];
-        scene.fillStyle = '#000'
-        scene.imageSmoothingEnabled = false;
         let coef = this.height / sprite.image[this.faced].height;
 
         let sizeW = sprite.image[this.faced].width * coef / sprite.max
         let sizeH = this.height
 
-        scene.translate(Display.width / 2, Display.height / 2);
-        scene.translate(-Camera.attached.x, -Camera.attached.y);
 
         let x = this.x - sizeW / 2
         let y = this.y - Camera.attached.height / 2
@@ -53,7 +49,6 @@ class GameObject {
             sprite.image[this.faced].width * coef / (sprite.max),
             this.height
         );
-        scene.resetTransform()
         sprite.update()
     }
 }

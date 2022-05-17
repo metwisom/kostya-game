@@ -11,6 +11,11 @@ class _Keyboard {
         document.addEventListener('keydown', e => this.codeReaction(e.code, true))
         document.addEventListener('keyup', e => this.codeReaction(e.code, false))
     }
+
+    attach(slave: GameObject) {
+        this.slave = slave
+    }
+
     codeReaction(code: string, bool: Boolean) {
         switch (code) {
             case 'KeyA':
@@ -26,6 +31,7 @@ class _Keyboard {
                 break;
         }
     }
+
     update() {
         if (this.slave == undefined) {
             return;

@@ -25,10 +25,6 @@ class Character extends GameObject {
         this.may_ground = false;
         this.inertion = 0;
     }
-
-    setController(controller: _Keyboard) {
-        controller.slave = this;
-    }
 }
 
 export default Character;

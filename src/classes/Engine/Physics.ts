@@ -69,7 +69,7 @@ class _Physics {
 
             })
 
-            requestAnimationFrame(() => calc())
+            requestAnimationFrame(calc)
             this.last_time = new Date().valueOf()
         }
 

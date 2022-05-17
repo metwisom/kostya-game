@@ -4,28 +4,14 @@ import GameObject from "./GameObject";
 
 class Parallax extends GameObject {
 
-    fon: HTMLImageElement;
+    fon: HTMLImageElement = new Image();
     bias: number;
 
     constructor(image: string, bias: number) {
-
-
         super();
-        this.fon = new Image();
+        this.fon;
         this.fon.src = image;
-
         this.bias = bias;
-
-        /*this.faced = 1;
-        this.state = 'idle';
-        this.sprites = {
-            'idle': new Sprite(1, 'block.png', 0)
-        }
-        this.x = x;
-        this.y = y
-        this.mass = 0;
-        this.height = 100;
-        this.width = 100;*/
     }
 
 

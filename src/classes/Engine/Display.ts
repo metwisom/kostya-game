@@ -3,9 +3,11 @@ import requestAnimationFrame from "../../utils/requestAnimationFrame";
 import recalcSceneSize from "../../utils/recalcSceneSize";
 import GameObject from "../GameObject";
 import DisplayAddons from "./DisplayAddons";
+import Camera from "./Camera";
 
 class _Display {
 
+  parallax: Layer = new Layer();
   layers: Layer[] = [];
   addons: DisplayAddons = new DisplayAddons();;
   display: HTMLCanvasElement;
@@ -25,28 +27,43 @@ class _Display {
     this.scene = this.display.getContext('2d');
   }
 
+  addParallax(obj: GameObject) {
+    const { parallax } = this;
+    parallax.addObject(obj);
+  }
+
   addObject(obj: GameObject, layer: number) {
-    if (this.layers[layer] == undefined) {
-      this.layers[layer] = new Layer()
+    const { layers } = this;
+    if (typeof layers[layer] == 'undefined') {
+      layers[layer] = new Layer();
     }
-    this.layers[layer].addObject(obj);
+    layers[layer].addObject(obj);
   }
 
   startDrawing() {
 
-    const { scene, display, layers, addons } = this;
+    const { scene, parallax, layers, addons } = this;
+
+    scene.imageSmoothingEnabled = false;
+    scene.fillStyle = '#000'
 
     const draw = () => {
-      scene.fillStyle = '#f00'
-      scene.fillRect(0, 0, display.width, display.height);
+      //scene.fillRect(0, 0, display.width, display.height);
+
+      parallax.objects.map(object => object.draw(scene))
+
+      scene.translate(Display.width / 2, Display.height / 2);
+      scene.translate(-Camera.attached.x, -Camera.attached.y);
 
       layers.map(layer => {
         layer.objects.map(object => object.draw(scene))
       })
 
+      scene.resetTransform()
+
       addons.postWork(scene);
 
-      requestAnimationFrame(() => draw())
+      requestAnimationFrame(draw)
 
     }
 
@@ -57,6 +74,5 @@ class _Display {
 const Display = new _Display()
 
 export default Display;
-
 
 export { _Display };
