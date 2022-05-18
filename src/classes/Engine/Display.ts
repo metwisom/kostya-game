@@ -5,11 +5,12 @@ import GameObject from "../GameObject";
 import DisplayAddons from "./DisplayAddons";
 import Camera from "./Camera";
 
+// tslint:disable-next-line: class-name
 class _Display {
 
   parallax: Layer = new Layer();
   layers: Layer[] = [];
-  addons: DisplayAddons = new DisplayAddons();;
+  addons: DisplayAddons = new DisplayAddons();
   display: HTMLCanvasElement;
   scene: CanvasRenderingContext2D;
 
@@ -22,9 +23,9 @@ class _Display {
   }
 
   attach(id: string) {
-    this.display = <HTMLCanvasElement>document.getElementById(id);
-    recalcSceneSize(this);
-    this.scene = this.display.getContext('2d');
+    this.display = document.getElementById(id) as HTMLCanvasElement;
+    recalcSceneSize();
+    this.scene = this.display.getContext("2d");
   }
 
   addParallax(obj: GameObject) {
@@ -34,7 +35,7 @@ class _Display {
 
   addObject(obj: GameObject, layer: number) {
     const { layers } = this;
-    if (typeof layers[layer] == 'undefined') {
+    if (typeof layers[layer] === "undefined") {
       layers[layer] = new Layer();
     }
     layers[layer].addObject(obj);
@@ -45,33 +46,31 @@ class _Display {
     const { scene, parallax, layers, addons } = this;
 
     scene.imageSmoothingEnabled = false;
-    scene.fillStyle = '#000'
+    scene.fillStyle = "#000";
 
     const draw = () => {
-      //scene.fillRect(0, 0, display.width, display.height);
-
-      parallax.objects.map(object => object.draw(scene))
+      parallax.objects.map(object => object.draw(scene));
 
       scene.translate(Display.width / 2, Display.height / 2);
       scene.translate(-Camera.x, -Camera.y);
 
       layers.map(layer => {
-        layer.objects.map(object => object.draw(scene))
-      })
+        layer.objects.map(object => object.draw(scene));
+      });
 
-      scene.resetTransform()
+      scene.resetTransform();
 
       addons.postWork(scene);
 
-      requestAnimationFrame(draw)
+      requestAnimationFrame(draw);
 
-    }
+    };
 
-    draw()
+    draw();
   }
 }
 
-const Display = new _Display()
+const Display = new _Display();
 
 export default Display;
 

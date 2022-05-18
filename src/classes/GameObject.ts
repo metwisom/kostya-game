@@ -4,7 +4,7 @@ import Sprite from "./Sprite";
 class GameObject {
 
   id: string;
-  state: string = 'idle';
+  state: string = "idle";
   sprites: Record<string, Sprite>;
   height: number;
   width: number;
@@ -16,7 +16,7 @@ class GameObject {
   inertion: number = 0;
   eDown: number = 0;
   mass: number = 0;
-  has_collision: boolean = true;
+  hasCollision: boolean = true;
 
   constructor() {
     this.id = Math.random().toString(16).slice(2);
@@ -28,11 +28,11 @@ class GameObject {
     const image = sprite.image[faced];
     const coef = this.height / image.height;
 
-    const sizeW = image.width * coef / sprite.max
-    const sizeH = this.height
+    const sizeW = image.width * coef / sprite.max;
+    const sizeH = this.height;
 
-    const x = this.x - sizeW / 2
-    const y = this.y - Camera.attached.height / 2
+    const x = this.x - sizeW / 2;
+    const y = this.y - Camera.attached.height / 2;
 
     scene.drawImage(
       image,
@@ -50,7 +50,7 @@ class GameObject {
       this.height
     );
 
-    sprite.update()
+    sprite.update();
   }
 }
 

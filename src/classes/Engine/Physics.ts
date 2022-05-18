@@ -3,13 +3,20 @@ import intersectRect from "../../utils/intersectRect";
 import GameObject from "../GameObject";
 import GameKeyboard from "./GameKeyboard";
 
+// tslint:disable-next-line: class-name
 class _Physics {
 
-  objects: GameObject[] = []
-  last_time: number = new Date().valueOf()
+  objects: GameObject[] = [];
+  lastTime: number = new Date().valueOf();
 
   addObject(obj: GameObject) {
-    this.objects.push(obj)
+    this.objects.push(obj);
+  }
+
+  removeObject(obj: GameObject) {
+    if (this.objects.includes(obj)) {
+      this.objects.splice(this.objects.indexOf(obj), 1);
+    }
   }
 
   start() {
@@ -18,77 +25,81 @@ class _Physics {
 
     const calc = () => {
       GameKeyboard.update();
-      let delta = new Date().valueOf() - this.last_time;
+      const delta = new Date().valueOf() - this.lastTime;
       objects.map(object => {
 
-        object.eDown += object.mass
+        object.eDown += object.mass;
 
-        let new_y = 0, new_x = 0, hit_box = undefined, inter = [];
+        let newY = 0;
+        let newX = 0;
+        let hitBox;
+        let inter = [];
 
-        new_y = object.y + object.eDown;
-        new_x = object.x;
-        hit_box = { left: new_x, top: new_y, right: new_x + object.width, bottom: new_y + object.height }
-        inter = this.checkCollision(hit_box, object.id)
-        if (inter.length == 0) {
-          object.y += object.eDown
-          object.state = 'fall';
+        newY = object.y + object.eDown;
+        newX = object.x;
+        hitBox = { left: newX, top: newY, right: newX + object.width, bottom: newY + object.height };
+        inter = this.checkCollision(hitBox, object.id);
+        if (inter.length === 0) {
+          object.y += object.eDown;
+          object.state = "fall";
         } else {
-          object.y = inter[0].top - object.height
-          object.eDown = 0
+          object.y = inter[0].top - object.height;
+          object.eDown = 0;
           object.hasGround = true;
-          object.state = 'idle';
+          object.state = "idle";
         }
 
-        new_y = object.y
-        new_x = object.x + object.inertion * delta;
-        hit_box = { left: new_x, top: new_y, right: new_x + object.width, bottom: new_y + object.height }
-        inter = this.checkCollision(hit_box, object.id)
+        newY = object.y;
+        newX = object.x + object.inertion * delta;
+        hitBox = { left: newX, top: newY, right: newX + object.width, bottom: newY + object.height };
+        inter = this.checkCollision(hitBox, object.id);
 
-        if (inter.length == 0) {
-          object.state = 'run';
+        if (inter.length === 0) {
+          object.state = "run";
           object.x += object.inertion * delta;
           if (object.hasGround) {
             object.inertion -= (object.inertion * 0.7);
           }
         } else {
-          object.inertion = 0
+          object.inertion = 0;
         }
 
         if (Math.abs(object.inertion) < 0.001) {
           object.inertion = 0;
         }
 
-        if (object.inertion == 0) {
-          if (object.state != 'fall') {
-            object.state = 'idle';
+        if (object.inertion === 0) {
+          if (object.state !== "fall") {
+            object.state = "idle";
           }
         }
 
-      })
+      });
 
-      requestAnimationFrame(calc)
-      this.last_time = new Date().valueOf()
-    }
+      requestAnimationFrame(calc);
+      this.lastTime = new Date().valueOf();
+    };
 
     calc();
   }
 
-  checkCollision(hit_box: any, ignore = '') {
-    let inter = this.objects.map(e => {
-      if (e.id == ignore || !e.has_collision) {
+  checkCollision(hitBox: Record<string, number>, ignore = "") {
+    const inter = this.objects.map(e => {
+      if (e.id === ignore || !e.hasCollision) {
         return undefined;
       }
-      if (intersectRect({ left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height }, hit_box,)) {
-        return { left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height }
+      if (intersectRect({ left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height }, hitBox,)) {
+        return { left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height };
       } else {
-        return undefined
+        return undefined;
       }
-    }).filter(e => e)
+    }).filter(e => e);
+
     return inter;
   }
 
 }
 
-const Physics = new _Physics()
+const Physics = new _Physics();
 
 export default Physics;
