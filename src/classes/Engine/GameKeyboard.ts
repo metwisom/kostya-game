@@ -4,17 +4,25 @@ import { _Keyboard } from "./Keyboard";
 // tslint:disable-next-line: class-name
 class _GameKeyboard {
 
-    a: boolean = false;
-    d: boolean = false;
-    space: boolean = false;
+    private a: boolean = false;
+    private d: boolean = false;
+    private space: boolean = false;
 
-    slave: GameObject;
-    master: _Keyboard;
+    private slave: GameObject;
+    private master: _Keyboard;
+
+    setMaster(keyboard: _Keyboard) {
+        this.master = keyboard;
+    }
+
+    setSlave(obj: GameObject) {
+        this.slave = obj;
+    }
 
     updateState() {
-        this.a = this.master.virtualKeys.KeyA !== undefined;
-        this.d = this.master.virtualKeys.KeyD !== undefined;
-        this.space = this.master.virtualKeys.Space !== undefined;
+        this.a = this.master.getKey("KeyA") !== undefined;
+        this.d = this.master.getKey("KeyD") !== undefined;
+        this.space = this.master.getKey("Space") !== undefined;
     }
 
     update() {

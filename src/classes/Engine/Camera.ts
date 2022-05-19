@@ -1,3 +1,4 @@
+import createVirtualPoint from "../../utils/createVirtualPoint";
 import GameObject from "../GameObject";
 import Keyboard, { _Keyboard } from "./Keyboard";
 import Physics from "./Physics";
@@ -5,8 +6,12 @@ import Physics from "./Physics";
 // tslint:disable-next-line: class-name
 class _Camera {
 
-  attached: GameObject;
-  customAttach: boolean = false;
+  private attached: GameObject;
+  private customAttach: boolean = false;
+
+  get target() {
+    return this.attached;
+  }
 
   get x() {
     return this?.attached.x;
@@ -21,13 +26,7 @@ class _Camera {
       this.attached = obj;
     }
     if (obj instanceof _Keyboard) {
-      this.attached = new GameObject();
-      this.attached.x = 100;
-      this.attached.y = 100;
-      this.attached.width = 1;
-      this.attached.height = 1;
-      this.attached.speed = 1;
-      this.attached.hasCollision = false;
+      this.attached = createVirtualPoint();
       this.customAttach = true;
       Keyboard.attach(this.attached);
       Physics.addObject(this.attached);

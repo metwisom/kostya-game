@@ -32,7 +32,7 @@ class GameObject {
     const sizeH = this.height;
 
     const x = this.x - sizeW / 2;
-    const y = this.y - Camera.attached.height / 2;
+    const y = this.y - Camera.target.height / 2;
 
     scene.drawImage(
       image,

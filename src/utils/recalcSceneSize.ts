@@ -1,9 +1,9 @@
 import Display, { _Display } from "../classes/Engine/Display";
 
 const recalcSceneSize = () => {
-  const displayParams = Display.display.getBoundingClientRect();
-  Display.display.width = displayParams.width;
-  Display.display.height = displayParams.height;
+  const { width, height } = Display.canvas.getBoundingClientRect();
+  Display.width = width;
+  Display.height = height;
 };
 
 export default recalcSceneSize;

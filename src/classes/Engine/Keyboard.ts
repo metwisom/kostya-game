@@ -5,27 +5,31 @@ import GameKeyboard, { _GameKeyboard } from "./GameKeyboard";
 // tslint:disable-next-line: class-name
 class _Keyboard {
 
-  slave: _GameKeyboard;
-  virtualKeys: Record<string, KeyboardEvent> = {};
+  private slave: _GameKeyboard;
+  private virtualKeys: Record<string, KeyboardEvent> = {};
 
   constructor() {
     document.addEventListener("keydown", e => this.codeReaction(e.code, true, e));
     document.addEventListener("keyup", e => this.codeReaction(e.code, false, e));
   }
 
+  getKey(key: string) {
+    return this.virtualKeys[key];
+  }
+
   attach(slave: GameObject) {
-    GameKeyboard.master = this;
-    GameKeyboard.slave = slave;
+    GameKeyboard.setMaster(this);
+    GameKeyboard.setSlave(slave);
     this.slave = GameKeyboard;
   }
 
   unAttach() {
-    GameKeyboard.master = undefined;
-    GameKeyboard.slave = undefined;
+    GameKeyboard.setMaster(undefined);
+    GameKeyboard.setSlave(undefined);
     this.slave = undefined;
   }
 
-  codeReaction(code: string, bool: boolean, event: KeyboardEvent) {
+  private codeReaction(code: string, bool: boolean, event: KeyboardEvent) {
     if (bool) {
       this.virtualKeys[code] = event;
     } else {

@@ -1,7 +1,7 @@
 
 class DisplayAddons {
 
-  postCb: CallableFunction[] = [];
+  private postCb: CallableFunction[] = [];
 
   add(postCb: CallableFunction) {
     this.postCb.push((scene: CanvasRenderingContext2D) => postCb(scene));

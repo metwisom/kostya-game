@@ -8,18 +8,30 @@ import Camera from "./Camera";
 // tslint:disable-next-line: class-name
 class _Display {
 
-  parallax: Layer = new Layer();
-  layers: Layer[] = [];
-  addons: DisplayAddons = new DisplayAddons();
-  display: HTMLCanvasElement;
-  scene: CanvasRenderingContext2D;
+  private parallax: Layer = new Layer();
+  private layers: Layer[] = [];
+  readonly addons: DisplayAddons = new DisplayAddons();
+  private display: HTMLCanvasElement;
+  private scene: CanvasRenderingContext2D;
 
   get height() {
     return this.display.height;
   }
 
+  set height(value: number) {
+    this.display.height = value;
+  }
+
   get width() {
     return this.display.width;
+  }
+
+  set width(value: number) {
+    this.display.width = value;
+  }
+
+  get canvas() {
+    return this.display;
   }
 
   attach(id: string) {
