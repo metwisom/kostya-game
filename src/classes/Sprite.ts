@@ -1,7 +1,7 @@
 
 class Sprite {
 
-  cur: number = 0;
+  cur = 0;
   speed: number;
   max: number;
   image: (HTMLImageElement | HTMLCanvasElement)[];

@@ -5,7 +5,6 @@ import GameObject from "../GameObject";
 import DisplayAddons from "./DisplayAddons";
 import Camera from "./Camera";
 
-// tslint:disable-next-line: class-name
 class _Display {
 
   private parallax: Layer = new Layer();

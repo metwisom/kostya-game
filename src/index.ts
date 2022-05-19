@@ -10,14 +10,14 @@ import fpsMeter from "./addons/fps";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    Display.attach("display");
-    Display.addons.add(fpsMeter);
-    Display.startDrawing();
-    Physics.start();
+  Display.attach("display");
+  Display.addons.add(fpsMeter);
+  Display.startDrawing();
+  Physics.start();
 
-    window.addEventListener("resize", () => {
-        recalcSceneSize();
-    });
+  window.addEventListener("resize", () => {
+    recalcSceneSize();
+  });
 });
 
 const plx1 = new Parallax("resources/plx-1.png", 1);
@@ -32,9 +32,9 @@ const plx5 = new Parallax("resources/plx-5.png", 5);
 Display.addParallax(plx5);
 
 for (let i = 0; i < 100; i++) {
-    const box = new Structure(50 + i * 250, 300);
-    Display.addObject(box, 1);
-    Physics.addObject(box);
+  const box = new Structure(50 + i * 250, 300);
+  Display.addObject(box, 1);
+  Physics.addObject(box);
 }
 
 const Kostya = new Character(100, 100);

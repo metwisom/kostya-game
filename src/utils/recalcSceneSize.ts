@@ -1,4 +1,4 @@
-import Display, { _Display } from "../classes/Engine/Display";
+import Display from "../classes/Engine/Display";
 
 const recalcSceneSize = () => {
   const { width, height } = Display.canvas.getBoundingClientRect();

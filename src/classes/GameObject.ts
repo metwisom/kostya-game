@@ -4,19 +4,19 @@ import Sprite from "./Sprite";
 class GameObject {
 
   id: string;
-  state: string = "idle";
+  state = "idle";
   sprites: Record<string, Sprite>;
   height: number;
   width: number;
   x: number;
   y: number;
   faced: number;
-  hasGround: boolean = true;
-  speed: number = 0;
-  inertion: number = 0;
-  eDown: number = 0;
-  mass: number = 0;
-  hasCollision: boolean = true;
+  hasGround = true;
+  speed = 0;
+  inertion = 0;
+  eDown = 0;
+  mass = 0;
+  hasCollision = true;
 
   constructor() {
     this.id = Math.random().toString(16).slice(2);
@@ -29,7 +29,6 @@ class GameObject {
     const coef = this.height / image.height;
 
     const sizeW = image.width * coef / sprite.max;
-    const sizeH = this.height;
 
     const x = this.x - sizeW / 2;
     const y = this.y - Camera.target.height / 2;

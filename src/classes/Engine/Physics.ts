@@ -3,7 +3,6 @@ import intersectRect from "../../utils/intersectRect";
 import GameObject from "../GameObject";
 import GameKeyboard from "./GameKeyboard";
 
-// tslint:disable-next-line: class-name
 class _Physics {
 
   objects: GameObject[] = [];

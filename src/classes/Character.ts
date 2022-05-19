@@ -1,5 +1,4 @@
 import GameObject from "./GameObject";
-import { _Keyboard } from "./Engine/Keyboard";
 import Sprite from "./Sprite";
 
 class Character extends GameObject {

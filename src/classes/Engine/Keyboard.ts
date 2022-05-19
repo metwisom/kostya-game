@@ -1,8 +1,6 @@
 import GameObject from "../GameObject";
-import { _Camera } from "./Camera";
 import GameKeyboard, { _GameKeyboard } from "./GameKeyboard";
 
-// tslint:disable-next-line: class-name
 class _Keyboard {
 
   private slave: _GameKeyboard;

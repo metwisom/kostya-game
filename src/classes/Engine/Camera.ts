@@ -3,11 +3,10 @@ import GameObject from "../GameObject";
 import Keyboard, { _Keyboard } from "./Keyboard";
 import Physics from "./Physics";
 
-// tslint:disable-next-line: class-name
 class _Camera {
 
   private attached: GameObject;
-  private customAttach: boolean = false;
+  private customAttach = false;
 
   get target() {
     return this.attached;
@@ -21,16 +20,20 @@ class _Camera {
     return this?.attached.y;
   }
 
+  private virtualAttach() {
+    this.attached = createVirtualPoint();
+    this.customAttach = true;
+    Keyboard.attach(this.attached);
+    Physics.addObject(this.attached);
+  }
+
   attach(obj: GameObject | _Keyboard) {
-    if (obj instanceof GameObject) {
-      this.attached = obj;
-    }
     if (obj instanceof _Keyboard) {
-      this.attached = createVirtualPoint();
-      this.customAttach = true;
-      Keyboard.attach(this.attached);
-      Physics.addObject(this.attached);
+      this.virtualAttach();
+
+      return;
     }
+    this.attached = obj;
   }
 
   unAttach() {
