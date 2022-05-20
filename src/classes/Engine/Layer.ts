@@ -2,10 +2,14 @@ import GameObject from "../GameObject";
 
 class Layer {
 
-  objects: GameObject[] = [];
+  items: GameObject[] = [];
+
+  get objects() {
+    return this.items;
+  }
 
   addObject(obj: GameObject) {
-    this.objects.push(obj);
+    this.items.push(obj);
   }
 }
 

@@ -17,13 +17,14 @@ class _Keyboard {
 
   attach(slave: GameObject) {
     GameKeyboard.setMaster(this);
+    GameKeyboard.setMaster(undefined);
     GameKeyboard.setSlave(slave);
     this.slave = GameKeyboard;
   }
 
   unAttach() {
-    GameKeyboard.setMaster(undefined);
-    GameKeyboard.setSlave(undefined);
+    GameKeyboard.removeMaster();
+    GameKeyboard.removeSlave();
     this.slave = undefined;
   }
 

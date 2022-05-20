@@ -3,7 +3,7 @@ import Sprite from "./Sprite";
 
 class GameObject {
 
-  id: string;
+  readonly id: string;
   state = "idle";
   sprites: Record<string, Sprite>;
   height: number;

@@ -5,8 +5,8 @@ import GameKeyboard from "./GameKeyboard";
 
 class _Physics {
 
-  objects: GameObject[] = [];
-  lastTime: number = new Date().valueOf();
+  private objects: GameObject[] = [];
+  private lastTime: number = new Date().valueOf();
 
   addObject(obj: GameObject) {
     this.objects.push(obj);
@@ -19,7 +19,6 @@ class _Physics {
   }
 
   start() {
-
     const { objects } = this;
 
     const calc = () => {
