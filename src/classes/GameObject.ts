@@ -1,11 +1,11 @@
 import Camera from "./Engine/Camera";
-import Sprite from "./Sprite";
+import Sprites from "./Sprites";
 
 class GameObject {
 
   readonly id: string;
-  state = "idle";
-  sprites: Record<string, Sprite>;
+  state: keyof Sprites = "idle";
+  sprites: Sprites;
   height: number;
   width: number;
   x: number;
