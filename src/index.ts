@@ -42,4 +42,4 @@ Display.addObject(Kostya, 1);
 Physics.addObject(Kostya);
 
 Keyboard.attach(Kostya);
-Camera.attach(Keyboard);
+Camera.attach(Kostya);
