@@ -1,1 +1,288 @@
-(()=>{"use strict";const t=function(){function t(){this.state="idle",this.hasGround=!0,this.speed=0,this.inertion=0,this.eDown=0,this.mass=0,this.hasCollision=!0,this.id=Math.random().toString(16).slice(2)}return t.prototype.draw=function(t){var e=this.faced,n=this.sprites[this.state],i=n.image[e],o=this.height/i.height,r=i.width*o/n.max,s=this.x-r/2,h=this.y-a.target.height/2;t.drawImage(i,i.width/n.max*Math.floor(n.cur),0,i.width/n.max,i.height,s,h,i.width*o/n.max,this.height),n.update()},t}(),e=new(function(){function t(){this.a=!1,this.d=!1,this.space=!1}return t.prototype.setMaster=function(t){this.master=t},t.prototype.removeMaster=function(){this.master=void 0},t.prototype.setSlave=function(t){this.slave=t},t.prototype.removeSlave=function(){this.slave=void 0},t.prototype.updateState=function(){this.a=void 0!==this.master.getKey("KeyA"),this.d=void 0!==this.master.getKey("KeyD"),this.space=void 0!==this.master.getKey("Space")},t.prototype.update=function(){void 0!==this.master&&void 0!==this.slave&&(this.a&&this.slave.hasGround&&(this.slave.faced=0,this.slave.inertion=-this.slave.speed),this.d&&this.slave.hasGround&&(this.slave.faced=1,this.slave.inertion=this.slave.speed),this.space&&this.slave.hasGround&&(this.slave.eDown=-10,this.slave.hasGround=!1,this.slave.state="jump"))},t}());var n=function(){function t(){var t=this;this.virtualKeys={},document.addEventListener("keydown",(function(e){return t.codeReaction(e.code,!0,e)})),document.addEventListener("keyup",(function(e){return t.codeReaction(e.code,!1,e)}))}return t.prototype.getKey=function(t){return this.virtualKeys[t]},t.prototype.attach=function(t){e.setMaster(this),e.setSlave(t),this.slave=e},t.prototype.unAttach=function(){e.removeMaster(),e.removeSlave(),this.slave=void 0},t.prototype.codeReaction=function(t,e,n){e?this.virtualKeys[t]=n:delete this.virtualKeys[t],this.slave&&this.slave.updateState()},t}();const i=new n;const o=window.requestAnimationFrame||function(t){return window.setTimeout(t,1e3/60)},r=new(function(){function t(){this.objects=[],this.lastTime=(new Date).valueOf()}return t.prototype.addObject=function(t){this.objects.push(t)},t.prototype.removeObject=function(t){this.objects.includes(t)&&this.objects.splice(this.objects.indexOf(t),1)},t.prototype.start=function(){var t=this,n=this.objects,i=function(){e.update();var r=(new Date).valueOf()-t.lastTime;n.map((function(e){e.eDown+=e.mass;var n,i=0,o=0,a=[];i=e.y+e.eDown,n={left:o=e.x,top:i,right:o+e.width,bottom:i+e.height},0===(a=t.checkCollision(n,e.id)).length?(e.y+=e.eDown,e.state="fall"):(e.y=a[0].top-e.height,e.eDown=0,e.hasGround=!0,e.state="idle"),i=e.y,n={left:o=e.x+e.inertion*r,top:i,right:o+e.width,bottom:i+e.height},0===(a=t.checkCollision(n,e.id)).length?(e.state="run",e.x+=e.inertion*r,e.hasGround&&(e.inertion-=.7*e.inertion)):e.inertion=0,Math.abs(e.inertion)<.001&&(e.inertion=0),0===e.inertion&&"fall"!==e.state&&(e.state="idle")})),o(i),t.lastTime=(new Date).valueOf()};i()},t.prototype.checkCollision=function(t,e){return void 0===e&&(e=""),this.objects.map((function(n){if(n.id!==e&&n.hasCollision)return i={left:n.x,top:n.y,right:n.x+n.width,bottom:n.y+n.height},(o=t).left>=i.right||o.right<=i.left||o.top>=i.bottom||o.bottom<=i.top?void 0:{left:n.x,top:n.y,right:n.x+n.width,bottom:n.y+n.height};var i,o})).filter((function(t){return t}))},t}()),a=new(function(){function e(){this.customAttach=!1}return Object.defineProperty(e.prototype,"target",{get:function(){return this.attached},enumerable:!1,configurable:!0}),Object.defineProperty(e.prototype,"x",{get:function(){return null==this?void 0:this.attached.x},enumerable:!1,configurable:!0}),Object.defineProperty(e.prototype,"y",{get:function(){return null==this?void 0:this.attached.y},enumerable:!1,configurable:!0}),e.prototype.virtualAttach=function(){this.attached=function(e,n){void 0===e&&(e=100),void 0===n&&(n=100);var i=new t;return i.x=e,i.y=n,i.width=1,i.height=1,i.speed=1,i.hasCollision=!1,i}(),this.customAttach=!0,i.attach(this.attached),r.addObject(this.attached)},e.prototype.attach=function(t){t instanceof n?this.virtualAttach():this.attached=t},e.prototype.unAttach=function(){this.customAttach&&(i.unAttach(),r.removeObject(this.attached),this.customAttach=!1),this.attached=void 0},e}()),s=function(){function t(t,e,n){var i=this;this.cur=0,this.speed=n,this.max=t,this.image=[];var o=new Image;o.src="resources/"+e,o.onload=function(){i.image[1]=o;var t=document.createElement("canvas");t.width=o.width,t.height=o.height;var e=t.getContext("2d");e.scale(-1,1),e.translate(-o.width,0),e.drawImage(o,0,0),i.image[0]=t}}return t.prototype.update=function(){this.cur+=this.speed,this.cur>this.max&&(this.cur=0)},t}();var h,c=(h=function(t,e){return h=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(t,e){t.__proto__=e}||function(t,e){for(var n in e)Object.prototype.hasOwnProperty.call(e,n)&&(t[n]=e[n])},h(t,e)},function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Class extends value "+String(e)+" is not a constructor or null");function n(){this.constructor=t}h(t,e),t.prototype=null===e?Object.create(e):(n.prototype=e.prototype,new n)});const u=function(t){function e(e,n){var i=t.call(this)||this;return i.faced=1,i.sprites={idle:new s(12,"idle.png",.3),run:new s(8,"run.png",.2),jump:new s(1,"jump.png",0),fall:new s(2,"fall.png",.1),landing:new s(1,"landing.png",0)},i.x=e,i.y=n,i.height=165,i.width=100,i.speed=.25,i.mass=.5,i.hasGround=!1,i}return c(e,t),e}(t),d=function(){function t(){this.items=[]}return Object.defineProperty(t.prototype,"objects",{get:function(){return this.items},enumerable:!1,configurable:!0}),t.prototype.addObject=function(t){this.items.push(t)},t}(),p=function(){var t=y.canvas.getBoundingClientRect(),e=t.width,n=t.height;y.width=e,y.height=n},l=function(){function t(){this.postCb=[]}return t.prototype.add=function(t){this.postCb.push((function(e){return t(e)}))},t.prototype.postWork=function(t){this.postCb.map((function(e){return e(t)}))},t}();var f=new(function(){function t(){this.parallax=new d,this.layers=[],this.addons=new l}return Object.defineProperty(t.prototype,"height",{get:function(){return this.display.height},set:function(t){this.display.height=t},enumerable:!1,configurable:!0}),Object.defineProperty(t.prototype,"width",{get:function(){return this.display.width},set:function(t){this.display.width=t},enumerable:!1,configurable:!0}),Object.defineProperty(t.prototype,"canvas",{get:function(){return this.display},enumerable:!1,configurable:!0}),t.prototype.attach=function(t){this.display=document.getElementById(t),p(),this.scene=this.display.getContext("2d")},t.prototype.addParallax=function(t){this.parallax.addObject(t)},t.prototype.addObject=function(t,e){var n=this.layers;void 0===n[e]&&(n[e]=new d),n[e].addObject(t)},t.prototype.startDrawing=function(){var t=this,e=t.scene,n=t.parallax,i=t.layers,r=t.addons;e.imageSmoothingEnabled=!1,e.fillStyle="#000";var s=function(){n.objects.map((function(t){return t.draw(e)})),e.translate(f.width/2,f.height/2),e.translate(-a.x,-a.y),i.map((function(t){t.objects.map((function(t){return t.draw(e)}))})),e.resetTransform(),r.postWork(e),o(s)};s()},t}());const y=f;var v=function(){var t=function(e,n){return t=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(t,e){t.__proto__=e}||function(t,e){for(var n in e)Object.prototype.hasOwnProperty.call(e,n)&&(t[n]=e[n])},t(e,n)};return function(e,n){if("function"!=typeof n&&null!==n)throw new TypeError("Class extends value "+String(n)+" is not a constructor or null");function i(){this.constructor=e}t(e,n),e.prototype=null===n?Object.create(n):(i.prototype=n.prototype,new i)}}();const g=function(t){function e(e,n){var i=t.call(this)||this;return i.fon=new Image,i.fon.src=e,i.bias=n,i}return v(e,t),e.prototype.draw=function(t){var e=this.fon,n=y.height/e.height,i=a.x*(this.bias/10)%(e.width*n);t.drawImage(e,0,0,e.width,e.height,-i-e.width*n,0,e.width*n,y.height),t.drawImage(e,0,0,e.width,e.height,-i,0,e.width*n,y.height),t.drawImage(e,0,0,e.width,e.height,-i+e.width*n,0,e.width*n,y.height),t.drawImage(e,0,0,e.width,e.height,-i+e.width*n*2,0,e.width*n,y.height)},e}(t);var w=function(){var t=function(e,n){return t=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(t,e){t.__proto__=e}||function(t,e){for(var n in e)Object.prototype.hasOwnProperty.call(e,n)&&(t[n]=e[n])},t(e,n)};return function(e,n){if("function"!=typeof n&&null!==n)throw new TypeError("Class extends value "+String(n)+" is not a constructor or null");function i(){this.constructor=e}t(e,n),e.prototype=null===n?Object.create(n):(i.prototype=n.prototype,new i)}}();const m=function(t){function e(e,n){var i=t.call(this)||this;return i.faced=1,i.sprites={idle:new s(1,"block.png",0)},i.x=e,i.y=n,i.height=100,i.width=100,i}return w(e,t),e}(t);var b=0,x=0;setInterval((function(){x=b,b=0}),1e3);const j=function(t){b++,t.fillText(x.toString(),20,20)};document.addEventListener("DOMContentLoaded",(function(){y.attach("display"),y.addons.add(j),y.startDrawing(),r.start(),window.addEventListener("resize",(function(){p()}))}));var O=new g("resources/plx-1.png",1);y.addParallax(O);var _=new g("resources/plx-2.png",2);y.addParallax(_);var P=new g("resources/plx-3.png",3);y.addParallax(P);var C=new g("resources/plx-4.png",4);y.addParallax(C);var A=new g("resources/plx-5.png",5);y.addParallax(A);for(var S=0;S<100;S++){var D=new m(50+250*S,300);y.addObject(D,1),r.addObject(D)}var E=new u(100,100);y.addObject(E,1),r.addObject(E),i.attach(E),a.attach(E)})();
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/addons/fps.ts":
+/*!***************************!*\
+  !*** ./src/addons/fps.ts ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar fps = 0;\nvar gfps = 0;\nsetInterval(function () { gfps = fps; fps = 0; }, 1000);\nvar fpsMeter = function (scene) {\n    fps++;\n    scene.fillText(gfps.toString(), 20, 20);\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (fpsMeter);\n\n\n//# sourceURL=webpack://kostya-game/./src/addons/fps.ts?");
+
+/***/ }),
+
+/***/ "./src/classes/Character.ts":
+/*!**********************************!*\
+  !*** ./src/classes/Character.ts ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _GameObject__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GameObject */ \"./src/classes/GameObject.ts\");\n/* harmony import */ var _Sprite__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Sprite */ \"./src/classes/Sprite.ts\");\nvar __extends = (undefined && undefined.__extends) || (function () {\n    var extendStatics = function (d, b) {\n        extendStatics = Object.setPrototypeOf ||\n            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||\n            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };\n        return extendStatics(d, b);\n    };\n    return function (d, b) {\n        if (typeof b !== \"function\" && b !== null)\n            throw new TypeError(\"Class extends value \" + String(b) + \" is not a constructor or null\");\n        extendStatics(d, b);\n        function __() { this.constructor = d; }\n        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\n    };\n})();\n\n\nvar Character = /** @class */ (function (_super) {\n    __extends(Character, _super);\n    function Character(x, y) {\n        var _this = _super.call(this) || this;\n        _this.faced = 1;\n        _this.sprites = {\n            \"idle\": new _Sprite__WEBPACK_IMPORTED_MODULE_1__[\"default\"](12, \"idle.png\", 0.30),\n            \"run\": new _Sprite__WEBPACK_IMPORTED_MODULE_1__[\"default\"](8, \"run.png\", 0.2),\n            \"jump\": new _Sprite__WEBPACK_IMPORTED_MODULE_1__[\"default\"](1, \"jump.png\", 0),\n            \"fall\": new _Sprite__WEBPACK_IMPORTED_MODULE_1__[\"default\"](2, \"fall.png\", 0.1),\n            \"landing\": new _Sprite__WEBPACK_IMPORTED_MODULE_1__[\"default\"](1, \"landing.png\", 0),\n        };\n        _this.x = x;\n        _this.y = y;\n        _this.height = 165;\n        _this.width = 100;\n        _this.speed = 0.25;\n        _this.mass = .5;\n        _this.hasGround = false;\n        return _this;\n    }\n    return Character;\n}(_GameObject__WEBPACK_IMPORTED_MODULE_0__[\"default\"]));\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Character);\n\n\n//# sourceURL=webpack://kostya-game/./src/classes/Character.ts?");
+
+/***/ }),
+
+/***/ "./src/classes/Engine/Camera.ts":
+/*!**************************************!*\
+  !*** ./src/classes/Engine/Camera.ts ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"_Camera\": () => (/* binding */ _Camera),\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _utils_createVirtualPoint__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/createVirtualPoint */ \"./src/utils/createVirtualPoint.ts\");\n/* harmony import */ var _Keyboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Keyboard */ \"./src/classes/Engine/Keyboard.ts\");\n/* harmony import */ var _Physics__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Physics */ \"./src/classes/Engine/Physics.ts\");\n\n\n\nvar _Camera = /** @class */ (function () {\n    function _Camera() {\n        this.customAttach = false;\n    }\n    Object.defineProperty(_Camera.prototype, \"target\", {\n        get: function () {\n            return this.attached;\n        },\n        enumerable: false,\n        configurable: true\n    });\n    Object.defineProperty(_Camera.prototype, \"x\", {\n        get: function () {\n            return this === null || this === void 0 ? void 0 : this.attached.x;\n        },\n        enumerable: false,\n        configurable: true\n    });\n    Object.defineProperty(_Camera.prototype, \"y\", {\n        get: function () {\n            return this === null || this === void 0 ? void 0 : this.attached.y;\n        },\n        enumerable: false,\n        configurable: true\n    });\n    _Camera.prototype.virtualAttach = function () {\n        this.attached = (0,_utils_createVirtualPoint__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\n        this.customAttach = true;\n        _Keyboard__WEBPACK_IMPORTED_MODULE_1__[\"default\"].attach(this.attached);\n        _Physics__WEBPACK_IMPORTED_MODULE_2__[\"default\"].addObject(this.attached);\n    };\n    _Camera.prototype.attach = function (obj) {\n        if (obj instanceof _Keyboard__WEBPACK_IMPORTED_MODULE_1__._Keyboard) {\n            this.virtualAttach();\n            return;\n        }\n        this.attached = obj;\n    };\n    _Camera.prototype.unAttach = function () {\n        if (this.customAttach) {\n            _Keyboard__WEBPACK_IMPORTED_MODULE_1__[\"default\"].unAttach();\n            _Physics__WEBPACK_IMPORTED_MODULE_2__[\"default\"].removeObject(this.attached);\n            this.customAttach = false;\n        }\n        this.attached = undefined;\n    };\n    return _Camera;\n}());\nvar Camera = new _Camera();\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Camera);\n\n\n\n//# sourceURL=webpack://kostya-game/./src/classes/Engine/Camera.ts?");
+
+/***/ }),
+
+/***/ "./src/classes/Engine/Display.ts":
+/*!***************************************!*\
+  !*** ./src/classes/Engine/Display.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"_Display\": () => (/* binding */ _Display),\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _Layer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Layer */ \"./src/classes/Engine/Layer.ts\");\n/* harmony import */ var _utils_requestAnimationFrame__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/requestAnimationFrame */ \"./src/utils/requestAnimationFrame.ts\");\n/* harmony import */ var _utils_recalcSceneSize__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/recalcSceneSize */ \"./src/utils/recalcSceneSize.ts\");\n/* harmony import */ var _DisplayAddons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DisplayAddons */ \"./src/classes/Engine/DisplayAddons.ts\");\n/* harmony import */ var _Camera__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Camera */ \"./src/classes/Engine/Camera.ts\");\n\n\n\n\n\nvar _Display = /** @class */ (function () {\n    function _Display() {\n        this.parallax = new _Layer__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\n        this.layers = [];\n        this.addons = new _DisplayAddons__WEBPACK_IMPORTED_MODULE_3__[\"default\"]();\n    }\n    Object.defineProperty(_Display.prototype, \"height\", {\n        get: function () {\n            return this.display.height;\n        },\n        set: function (value) {\n            this.display.height = value;\n        },\n        enumerable: false,\n        configurable: true\n    });\n    Object.defineProperty(_Display.prototype, \"width\", {\n        get: function () {\n            return this.display.width;\n        },\n        set: function (value) {\n            this.display.width = value;\n        },\n        enumerable: false,\n        configurable: true\n    });\n    Object.defineProperty(_Display.prototype, \"canvas\", {\n        get: function () {\n            return this.display;\n        },\n        enumerable: false,\n        configurable: true\n    });\n    _Display.prototype.attach = function (id) {\n        this.display = document.getElementById(id);\n        (0,_utils_recalcSceneSize__WEBPACK_IMPORTED_MODULE_2__[\"default\"])();\n        this.scene = this.display.getContext(\"2d\");\n    };\n    _Display.prototype.addParallax = function (obj) {\n        var parallax = this.parallax;\n        parallax.addObject(obj);\n    };\n    _Display.prototype.addObject = function (obj, layer) {\n        var layers = this.layers;\n        if (typeof layers[layer] === \"undefined\") {\n            layers[layer] = new _Layer__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\n        }\n        layers[layer].addObject(obj);\n    };\n    _Display.prototype.startDrawing = function () {\n        var _a = this, scene = _a.scene, parallax = _a.parallax, layers = _a.layers, addons = _a.addons;\n        scene.imageSmoothingEnabled = false;\n        scene.fillStyle = \"#000\";\n        var draw = function () {\n            parallax.objects.map(function (object) { return object.draw(scene); });\n            scene.translate(Display.width / 2, Display.height / 2);\n            scene.translate(-_Camera__WEBPACK_IMPORTED_MODULE_4__[\"default\"].x, -_Camera__WEBPACK_IMPORTED_MODULE_4__[\"default\"].y);\n            layers.map(function (layer) {\n                layer.objects.map(function (object) { return object.draw(scene); });\n            });\n            scene.resetTransform();\n            addons.postWork(scene);\n            (0,_utils_requestAnimationFrame__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(draw);\n        };\n        draw();\n    };\n    return _Display;\n}());\nvar Display = new _Display();\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Display);\n\n\n\n//# sourceURL=webpack://kostya-game/./src/classes/Engine/Display.ts?");
+
+/***/ }),
+
+/***/ "./src/classes/Engine/DisplayAddons.ts":
+/*!*********************************************!*\
+  !*** ./src/classes/Engine/DisplayAddons.ts ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar DisplayAddons = /** @class */ (function () {\n    function DisplayAddons() {\n        this.postCb = [];\n    }\n    DisplayAddons.prototype.add = function (postCb) {\n        this.postCb.push(function (scene) { return postCb(scene); });\n    };\n    DisplayAddons.prototype.postWork = function (scene) {\n        this.postCb.map(function (cb) { return cb(scene); });\n    };\n    return DisplayAddons;\n}());\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DisplayAddons);\n\n\n//# sourceURL=webpack://kostya-game/./src/classes/Engine/DisplayAddons.ts?");
+
+/***/ }),
+
+/***/ "./src/classes/Engine/GameKeyboard.ts":
+/*!********************************************!*\
+  !*** ./src/classes/Engine/GameKeyboard.ts ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"_GameKeyboard\": () => (/* binding */ _GameKeyboard),\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar _GameKeyboard = /** @class */ (function () {\n    function _GameKeyboard() {\n        this.a = false;\n        this.d = false;\n        this.space = false;\n    }\n    _GameKeyboard.prototype.setMaster = function (keyboard) {\n        this.master = keyboard;\n    };\n    _GameKeyboard.prototype.removeMaster = function () {\n        this.master = undefined;\n    };\n    _GameKeyboard.prototype.setSlave = function (obj) {\n        this.slave = obj;\n    };\n    _GameKeyboard.prototype.removeSlave = function () {\n        this.slave = undefined;\n    };\n    _GameKeyboard.prototype.updateState = function () {\n        this.a = this.master.getKey(\"KeyA\") !== undefined;\n        this.d = this.master.getKey(\"KeyD\") !== undefined;\n        this.space = this.master.getKey(\"Space\") !== undefined;\n    };\n    _GameKeyboard.prototype.update = function () {\n        if (this.master === undefined || this.slave === undefined) {\n            return;\n        }\n        if (this.a && this.slave.hasGround) {\n            this.slave.faced = 0;\n            this.slave.inertion = -this.slave.speed;\n        }\n        if (this.d && this.slave.hasGround) {\n            this.slave.faced = 1;\n            this.slave.inertion = this.slave.speed;\n        }\n        if (this.space && this.slave.hasGround) {\n            this.slave.eDown = -10;\n            this.slave.hasGround = false;\n            this.slave.state = \"jump\";\n        }\n    };\n    return _GameKeyboard;\n}());\nvar GameKeyboard = new _GameKeyboard();\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GameKeyboard);\n\n\n\n//# sourceURL=webpack://kostya-game/./src/classes/Engine/GameKeyboard.ts?");
+
+/***/ }),
+
+/***/ "./src/classes/Engine/Keyboard.ts":
+/*!****************************************!*\
+  !*** ./src/classes/Engine/Keyboard.ts ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"_Keyboard\": () => (/* binding */ _Keyboard),\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _GameKeyboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GameKeyboard */ \"./src/classes/Engine/GameKeyboard.ts\");\n\nvar _Keyboard = /** @class */ (function () {\n    function _Keyboard() {\n        var _this = this;\n        this.virtualKeys = {};\n        document.addEventListener(\"keydown\", function (e) { return _this.codeReaction(e.code, true, e); });\n        document.addEventListener(\"keyup\", function (e) { return _this.codeReaction(e.code, false, e); });\n    }\n    _Keyboard.prototype.getKey = function (key) {\n        return this.virtualKeys[key];\n    };\n    _Keyboard.prototype.attach = function (slave) {\n        _GameKeyboard__WEBPACK_IMPORTED_MODULE_0__[\"default\"].setMaster(this);\n        _GameKeyboard__WEBPACK_IMPORTED_MODULE_0__[\"default\"].setSlave(slave);\n        this.slave = _GameKeyboard__WEBPACK_IMPORTED_MODULE_0__[\"default\"];\n    };\n    _Keyboard.prototype.unAttach = function () {\n        _GameKeyboard__WEBPACK_IMPORTED_MODULE_0__[\"default\"].removeMaster();\n        _GameKeyboard__WEBPACK_IMPORTED_MODULE_0__[\"default\"].removeSlave();\n        this.slave = undefined;\n    };\n    _Keyboard.prototype.codeReaction = function (code, bool, event) {\n        if (bool) {\n            this.virtualKeys[code] = event;\n        }\n        else {\n            delete this.virtualKeys[code];\n        }\n        if (this.slave) {\n            this.slave.updateState();\n        }\n    };\n    return _Keyboard;\n}());\nvar Keyboard = new _Keyboard();\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Keyboard);\n\n\n\n//# sourceURL=webpack://kostya-game/./src/classes/Engine/Keyboard.ts?");
+
+/***/ }),
+
+/***/ "./src/classes/Engine/Layer.ts":
+/*!*************************************!*\
+  !*** ./src/classes/Engine/Layer.ts ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar Layer = /** @class */ (function () {\n    function Layer() {\n        this.items = [];\n    }\n    Object.defineProperty(Layer.prototype, \"objects\", {\n        get: function () {\n            return this.items;\n        },\n        enumerable: false,\n        configurable: true\n    });\n    Layer.prototype.addObject = function (obj) {\n        this.items.push(obj);\n    };\n    return Layer;\n}());\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Layer);\n\n\n//# sourceURL=webpack://kostya-game/./src/classes/Engine/Layer.ts?");
+
+/***/ }),
+
+/***/ "./src/classes/Engine/Physics.ts":
+/*!***************************************!*\
+  !*** ./src/classes/Engine/Physics.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _utils_requestAnimationFrame__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/requestAnimationFrame */ \"./src/utils/requestAnimationFrame.ts\");\n/* harmony import */ var _utils_intersectRect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/intersectRect */ \"./src/utils/intersectRect.ts\");\n/* harmony import */ var _GameKeyboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GameKeyboard */ \"./src/classes/Engine/GameKeyboard.ts\");\n\n\n\nvar _Physics = /** @class */ (function () {\n    function _Physics() {\n        this.objects = [];\n        this.lastTime = new Date().valueOf();\n    }\n    _Physics.prototype.addObject = function (obj) {\n        this.objects.push(obj);\n    };\n    _Physics.prototype.removeObject = function (obj) {\n        if (this.objects.includes(obj)) {\n            this.objects.splice(this.objects.indexOf(obj), 1);\n        }\n    };\n    _Physics.prototype.start = function () {\n        var _this = this;\n        var objects = this.objects;\n        var calc = function () {\n            _GameKeyboard__WEBPACK_IMPORTED_MODULE_2__[\"default\"].update();\n            var delta = new Date().valueOf() - _this.lastTime;\n            objects.map(function (object) {\n                object.eDown += object.mass;\n                var newY = 0;\n                var newX = 0;\n                var hitBox;\n                var inter = [];\n                newY = object.y + object.eDown;\n                newX = object.x;\n                hitBox = { left: newX, top: newY, right: newX + object.width, bottom: newY + object.height };\n                inter = _this.checkCollision(hitBox, object.id);\n                if (inter.length === 0) {\n                    object.y += object.eDown;\n                    object.state = \"fall\";\n                }\n                else {\n                    object.y = inter[0].top - object.height;\n                    object.eDown = 0;\n                    object.hasGround = true;\n                    object.state = \"idle\";\n                }\n                newY = object.y;\n                newX = object.x + object.inertion * delta;\n                hitBox = { left: newX, top: newY, right: newX + object.width, bottom: newY + object.height };\n                inter = _this.checkCollision(hitBox, object.id);\n                if (inter.length === 0) {\n                    object.state = \"run\";\n                    object.x += object.inertion * delta;\n                    if (object.hasGround) {\n                        object.inertion -= (object.inertion * 0.7);\n                    }\n                }\n                else {\n                    object.inertion = 0;\n                }\n                if (Math.abs(object.inertion) < 0.001) {\n                    object.inertion = 0;\n                }\n                if (object.inertion === 0) {\n                    if (object.state !== \"fall\") {\n                        object.state = \"idle\";\n                    }\n                }\n            });\n            (0,_utils_requestAnimationFrame__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(calc);\n            _this.lastTime = new Date().valueOf();\n        };\n        calc();\n    };\n    _Physics.prototype.checkCollision = function (hitBox, ignore) {\n        if (ignore === void 0) { ignore = \"\"; }\n        var inter = this.objects.map(function (e) {\n            if (e.id === ignore || !e.hasCollision) {\n                return undefined;\n            }\n            if ((0,_utils_intersectRect__WEBPACK_IMPORTED_MODULE_1__[\"default\"])({ left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height }, hitBox)) {\n                return { left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height };\n            }\n            else {\n                return undefined;\n            }\n        }).filter(function (e) { return e; });\n        return inter;\n    };\n    return _Physics;\n}());\nvar Physics = new _Physics();\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Physics);\n\n\n//# sourceURL=webpack://kostya-game/./src/classes/Engine/Physics.ts?");
+
+/***/ }),
+
+/***/ "./src/classes/GameObject.ts":
+/*!***********************************!*\
+  !*** ./src/classes/GameObject.ts ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _Engine_Camera__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Engine/Camera */ \"./src/classes/Engine/Camera.ts\");\n\nvar GameObject = /** @class */ (function () {\n    function GameObject() {\n        this.state = \"idle\";\n        this.hasGround = true;\n        this.speed = 0;\n        this.inertion = 0;\n        this.eDown = 0;\n        this.mass = 0;\n        this.hasCollision = true;\n        this.id = Math.random().toString(16).slice(2);\n    }\n    GameObject.prototype.draw = function (scene) {\n        var faced = this.faced;\n        var sprite = this.sprites[this.state];\n        var image = sprite.image[faced];\n        var coef = this.height / image.height;\n        var sizeW = image.width * coef / sprite.max;\n        var x = this.x - sizeW / 2;\n        var y = this.y - _Engine_Camera__WEBPACK_IMPORTED_MODULE_0__[\"default\"].target.height / 2;\n        scene.drawImage(image, image.width / (sprite.max) * Math.floor(sprite.cur), 0, image.width / (sprite.max), image.height, x, y, image.width * coef / (sprite.max), this.height);\n        sprite.update();\n    };\n    return GameObject;\n}());\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GameObject);\n\n\n//# sourceURL=webpack://kostya-game/./src/classes/GameObject.ts?");
+
+/***/ }),
+
+/***/ "./src/classes/Parallax.ts":
+/*!*********************************!*\
+  !*** ./src/classes/Parallax.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _Engine_Camera__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Engine/Camera */ \"./src/classes/Engine/Camera.ts\");\n/* harmony import */ var _Engine_Display__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Engine/Display */ \"./src/classes/Engine/Display.ts\");\n/* harmony import */ var _GameObject__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GameObject */ \"./src/classes/GameObject.ts\");\nvar __extends = (undefined && undefined.__extends) || (function () {\n    var extendStatics = function (d, b) {\n        extendStatics = Object.setPrototypeOf ||\n            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||\n            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };\n        return extendStatics(d, b);\n    };\n    return function (d, b) {\n        if (typeof b !== \"function\" && b !== null)\n            throw new TypeError(\"Class extends value \" + String(b) + \" is not a constructor or null\");\n        extendStatics(d, b);\n        function __() { this.constructor = d; }\n        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\n    };\n})();\n\n\n\nvar Parallax = /** @class */ (function (_super) {\n    __extends(Parallax, _super);\n    function Parallax(image, bias) {\n        var _this = _super.call(this) || this;\n        _this.fon = new Image();\n        _this.fon.src = image;\n        _this.bias = bias;\n        return _this;\n    }\n    Parallax.prototype.draw = function (scene) {\n        var fon = this.fon;\n        var coef = _Engine_Display__WEBPACK_IMPORTED_MODULE_1__[\"default\"].height / fon.height;\n        var pass = (_Engine_Camera__WEBPACK_IMPORTED_MODULE_0__[\"default\"].x * (this.bias / 10)) % (fon.width * coef);\n        scene.drawImage(fon, 0, 0, fon.width, fon.height, -pass - (fon.width * coef), 0, fon.width * coef, _Engine_Display__WEBPACK_IMPORTED_MODULE_1__[\"default\"].height);\n        scene.drawImage(fon, 0, 0, fon.width, fon.height, -pass, 0, fon.width * coef, _Engine_Display__WEBPACK_IMPORTED_MODULE_1__[\"default\"].height);\n        scene.drawImage(fon, 0, 0, fon.width, fon.height, -pass + (fon.width * coef), 0, fon.width * coef, _Engine_Display__WEBPACK_IMPORTED_MODULE_1__[\"default\"].height);\n        scene.drawImage(fon, 0, 0, fon.width, fon.height, -pass + (fon.width * coef) * 2, 0, fon.width * coef, _Engine_Display__WEBPACK_IMPORTED_MODULE_1__[\"default\"].height);\n    };\n    return Parallax;\n}(_GameObject__WEBPACK_IMPORTED_MODULE_2__[\"default\"]));\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Parallax);\n\n\n//# sourceURL=webpack://kostya-game/./src/classes/Parallax.ts?");
+
+/***/ }),
+
+/***/ "./src/classes/ResourceLoader.ts":
+/*!***************************************!*\
+  !*** ./src/classes/ResourceLoader.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var node_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! node-fetch */ \"node-fetch\");\n/* harmony import */ var node_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(node_fetch__WEBPACK_IMPORTED_MODULE_0__);\nvar __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\n    return new (P || (P = Promise))(function (resolve, reject) {\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\n    });\n};\nvar __generator = (undefined && undefined.__generator) || function (thisArg, body) {\n    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;\n    return g = { next: verb(0), \"throw\": verb(1), \"return\": verb(2) }, typeof Symbol === \"function\" && (g[Symbol.iterator] = function() { return this; }), g;\n    function verb(n) { return function (v) { return step([n, v]); }; }\n    function step(op) {\n        if (f) throw new TypeError(\"Generator is already executing.\");\n        while (_) try {\n            if (f = 1, y && (t = op[0] & 2 ? y[\"return\"] : op[0] ? y[\"throw\"] || ((t = y[\"return\"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;\n            if (y = 0, t) op = [op[0] & 2, t.value];\n            switch (op[0]) {\n                case 0: case 1: t = op; break;\n                case 4: _.label++; return { value: op[1], done: false };\n                case 5: _.label++; y = op[1]; op = [0]; continue;\n                case 7: op = _.ops.pop(); _.trys.pop(); continue;\n                default:\n                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }\n                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }\n                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }\n                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }\n                    if (t[2]) _.ops.pop();\n                    _.trys.pop(); continue;\n            }\n            op = body.call(thisArg, _);\n        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }\n        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };\n    }\n};\n\nvar _ResourceLoader = /** @class */ (function () {\n    function _ResourceLoader() {\n    }\n    _ResourceLoader.prototype.loadResource = function (resourceMap) {\n        return __awaiter(this, void 0, void 0, function () {\n            var _a;\n            return __generator(this, function (_b) {\n                switch (_b.label) {\n                    case 0:\n                        console.log(\"http://gg.prog3.airnet.ru/\" + resourceMap);\n                        _a = this;\n                        return [4 /*yield*/, node_fetch__WEBPACK_IMPORTED_MODULE_0___default()(\"http://gg.prog3.airnet.ru/\" + resourceMap)\n                                .then(function (res) { return res.json(); })];\n                    case 1:\n                        _a.resourceMap = (_b.sent());\n                        return [2 /*return*/];\n                }\n            });\n        });\n    };\n    return _ResourceLoader;\n}());\nvar Resources = new _ResourceLoader();\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Resources);\n\n\n//# sourceURL=webpack://kostya-game/./src/classes/ResourceLoader.ts?");
+
+/***/ }),
+
+/***/ "./src/classes/Sprite.ts":
+/*!*******************************!*\
+  !*** ./src/classes/Sprite.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar Sprite = /** @class */ (function () {\n    function Sprite(max, src, speed) {\n        var _this = this;\n        this.cur = 0;\n        this.speed = speed;\n        this.max = max;\n        this.image = [];\n        var tmpImg = new Image();\n        tmpImg.src = \"resources/\" + src;\n        tmpImg.onload = function () {\n            _this.image[1] = tmpImg;\n            var canvasTmp = document.createElement(\"canvas\");\n            canvasTmp.width = tmpImg.width;\n            canvasTmp.height = tmpImg.height;\n            var secondaryCtx = canvasTmp.getContext(\"2d\");\n            secondaryCtx.scale(-1, 1);\n            secondaryCtx.translate(-tmpImg.width, 0);\n            secondaryCtx.drawImage(tmpImg, 0, 0);\n            _this.image[0] = canvasTmp;\n        };\n    }\n    Sprite.prototype.update = function () {\n        this.cur += this.speed;\n        if (this.cur > this.max) {\n            this.cur = 0;\n        }\n    };\n    return Sprite;\n}());\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Sprite);\n\n\n//# sourceURL=webpack://kostya-game/./src/classes/Sprite.ts?");
+
+/***/ }),
+
+/***/ "./src/classes/Structure.ts":
+/*!**********************************!*\
+  !*** ./src/classes/Structure.ts ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _GameObject__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GameObject */ \"./src/classes/GameObject.ts\");\n/* harmony import */ var _Sprite__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Sprite */ \"./src/classes/Sprite.ts\");\nvar __extends = (undefined && undefined.__extends) || (function () {\n    var extendStatics = function (d, b) {\n        extendStatics = Object.setPrototypeOf ||\n            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||\n            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };\n        return extendStatics(d, b);\n    };\n    return function (d, b) {\n        if (typeof b !== \"function\" && b !== null)\n            throw new TypeError(\"Class extends value \" + String(b) + \" is not a constructor or null\");\n        extendStatics(d, b);\n        function __() { this.constructor = d; }\n        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());\n    };\n})();\n\n\nvar Structure = /** @class */ (function (_super) {\n    __extends(Structure, _super);\n    function Structure(x, y) {\n        var _this = _super.call(this) || this;\n        _this.faced = 1;\n        _this.sprites = {\n            \"idle\": new _Sprite__WEBPACK_IMPORTED_MODULE_1__[\"default\"](1, \"block.png\", 0)\n        };\n        _this.x = x;\n        _this.y = y;\n        _this.height = 100;\n        _this.width = 100;\n        return _this;\n    }\n    return Structure;\n}(_GameObject__WEBPACK_IMPORTED_MODULE_0__[\"default\"]));\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Structure);\n\n\n//# sourceURL=webpack://kostya-game/./src/classes/Structure.ts?");
+
+/***/ }),
+
+/***/ "./src/index.ts":
+/*!**********************!*\
+  !*** ./src/index.ts ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _classes_Engine_Camera__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./classes/Engine/Camera */ \"./src/classes/Engine/Camera.ts\");\n/* harmony import */ var _classes_Character__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./classes/Character */ \"./src/classes/Character.ts\");\n/* harmony import */ var _classes_Engine_Display__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./classes/Engine/Display */ \"./src/classes/Engine/Display.ts\");\n/* harmony import */ var _classes_Engine_Keyboard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./classes/Engine/Keyboard */ \"./src/classes/Engine/Keyboard.ts\");\n/* harmony import */ var _classes_Parallax__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./classes/Parallax */ \"./src/classes/Parallax.ts\");\n/* harmony import */ var _classes_Engine_Physics__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./classes/Engine/Physics */ \"./src/classes/Engine/Physics.ts\");\n/* harmony import */ var _classes_Structure__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./classes/Structure */ \"./src/classes/Structure.ts\");\n/* harmony import */ var _utils_recalcSceneSize__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./utils/recalcSceneSize */ \"./src/utils/recalcSceneSize.ts\");\n/* harmony import */ var _addons_fps__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./addons/fps */ \"./src/addons/fps.ts\");\n/* harmony import */ var _classes_ResourceLoader__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./classes/ResourceLoader */ \"./src/classes/ResourceLoader.ts\");\n\n\n\n\n\n\n\n\n\n\ndocument.addEventListener(\"DOMContentLoaded\", function () {\n    _classes_Engine_Display__WEBPACK_IMPORTED_MODULE_2__[\"default\"].attach(\"display\");\n    _classes_Engine_Display__WEBPACK_IMPORTED_MODULE_2__[\"default\"].addons.add(_addons_fps__WEBPACK_IMPORTED_MODULE_8__[\"default\"]);\n    _classes_Engine_Display__WEBPACK_IMPORTED_MODULE_2__[\"default\"].startDrawing();\n    _classes_Engine_Physics__WEBPACK_IMPORTED_MODULE_5__[\"default\"].start();\n    window.addEventListener(\"resize\", function () {\n        (0,_utils_recalcSceneSize__WEBPACK_IMPORTED_MODULE_7__[\"default\"])();\n    });\n});\n_classes_ResourceLoader__WEBPACK_IMPORTED_MODULE_9__[\"default\"].loadResource(\"/resource.json\");\nconsole.log(_classes_ResourceLoader__WEBPACK_IMPORTED_MODULE_9__[\"default\"].resourceList);\nconsole.log(_classes_ResourceLoader__WEBPACK_IMPORTED_MODULE_9__[\"default\"].resourceMap);\nvar plx1 = new _classes_Parallax__WEBPACK_IMPORTED_MODULE_4__[\"default\"](\"resources/plx-1.png\", 1);\n_classes_Engine_Display__WEBPACK_IMPORTED_MODULE_2__[\"default\"].addParallax(plx1);\nvar plx2 = new _classes_Parallax__WEBPACK_IMPORTED_MODULE_4__[\"default\"](\"resources/plx-2.png\", 2);\n_classes_Engine_Display__WEBPACK_IMPORTED_MODULE_2__[\"default\"].addParallax(plx2);\nvar plx3 = new _classes_Parallax__WEBPACK_IMPORTED_MODULE_4__[\"default\"](\"resources/plx-3.png\", 3);\n_classes_Engine_Display__WEBPACK_IMPORTED_MODULE_2__[\"default\"].addParallax(plx3);\nvar plx4 = new _classes_Parallax__WEBPACK_IMPORTED_MODULE_4__[\"default\"](\"resources/plx-4.png\", 4);\n_classes_Engine_Display__WEBPACK_IMPORTED_MODULE_2__[\"default\"].addParallax(plx4);\nvar plx5 = new _classes_Parallax__WEBPACK_IMPORTED_MODULE_4__[\"default\"](\"resources/plx-5.png\", 5);\n_classes_Engine_Display__WEBPACK_IMPORTED_MODULE_2__[\"default\"].addParallax(plx5);\nfor (var i = 0; i < 100; i++) {\n    var box = new _classes_Structure__WEBPACK_IMPORTED_MODULE_6__[\"default\"](50 + i * 250, 300);\n    _classes_Engine_Display__WEBPACK_IMPORTED_MODULE_2__[\"default\"].addObject(box, 1);\n    _classes_Engine_Physics__WEBPACK_IMPORTED_MODULE_5__[\"default\"].addObject(box);\n}\nvar Kostya = new _classes_Character__WEBPACK_IMPORTED_MODULE_1__[\"default\"](100, 100);\n_classes_Engine_Display__WEBPACK_IMPORTED_MODULE_2__[\"default\"].addObject(Kostya, 1);\n_classes_Engine_Physics__WEBPACK_IMPORTED_MODULE_5__[\"default\"].addObject(Kostya);\n_classes_Engine_Keyboard__WEBPACK_IMPORTED_MODULE_3__[\"default\"].attach(Kostya);\n_classes_Engine_Camera__WEBPACK_IMPORTED_MODULE_0__[\"default\"].attach(Kostya);\n\n\n//# sourceURL=webpack://kostya-game/./src/index.ts?");
+
+/***/ }),
+
+/***/ "./src/utils/createVirtualPoint.ts":
+/*!*****************************************!*\
+  !*** ./src/utils/createVirtualPoint.ts ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _classes_GameObject__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../classes/GameObject */ \"./src/classes/GameObject.ts\");\n\nvar createVirtualPoint = function (x, y) {\n    if (x === void 0) { x = 100; }\n    if (y === void 0) { y = 100; }\n    var point = new _classes_GameObject__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\n    point.x = x;\n    point.y = y;\n    point.width = 1;\n    point.height = 1;\n    point.speed = 1;\n    point.hasCollision = false;\n    return point;\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createVirtualPoint);\n\n\n//# sourceURL=webpack://kostya-game/./src/utils/createVirtualPoint.ts?");
+
+/***/ }),
+
+/***/ "./src/utils/intersectRect.ts":
+/*!************************************!*\
+  !*** ./src/utils/intersectRect.ts ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar intersectRect = function (r1, r2) {\n    return !(r2.left >= r1.right ||\n        r2.right <= r1.left ||\n        r2.top >= r1.bottom ||\n        r2.bottom <= r1.top);\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (intersectRect);\n\n\n//# sourceURL=webpack://kostya-game/./src/utils/intersectRect.ts?");
+
+/***/ }),
+
+/***/ "./src/utils/recalcSceneSize.ts":
+/*!**************************************!*\
+  !*** ./src/utils/recalcSceneSize.ts ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _classes_Engine_Display__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../classes/Engine/Display */ \"./src/classes/Engine/Display.ts\");\n\nvar recalcSceneSize = function () {\n    var _a = _classes_Engine_Display__WEBPACK_IMPORTED_MODULE_0__[\"default\"].canvas.getBoundingClientRect(), width = _a.width, height = _a.height;\n    _classes_Engine_Display__WEBPACK_IMPORTED_MODULE_0__[\"default\"].width = width;\n    _classes_Engine_Display__WEBPACK_IMPORTED_MODULE_0__[\"default\"].height = height;\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (recalcSceneSize);\n\n\n//# sourceURL=webpack://kostya-game/./src/utils/recalcSceneSize.ts?");
+
+/***/ }),
+
+/***/ "./src/utils/requestAnimationFrame.ts":
+/*!********************************************!*\
+  !*** ./src/utils/requestAnimationFrame.ts ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar customRequestAnimationFrame = function (callback) { return window.setTimeout(callback, 1000 / 60); };\nvar requestAnimationFrame = (function () { return window.requestAnimationFrame || customRequestAnimationFrame; })();\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (requestAnimationFrame);\n\n\n//# sourceURL=webpack://kostya-game/./src/utils/requestAnimationFrame.ts?");
+
+/***/ }),
+
+/***/ "node-fetch":
+/*!*****************************!*\
+  !*** external "node-fetch" ***!
+  \*****************************/
+/***/ ((module) => {
+
+module.exports = require("node-fetch");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/index.ts");
+/******/ 	
+/******/ })()
+;

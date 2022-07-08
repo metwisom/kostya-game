@@ -18,5 +18,6 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
+  externalsPresets: { node: true },
   mode: "production"
 };

@@ -7,6 +7,7 @@ import Physics from "./classes/Engine/Physics";
 import Structure from "./classes/Structure";
 import recalcSceneSize from "./utils/recalcSceneSize";
 import fpsMeter from "./addons/fps";
+import Resources from "./classes/ResourceLoader";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -19,6 +20,12 @@ document.addEventListener("DOMContentLoaded", () => {
     recalcSceneSize();
   });
 });
+
+Resources.loadResource("/resource.json");
+
+console.log(Resources.resourceList);
+console.log(Resources.resourceMap);
+
 
 const plx1 = new Parallax("resources/plx-1.png", 1);
 Display.addParallax(plx1);

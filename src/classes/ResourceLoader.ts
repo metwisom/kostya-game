@@ -1,15 +1,20 @@
-import * as fs from "fs";
 import Sprites from "./Sprites";
 
-class ResourceLoader {
+import fetch from "node-fetch";
+
+class _ResourceLoader {
 
   resourceList: Record<string, Sprites>;
   resourceMap: Record<string, object>;
 
-  constructor(resourceMap: string) {
-    const rawdata = fs.readFileSync(resourceMap, "utf8");
-    this.resourceMap = JSON.parse(rawdata);
+  async loadResource(resourceMap: string) {
+    console.log("http://gg.prog3.airnet.ru/" + resourceMap);
+    this.resourceMap = <Record<string, object>>(await fetch("http://gg.prog3.airnet.ru/" + resourceMap)
+      .then(res => res.json()));
+
   }
 }
 
-export default ResourceLoader;
+const Resources = new _ResourceLoader();
+
+export default Resources;
