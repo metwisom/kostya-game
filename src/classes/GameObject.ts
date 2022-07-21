@@ -25,7 +25,9 @@ class GameObject {
   draw(scene: CanvasRenderingContext2D) {
     const { faced } = this;
     const sprite = this.sprites[this.state];
+    //console.log(sprite);
     const image = sprite.image[faced];
+    //console.log(image);
     const coef = this.height / image.height;
 
     const sizeW = image.width * coef / sprite.max;

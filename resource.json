@@ -1,9 +1,17 @@
-{
-    "block": {
-        "idle": [
-            1,
-            "block.png",
-            0
-        ]
-    }
-}
+[
+    "block.png",
+    "fall.png",
+    "idle.gif",
+    "idle.png",
+    "jump.png",
+    "landing.png",
+    "ledge grab.gif",
+    "mid air.gif",
+    "plx-1.png",
+    "plx-2.png",
+    "plx-3.png",
+    "plx-4.png",
+    "plx-5.png",
+    "run.gif",
+    "run.png"
+]
