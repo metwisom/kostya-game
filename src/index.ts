@@ -11,7 +11,7 @@ import fpsMeter from "./addons/fps";
 document.addEventListener("DOMContentLoaded", () => {
 
   Display.attach("display");
-  Display.addons.add(fpsMeter);
+  //Display.addons.add(fpsMeter);
   Display.startDrawing();
   Physics.start();
 
