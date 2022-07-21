@@ -1,9 +1,7 @@
-import Sprites from "./Sprites";
 import fetch from "node-fetch";
 
 class _ResourceLoader {
 
-  resourceList: Record<string, Sprites>;
   resourceMap: Record<string, HTMLImageElement> = {};
 
   async load(resourceMap: string) {

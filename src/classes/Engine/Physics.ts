@@ -28,10 +28,10 @@ class _Physics {
 
         object.eDown += object.mass;
 
-        let newY = 0;
-        let newX = 0;
+        let newY: number;
+        let newX: number;
         let hitBox;
-        let inter = [];
+        let inter: {left: number, top: number, right: number, bottom: number}[];
 
         newY = object.y + object.eDown;
         newX = object.x;
@@ -82,18 +82,16 @@ class _Physics {
   }
 
   checkCollision(hitBox: Record<string, number>, ignore = "") {
-    const inter = this.objects.map(e => {
+    return this.objects.map(e => {
       if (e.id === ignore || !e.hasCollision) {
         return undefined;
       }
-      if (intersectRect({ left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height }, hitBox,)) {
-        return { left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height };
+      if (intersectRect({left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height}, hitBox,)) {
+        return {left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height};
       } else {
         return undefined;
       }
     }).filter(e => e);
-
-    return inter;
   }
 
 }
