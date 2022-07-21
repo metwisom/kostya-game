@@ -27,11 +27,11 @@ class _ResourceLoader {
       this.resourceMap[key] = item[1];
     });
 
-    console.trace(this.resourceMap);
+    //console.trace(this.resourceMap);
   }
 
   get(name: string) {
-    console.trace("get", name, this.resourceMap[name]);
+    //console.trace("get", name, this.resourceMap[name]);
     return this.resourceMap[name];
   }
 }

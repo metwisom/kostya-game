@@ -11,7 +11,7 @@ import ResourceLoader from "./classes/ResourceLoader";
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-  await ResourceLoader.load("http://kostya.localhost/resource.json");
+  await ResourceLoader.load("/resource.json");
 
 
   const plx1 = new Parallax("resources/plx-1.png", 1);
