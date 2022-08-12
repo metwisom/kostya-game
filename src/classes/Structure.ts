@@ -9,7 +9,7 @@ class Structure extends GameObject {
 
     this.faced = 1;
     this.sprites = {
-      "idle": new Sprite(1, "block.png", 0)
+      "idle": new Sprite("block.png")
     };
     this.x = x;
     this.y = y;

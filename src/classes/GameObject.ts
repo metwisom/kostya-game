@@ -38,7 +38,7 @@ class GameObject {
     scene.drawImage(
       image,
 
-      image.width / (sprite.max) * Math.floor(sprite.cur),
+      image.width / (sprite.max) * Math.floor(sprite.max * faced + sprite.cur * (faced ? -1 : 1)),
       0,
 
       image.width / (sprite.max),

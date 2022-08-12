@@ -1,17 +1,58 @@
 [
-    "block.png",
-    "fall.png",
-    "idle.gif",
-    "idle.png",
-    "jump.png",
-    "landing.png",
-    "ledge grab.gif",
-    "mid air.gif",
-    "plx-1.png",
-    "plx-2.png",
-    "plx-3.png",
-    "plx-4.png",
-    "plx-5.png",
-    "run.gif",
-    "run.png"
+  {
+    "file": "block.png",
+    "frames": 1,
+    "speed": 0
+  },
+  {
+    "file": "idle.png",
+    "frames": 12,
+    "speed": 0.22
+  },
+  {
+    "file": "run.png",
+    "frames": 8,
+    "speed": 0.2
+  },
+  {
+    "file": "jump.png",
+    "frames": 1,
+    "speed": 0
+  },
+  {
+    "file": "fall.png",
+    "frames": 2,
+    "speed": 0.1
+  },
+  {
+    "file": "landing.png",
+    "frames": 1,
+    "speed": 0
+  },
+
+  {
+    "file": "plx-1.png",
+    "frames": 1,
+    "speed": 0
+  },
+  {
+    "file": "plx-2.png",
+    "frames": 1,
+    "speed": 0
+  },
+  {
+    "file": "plx-3.png",
+    "frames": 1,
+    "speed": 0
+  },
+  {
+    "file": "plx-4.png",
+    "frames": 1,
+    "speed": 0
+  },
+  {
+    "file": "plx-5.png",
+    "frames": 1,
+    "speed": 0
+  }
 ]

@@ -1,4 +1,4 @@
-import ResourceLoader from "./ResourceLoader";
+import ResourceLoader from "./Engine/ResourceLoader/ResourceLoader";
 
 class Sprite {
 
@@ -7,11 +7,12 @@ class Sprite {
   max: number;
   image: (HTMLImageElement | HTMLCanvasElement)[];
 
-  constructor(max: number, src: string, speed: number) {
-    this.speed = speed;
-    this.max = max;
+  constructor( src: string) {
+    this.speed = ResourceLoader.get(src).speed;
+    this.max = ResourceLoader.get(src).frames;
     this.image = [];
-    const tmpImg = ResourceLoader.get(src);
+    this.cur = this.max;
+    const tmpImg = ResourceLoader.get(src).image;
 
     this.image[1] = tmpImg;
     const canvasTmp = document.createElement("canvas");
@@ -26,9 +27,9 @@ class Sprite {
   }
 
   update() {
-    this.cur += this.speed;
-    if (this.cur > this.max) {
-      this.cur = 0;
+    this.cur -= this.speed;
+    if (this.cur <= 0) {
+      this.cur = this.max;
     }
   }
 }
