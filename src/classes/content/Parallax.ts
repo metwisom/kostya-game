@@ -1,7 +1,7 @@
-import Camera from "./Engine/Camera";
-import Display from "./Engine/Display";
-import GameObject from "./GameObject";
-import ResourceLoader from "./Engine/ResourceLoader/ResourceLoader";
+import Camera from "../Engine/Camera";
+import Display from "../Engine/Display";
+import GameObject from "../GameObject";
+import ResourceLoader from "../Engine/ResourceLoader/ResourceLoader";
 
 class Parallax extends GameObject {
 
@@ -9,7 +9,6 @@ class Parallax extends GameObject {
   bias: number;
 
   constructor(image: string, bias: number) {
-
     super();
     this.fon = ResourceLoader.get(image).image;
     this.bias = bias;

@@ -1,0 +1,37 @@
+[
+  {
+    "x": 0,
+    "y": 3,
+    "type": "ground"
+  },
+  {
+    "x": 1,
+    "y": 3,
+    "type": "ground"
+  },
+  {
+    "x": 2,
+    "y": 3,
+    "type": "ground"
+  },
+  {
+    "x": 4,
+    "y": 3,
+    "type": "ground"
+  },
+  {
+    "x": 5,
+    "y": 3,
+    "type": "ground"
+  },
+  {
+    "x": 6,
+    "y": 3,
+    "type": "ground"
+  },
+  {
+    "x": 5,
+    "y": 2,
+    "type": "ground"
+  }
+]

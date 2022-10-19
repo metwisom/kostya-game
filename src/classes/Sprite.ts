@@ -1,20 +1,27 @@
 import ResourceLoader from "./Engine/ResourceLoader/ResourceLoader";
 
+export type Direction<T> = {
+  left: T,
+  right: T
+}
+
 class Sprite {
 
   cur = 0;
   speed: number;
-  max: number;
-  image: (HTMLImageElement | HTMLCanvasElement)[];
+  framesCount: number;
+  image: Direction<(HTMLImageElement | HTMLCanvasElement)> = {
+    left: undefined,
+    right:undefined
+  };
 
   constructor( src: string) {
     this.speed = ResourceLoader.get(src).speed;
-    this.max = ResourceLoader.get(src).frames;
-    this.image = [];
-    this.cur = this.max;
+    this.framesCount = ResourceLoader.get(src).frames;
+    this.cur = this.framesCount;
     const tmpImg = ResourceLoader.get(src).image;
 
-    this.image[1] = tmpImg;
+    this.image.right = tmpImg;
     const canvasTmp = document.createElement("canvas");
     canvasTmp.width = tmpImg.width;
     canvasTmp.height = tmpImg.height;
@@ -22,14 +29,14 @@ class Sprite {
     secondaryCtx.scale(-1, 1);
     secondaryCtx.translate(-tmpImg.width, 0);
     secondaryCtx.drawImage(tmpImg, 0, 0);
-    this.image[0] = canvasTmp as unknown as HTMLImageElement;
+    this.image.left = canvasTmp as unknown as HTMLImageElement;
 
   }
 
   update() {
     this.cur -= this.speed;
     if (this.cur <= 0) {
-      this.cur = this.max;
+      this.cur = this.framesCount + this.cur;
     }
   }
 }

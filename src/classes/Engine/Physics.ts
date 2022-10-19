@@ -19,23 +19,23 @@ class _Physics {
   }
 
   start() {
-    const { objects } = this;
+    const {objects} = this;
 
     const calc = () => {
       GameKeyboard.update();
       const delta = new Date().valueOf() - this.lastTime;
-      objects.map(object => {
+      objects.filter(e => e.mass > 0 || e.eDown != 0 || e.inertion != 0).map(object => {
 
         object.eDown += object.mass;
 
         let newY: number;
         let newX: number;
         let hitBox;
-        let inter: {left: number, top: number, right: number, bottom: number}[];
+        let inter: { left: number, top: number, right: number, bottom: number }[];
 
         newY = object.y + object.eDown;
         newX = object.x;
-        hitBox = { left: newX, top: newY, right: newX + object.width, bottom: newY + object.height };
+        hitBox = {left: newX, top: newY, right: newX + object.width, bottom: newY + object.height};
         inter = this.checkCollision(hitBox, object.id);
         if (inter.length === 0) {
           object.y += object.eDown;
@@ -49,26 +49,44 @@ class _Physics {
 
         newY = object.y;
         newX = object.x + object.inertion * delta;
-        hitBox = { left: newX, top: newY, right: newX + object.width, bottom: newY + object.height };
+        hitBox = {left: newX, top: newY, right: newX + object.width, bottom: newY + object.height};
         inter = this.checkCollision(hitBox, object.id);
 
         if (inter.length === 0) {
-          object.state = "run";
+          //object.state = "run";
           object.x += object.inertion * delta;
           if (object.hasGround) {
             object.inertion -= (object.inertion * 0.7);
           }
         } else {
-          object.inertion = 0;
+          if (object.hasGround) {
+            object.inertion = 0;
+          }else{
+            object.inertion -= (object.inertion * 0.7);
+          }
         }
 
         if (Math.abs(object.inertion) < 0.001) {
           object.inertion = 0;
         }
 
+        if (object.eDown < 0) {
+          if (!object.hasGround) {
+            object.state = "jump";
+          }
+        } else {
+          if (!object.hasGround) {
+            object.state = "fall";
+          }
+        }
+
         if (object.inertion === 0) {
-          if (object.state !== "fall") {
+          if (object.hasGround) {
             object.state = "idle";
+          }
+        } else {
+          if (object.hasGround) {
+            object.state = "run";
           }
         }
 
