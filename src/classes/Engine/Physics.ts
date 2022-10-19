@@ -12,11 +12,11 @@ class _Physics {
     this.objects.push(obj);
   }
 
-  removeObject(obj: GameObject) {
-    if (this.objects.includes(obj)) {
-      this.objects.splice(this.objects.indexOf(obj), 1);
-    }
-  }
+  // removeObject(obj: GameObject) {
+  //   if (this.objects.includes(obj)) {
+  //     this.objects.splice(this.objects.indexOf(obj), 1);
+  //   }
+  // }
 
   start() {
     const {objects} = this;

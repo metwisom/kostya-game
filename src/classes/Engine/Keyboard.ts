@@ -21,11 +21,11 @@ class _Keyboard {
     this.slave = GameKeyboard;
   }
 
-  unAttach() {
-    GameKeyboard.removeMaster();
-    GameKeyboard.removeSlave();
-    this.slave = undefined;
-  }
+  // unAttach() {
+  //   GameKeyboard.removeMaster();
+  //   GameKeyboard.removeSlave();
+  //   this.slave = undefined;
+  // }
 
   private codeReaction(code: string, bool: boolean, event: KeyboardEvent) {
     if (bool) {

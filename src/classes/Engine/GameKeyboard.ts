@@ -14,17 +14,17 @@ class _GameKeyboard {
     this.master = keyboard;
   }
 
-  removeMaster() {
-    this.master = undefined;
-  }
+  // removeMaster() {
+  //   this.master = undefined;
+  // }
 
   setSlave(obj: GameObject) {
     this.slave = obj;
   }
 
-  removeSlave() {
-    this.slave = undefined;
-  }
+  // removeSlave() {
+  //   this.slave = undefined;
+  // }
 
   updateState() {
     this.a = this.master.getKey("KeyA") !== undefined;

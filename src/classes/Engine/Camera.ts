@@ -36,14 +36,14 @@ class _Camera {
     this.attached = obj;
   }
 
-  unAttach() {
-    if (this.customAttach) {
-      Keyboard.unAttach();
-      Physics.removeObject(this.attached);
-      this.customAttach = false;
-    }
-    this.attached = undefined;
-  }
+  // unAttach() {
+  //   if (this.customAttach) {
+  //     Keyboard.unAttach();
+  //     Physics.removeObject(this.attached);
+  //     this.customAttach = false;
+  //   }
+  //   this.attached = undefined;
+  // }
 }
 
 const Camera = new _Camera();

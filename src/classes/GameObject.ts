@@ -37,7 +37,7 @@ class GameObject {
     const resultFrameHeight = image.height * proportion;
 
     const x = this.x - resultFrameWidth / 2;
-    // Сдвигаем весь мир на половину высоты нашего таргета камеры, что бы он был точно в центре
+    // Сдвигаем весь мир на половину высоты нашего объекта в фокусе камеры, что бы он был точно в центре
     const y = this.y - Camera.target.height / 2;
 
     let imagePos = 0;
