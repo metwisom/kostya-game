@@ -1,6 +1,5 @@
 import Layer from "./Layer";
 import requestAnimationFrame from "../../utils/requestAnimationFrame";
-import recalcSceneSize from "../../utils/recalcSceneSize";
 import GameObject from "../GameObject";
 import DisplayAddons from "./DisplayAddons";
 import Camera from "./Camera";
@@ -35,8 +34,16 @@ class _Display {
 
   attach(id: string) {
     this.display = document.getElementById(id) as HTMLCanvasElement;
-    recalcSceneSize();
+    this.recalcSceneSize();
+  }
+
+  recalcSceneSize()  {
+    const { width, height } = Display.canvas.getBoundingClientRect();
+    Display.width = width;
+    Display.height = height;
     this.scene = this.display.getContext("2d");
+    this.scene.imageSmoothingEnabled = false;
+    this.scene.fillStyle = "#000";
   }
 
   addParallax(obj: GameObject) {
