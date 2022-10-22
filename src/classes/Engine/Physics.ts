@@ -2,6 +2,7 @@ import requestAnimationFrame from "../../utils/requestAnimationFrame";
 import intersectRect from "../../utils/intersectRect";
 import GameObject from "../GameObject";
 import GameKeyboard from "./GameKeyboard";
+import Character from "../content/Character";
 
 class _Physics {
 
@@ -39,6 +40,7 @@ class _Physics {
         inter = this.checkCollision(hitBox, object.id);
         if (inter.length === 0) {
           object.y += object.eDown;
+          object.hasGround = false;
           object.state = "fall";
         } else {
           object.y = inter[0].top - object.height;
@@ -66,6 +68,11 @@ class _Physics {
           }
         }
 
+        if(object.y > 300 && object instanceof Character){
+          object.x = 0;
+          object.y = 0;
+        }
+
         if (Math.abs(object.inertion) < 0.001) {
           object.inertion = 0;
         }
@@ -90,7 +97,10 @@ class _Physics {
           }
         }
 
+
+
       });
+
 
       requestAnimationFrame(calc);
       this.lastTime = new Date().valueOf();

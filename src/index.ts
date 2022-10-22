@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await MapLoader.load("/map.json");
 
 
-  const Kostya = new Character(100, 100);
+  const Kostya = new Character(0, 0);
   Display.addObject(Kostya, 1);
   Physics.addObject(Kostya);
   // Display.addObject(Kostya1, 1);

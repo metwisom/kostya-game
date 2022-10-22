@@ -25,6 +25,20 @@ class Character extends GameObject {
     this.hasGround = false;
     this.hasCollision = false;
   }
+
+  draw(scene: CanvasRenderingContext2D) {
+    super.draw(scene);
+    if (this.inertion != 0 && audio.paused) {
+      audio.play();
+    }
+    if (this.inertion == 0) {
+      audio.pause();
+    }
+  }
 }
+
+const audio = new Audio("/resources/step.wav");
+audio.playbackRate = 1.7;
+audio.loop = true;
 
 export default Character;
