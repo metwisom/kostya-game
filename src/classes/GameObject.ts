@@ -36,7 +36,7 @@ class GameObject {
     const resultFrameWidth = image.width * proportion / sprite.framesCount;
     const resultFrameHeight = image.height * proportion;
 
-    const x = this.x - resultFrameWidth / 2;
+    const x = this.x - Camera.target.width / 2;
     // Сдвигаем весь мир на половину высоты нашего объекта в фокусе камеры, что бы он был точно в центре
     const y = this.y - Camera.target.height / 2;
 
@@ -56,7 +56,11 @@ class GameObject {
       resultFrameWidth, resultFrameHeight
     );
 
+    // scene.fillRect( x, y,
+    //   resultFrameWidth, resultFrameHeight)
+
     sprite.update();
+
   }
 
 

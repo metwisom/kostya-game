@@ -17,8 +17,8 @@ class Structure extends GameObject {
     };
     this.matrixPosX = x;
     this.matrixPosY = y;
-    this.height = 100;
-    this.width = 100;
+    this.height = 50;
+    this.width = 50;
     this.x = x * this.width;
     this.y = y * this.height;
   }

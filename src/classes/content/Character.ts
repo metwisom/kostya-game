@@ -33,12 +33,13 @@ class Character extends GameObject {
     }
     if (this.inertion == 0 && !audio.paused) {
       audio.pause();
+      audio.currentTime = 0;
     }
   }
 }
 
 const audio = new Audio("/resources/step.wav");
-
 audio.playbackRate = 1.8;
+audio.loop = true;
 
 export default Character;
