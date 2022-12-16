@@ -1,26 +1,31 @@
 import fetch from "node-fetch";
-import {MapItem} from "./iMap";
+import {BackgroundEntity, GameMap, MapEntity} from "./iMap";
 import Structure from "../../content/Structure";
 import Display from "../Display";
 import Physics from "../Physics";
 import GameObject from "../../GameObject";
+import Parallax from "../../content/Parallax";
 
 class _MapLoader {
 
   Map: Array<GameObject[]> = [];
 
   async load(resourceMap: string) {
-    const readyList: MapItem[] = [];
+    const readyMapList: MapEntity[] = [];
+    const readyParallaxList: BackgroundEntity[] = [];
 
     await fetch(resourceMap)
       .then(res => res.json())
-      .then((data: MapItem[]) => {
-        data.map((item) =>
-          readyList.push(item)
+      .then((data: GameMap) => {
+        data.map.map((item) =>
+          readyMapList.push(item)
+        );
+        data.background.items.map((item) =>
+          readyParallaxList.push(item)
         );
       });
 
-    readyList.map(item => {
+    readyMapList.map(item => {
       let someObject = undefined;
       switch (item.type) {
       case "ground":
@@ -30,6 +35,10 @@ class _MapLoader {
       Display.addObject(someObject, 1);
       Physics.addObject(someObject);
       this.set(item.x, item.y, someObject);
+    });
+    readyParallaxList.map(item => {
+      const plx1 = new Parallax(item.image, item.bias);
+      Display.addParallax(plx1);
     });
     this.refreshTextures();
   }

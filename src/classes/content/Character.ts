@@ -31,14 +31,15 @@ class Character extends GameObject {
     if (this.momentum != 0 && audio.paused) {
       audio.play().then();
     }
-    if (this.momentum == 0) {
+    if (this.momentum == 0 && !audio.paused) {
       audio.pause();
+      audio.currentTime = 0;
     }
   }
 }
 
 const audio = new Audio("/resources/step.wav");
-audio.playbackRate = 1.7;
+audio.playbackRate = 1.8;
 audio.loop = true;
 
 export default Character;
