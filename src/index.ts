@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   Physics.start();
 
   window.addEventListener("resize", () => {
-    Display.recalcSceneSize();
+    Display.recalculateSceneSize();
   });
 });
 

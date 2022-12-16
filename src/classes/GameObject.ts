@@ -14,7 +14,7 @@ class GameObject {
   faced: keyof Direction<CanvasRenderingContext2D>;
   hasGround = true;
   speed = 0;
-  inertion = 0;
+  momentum = 0;
   eDown = 0;
   mass = 0;
   hasCollision = true;

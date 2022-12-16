@@ -34,10 +34,10 @@ class _Display {
 
   attach(id: string) {
     this.display = document.getElementById(id) as HTMLCanvasElement;
-    this.recalcSceneSize();
+    this.recalculateSceneSize();
   }
 
-  recalcSceneSize()  {
+  recalculateSceneSize()  {
     const { width, height } = Display.canvas.getBoundingClientRect();
     Display.width = width;
     Display.height = height;

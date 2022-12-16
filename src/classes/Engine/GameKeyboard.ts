@@ -38,12 +38,12 @@ class _GameKeyboard {
     }
     if (this.a && this.slave.hasGround) {
       this.slave.faced = "left";
-      this.slave.inertion = -this.slave.speed;
+      this.slave.momentum = -this.slave.speed;
     }
 
     if (this.d && this.slave.hasGround) {
       this.slave.faced = "right";
-      this.slave.inertion = this.slave.speed;
+      this.slave.momentum = this.slave.speed;
     }
 
     if (this.space && this.slave.hasGround) {

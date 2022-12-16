@@ -28,10 +28,10 @@ class Character extends GameObject {
 
   draw(scene: CanvasRenderingContext2D) {
     super.draw(scene);
-    if (this.inertion != 0 && audio.paused) {
-      audio.play();
+    if (this.momentum != 0 && audio.paused) {
+      audio.play().then();
     }
-    if (this.inertion == 0) {
+    if (this.momentum == 0) {
       audio.pause();
     }
   }

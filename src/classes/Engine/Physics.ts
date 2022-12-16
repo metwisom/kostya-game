@@ -25,7 +25,7 @@ class _Physics {
     const calc = () => {
       GameKeyboard.update();
       const delta = new Date().valueOf() - this.lastTime;
-      objects.filter(e => e.mass > 0 || e.eDown != 0 || e.inertion != 0).map(object => {
+      objects.filter(e => e.mass > 0 || e.eDown != 0 || e.momentum != 0).map(object => {
 
         object.eDown += object.mass;
 
@@ -50,21 +50,21 @@ class _Physics {
         }
 
         newY = object.y;
-        newX = object.x + object.inertion * delta;
+        newX = object.x + object.momentum * delta;
         hitBox = {left: newX, top: newY, right: newX + object.width, bottom: newY + object.height};
         inter = this.checkCollision(hitBox, object.id);
 
         if (inter.length === 0) {
           //object.state = "run";
-          object.x += object.inertion * delta;
+          object.x += object.momentum * delta;
           if (object.hasGround) {
-            object.inertion -= (object.inertion * 0.7);
+            object.momentum -= (object.momentum * 0.7);
           }
         } else {
           if (object.hasGround) {
-            object.inertion = 0;
+            object.momentum = 0;
           }else{
-            object.inertion -= (object.inertion * 0.7);
+            object.momentum -= (object.momentum * 0.7);
           }
         }
 
@@ -73,8 +73,8 @@ class _Physics {
           object.y = 0;
         }
 
-        if (Math.abs(object.inertion) < 0.001) {
-          object.inertion = 0;
+        if (Math.abs(object.momentum) < 0.001) {
+          object.momentum = 0;
         }
 
         if (object.eDown < 0) {
@@ -87,7 +87,7 @@ class _Physics {
           }
         }
 
-        if (object.inertion === 0) {
+        if (object.momentum === 0) {
           if (object.hasGround) {
             object.state = "idle";
           }
