@@ -25,6 +25,7 @@
     "@typescript-eslint/parser": "^5.25.0",
     "eslint": "^8.15.0",
     "javascript-obfuscator": "^4.0.0",
+    "source-map-loader": "^4.0.1",
     "ts-loader": "^9.3.0",
     "typescript": "^4.6.4",
     "webpack": "^5.72.0",
@@ -36,5 +37,6 @@
     "buffer": "^6.0.3",
     "node-fetch": "^2.6.7",
     "stream-browserify": "^3.0.0"
-  }
+  },
+  "devtool": "source-map"
 }

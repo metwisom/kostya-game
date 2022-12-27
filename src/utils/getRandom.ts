@@ -6,4 +6,4 @@
 //   return Math.floor(Math.random() * maxInt + 1) + minInt;
 // };
 
-// export default getRandom;
+// export {getRandom};

@@ -1,6 +1,6 @@
-import GameObject from "../GameObject";
-import Sprite from "../Sprite";
-import MapLoader from "../Engine/Map/MapLoader";
+import {GameObject} from "../GameObject";
+import {Sprite} from "../Sprite";
+import {MapLoader} from "../Engine/Map/MapLoader";
 
 class Structure extends GameObject {
 
@@ -51,7 +51,7 @@ class Structure extends GameObject {
       this.sprites["idle"] = new Sprite("block_left.png");
       this.faced = "right";
     }
-    if (this.byteCalc(view, [4,16,64], [8,32])) {
+    if (this.byteCalc(view, [4, 16, 64], [8, 32])) {
       this.sprites["idle"] = new Sprite("block_mouse.png");
       this.faced = "right";
     }
@@ -63,4 +63,4 @@ class Structure extends GameObject {
   }
 }
 
-export default Structure;
+export {Structure};

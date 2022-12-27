@@ -1,11 +1,11 @@
-import Camera from "./classes/Engine/Camera";
-import Character from "./classes/content/Character";
-import Display from "./classes/Engine/Display";
-import Keyboard from "./classes/Engine/Keyboard";
-import Physics from "./classes/Engine/Physics";
-import fpsMeter from "./addons/fps";
-import ResourceLoader from "./classes/Engine/ResourceLoader/ResourceLoader";
-import MapLoader from "./classes/Engine/Map/MapLoader";
+import {Camera} from "./classes/Engine/Camera";
+import {Character} from "./classes/content/Character";
+import {Display} from "./classes/Engine/Display";
+import {Keyboard} from "./classes/Engine/Keyboard";
+import {Physics} from "./classes/Engine/Physics";
+import {fpsMeter} from "./addons/fps";
+import {ResourceLoader} from "./classes/Engine/ResourceLoader/ResourceLoader";
+import {MapLoader} from "./classes/Engine/Map/MapLoader";
 
 document.addEventListener("DOMContentLoaded", async () => {
 

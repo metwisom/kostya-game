@@ -1,4 +1,3 @@
-
 class DisplayAddons {
 
   private postCb: CallableFunction[] = [];
@@ -12,4 +11,4 @@ class DisplayAddons {
   }
 }
 
-export default DisplayAddons;
+export {DisplayAddons};

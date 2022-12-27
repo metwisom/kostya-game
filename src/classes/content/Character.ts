@@ -1,5 +1,5 @@
-import GameObject from "../GameObject";
-import Sprite from "../Sprite";
+import {GameObject} from "../GameObject";
+import {Sprite} from "../Sprite";
 
 class Character extends GameObject {
 
@@ -42,4 +42,4 @@ const audio = new Audio("/resources/step.wav");
 audio.playbackRate = 1.8;
 audio.loop = true;
 
-export default Character;
+export {Character};

@@ -1,4 +1,4 @@
-import ResourceLoader from "./Engine/ResourceLoader/ResourceLoader";
+import {ResourceLoader} from "./Engine/ResourceLoader/ResourceLoader";
 
 export type Direction<T> = {
   left: T,
@@ -12,10 +12,10 @@ class Sprite {
   framesCount: number;
   image: Direction<(HTMLImageElement | HTMLCanvasElement)> = {
     left: undefined,
-    right:undefined
+    right: undefined
   };
 
-  constructor( src: string) {
+  constructor(src: string) {
     this.speed = ResourceLoader.get(src).speed;
     this.framesCount = ResourceLoader.get(src).frames;
     this.cur = this.framesCount;
@@ -41,4 +41,4 @@ class Sprite {
   }
 }
 
-export default Sprite;
+export {Sprite};

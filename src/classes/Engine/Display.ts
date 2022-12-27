@@ -1,8 +1,8 @@
-import Layer from "./Layer";
-import requestAnimationFrame from "../../utils/requestAnimationFrame";
-import GameObject from "../GameObject";
-import DisplayAddons from "./DisplayAddons";
-import Camera from "./Camera";
+import {Layer} from "./Layer";
+import {requestAnimationFrame} from "../../utils/requestAnimationFrame";
+import {GameObject} from "../GameObject";
+import {DisplayAddons} from "./DisplayAddons";
+import {Camera} from "./Camera";
 
 class _Display {
 
@@ -37,8 +37,8 @@ class _Display {
     this.recalculateSceneSize();
   }
 
-  recalculateSceneSize()  {
-    const { width, height } = Display.canvas.getBoundingClientRect();
+  recalculateSceneSize() {
+    const {width, height} = Display.canvas.getBoundingClientRect();
     Display.width = width;
     Display.height = height;
     this.scene = this.display.getContext("2d");
@@ -47,12 +47,12 @@ class _Display {
   }
 
   addParallax(obj: GameObject) {
-    const { parallax } = this;
+    const {parallax} = this;
     parallax.addObject(obj);
   }
 
   addObject(obj: GameObject, layer: number) {
-    const { layers } = this;
+    const {layers} = this;
     if (typeof layers[layer] === "undefined") {
       layers[layer] = new Layer();
     }
@@ -61,7 +61,7 @@ class _Display {
 
   startDrawing() {
 
-    const { scene, parallax, layers, addons } = this;
+    const {scene, parallax, layers, addons} = this;
 
     scene.imageSmoothingEnabled = false;
     scene.fillStyle = "#000";
@@ -90,6 +90,4 @@ class _Display {
 
 const Display = new _Display();
 
-export default Display;
-
-export { _Display };
+export {Display, _Display};

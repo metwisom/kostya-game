@@ -1,7 +1,7 @@
-import Camera from "../Engine/Camera";
-import Display from "../Engine/Display";
-import GameObject from "../GameObject";
-import ResourceLoader from "../Engine/ResourceLoader/ResourceLoader";
+import {Camera} from "../Engine/Camera";
+import {Display} from "../Engine/Display";
+import {GameObject} from "../GameObject";
+import {ResourceLoader} from "../Engine/ResourceLoader/ResourceLoader";
 
 class Parallax extends GameObject {
 
@@ -15,7 +15,7 @@ class Parallax extends GameObject {
   }
 
   draw(scene: CanvasRenderingContext2D) {
-    const { fon } = this;
+    const {fon} = this;
     const ar = Display.height / fon.height;
     const pass = (Camera.x * (this.bias / 10)) % (fon.width * ar);
     scene.drawImage(fon, 0, 0, fon.width, fon.height, -pass - (fon.width * ar), 0, fon.width * ar, Display.height);
@@ -25,4 +25,4 @@ class Parallax extends GameObject {
   }
 }
 
-export default Parallax;
+export {Parallax};

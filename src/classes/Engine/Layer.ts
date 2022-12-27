@@ -1,4 +1,4 @@
-import GameObject from "../GameObject";
+import {GameObject} from "../GameObject";
 
 class Layer {
 
@@ -13,4 +13,4 @@ class Layer {
   }
 }
 
-export default Layer;
+export {Layer};

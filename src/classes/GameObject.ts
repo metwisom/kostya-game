@@ -1,5 +1,5 @@
-import Sprites from "./Sprites";
-import Camera from "./Engine/Camera";
+import {Sprites} from "./Sprites";
+import {Camera} from "./Engine/Camera";
 import {Direction} from "./Sprite";
 
 class GameObject {
@@ -69,4 +69,4 @@ class GameObject {
   }
 }
 
-export default GameObject;
+export {GameObject};

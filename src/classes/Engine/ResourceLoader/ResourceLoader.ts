@@ -35,4 +35,4 @@ class _ResourceLoader {
 
 const ResourceLoader = new _ResourceLoader();
 
-export default ResourceLoader;
+export {ResourceLoader};

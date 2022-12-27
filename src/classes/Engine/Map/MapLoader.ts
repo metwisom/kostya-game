@@ -1,10 +1,10 @@
 import fetch from "node-fetch";
 import {BackgroundEntity, GameMap, MapEntity} from "./iMap";
-import Structure from "../../content/Structure";
-import Display from "../Display";
-import Physics from "../Physics";
-import GameObject from "../../GameObject";
-import Parallax from "../../content/Parallax";
+import {Structure} from "../../content/Structure";
+import {Display} from "../Display";
+import {Physics} from "../Physics";
+import {GameObject} from "../../GameObject";
+import {Parallax} from "../../content/Parallax";
 
 class _MapLoader {
 
@@ -65,4 +65,4 @@ class _MapLoader {
 
 const MapLoader = new _MapLoader();
 
-export default MapLoader;
+export {MapLoader};

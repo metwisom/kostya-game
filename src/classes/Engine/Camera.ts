@@ -1,7 +1,7 @@
-import createVirtualPoint from "../../utils/createVirtualPoint";
-import GameObject from "../GameObject";
-import Keyboard, { _Keyboard } from "./Keyboard";
-import Physics from "./Physics";
+import {createVirtualPoint} from "../../utils/createVirtualPoint";
+import {GameObject} from "../GameObject";
+import {Keyboard, _Keyboard} from "./Keyboard";
+import {Physics} from "./Physics";
 
 class _Camera {
 
@@ -48,6 +48,4 @@ class _Camera {
 
 const Camera = new _Camera();
 
-export default Camera;
-
-export { _Camera };
+export {Camera, _Camera};

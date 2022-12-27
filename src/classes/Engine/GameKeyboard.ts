@@ -1,5 +1,5 @@
-import GameObject from "../GameObject";
-import { _Keyboard } from "./Keyboard";
+import {GameObject} from "../GameObject";
+import {_Keyboard} from "./Keyboard";
 
 class _GameKeyboard {
 
@@ -56,6 +56,4 @@ class _GameKeyboard {
 
 const GameKeyboard = new _GameKeyboard();
 
-export default GameKeyboard;
-
-export { _GameKeyboard };
+export {GameKeyboard, _GameKeyboard};

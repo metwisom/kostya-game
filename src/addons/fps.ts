@@ -12,4 +12,4 @@ const fpsMeter = () => {
   };
 };
 
-export default fpsMeter;
+export {fpsMeter};

@@ -1,8 +1,8 @@
-import requestAnimationFrame from "../../utils/requestAnimationFrame";
-import intersectRect from "../../utils/intersectRect";
-import GameObject from "../GameObject";
-import GameKeyboard from "./GameKeyboard";
-import Character from "../content/Character";
+import {requestAnimationFrame} from "../../utils/requestAnimationFrame";
+import {intersectRect} from "../../utils/intersectRect";
+import {GameObject} from "../GameObject";
+import {GameKeyboard} from "./GameKeyboard";
+import {Character} from "../content/Character";
 
 class _Physics {
 
@@ -63,12 +63,12 @@ class _Physics {
         } else {
           if (object.hasGround) {
             object.momentum = 0;
-          }else{
+          } else {
             object.momentum -= (object.momentum * 0.7);
           }
         }
 
-        if(object.y > 300 && object instanceof Character){
+        if (object.y > 300 && object instanceof Character) {
           object.x = 0;
           object.y = 0;
         }
@@ -98,7 +98,6 @@ class _Physics {
         }
 
 
-
       });
 
 
@@ -126,4 +125,4 @@ class _Physics {
 
 const Physics = new _Physics();
 
-export default Physics;
+export {Physics};

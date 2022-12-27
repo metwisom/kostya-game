@@ -1,4 +1,4 @@
-import GameObject from "../classes/GameObject";
+import {GameObject} from "../classes/GameObject";
 
 const createVirtualPoint = (x = 100, y = 100) => {
   const point = new GameObject();
@@ -12,4 +12,4 @@ const createVirtualPoint = (x = 100, y = 100) => {
   return point;
 };
 
-export default createVirtualPoint;
+export {createVirtualPoint};

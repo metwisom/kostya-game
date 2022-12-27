@@ -1,4 +1,4 @@
-import Sprite from "./Sprite";
+import {Sprite} from "./Sprite";
 
 interface Sprites {
   idle?: Sprite,
@@ -9,4 +9,4 @@ interface Sprites {
   levitate?: Sprite
 }
 
-export default Sprites;
+export {Sprites};
