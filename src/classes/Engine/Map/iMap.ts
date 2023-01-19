@@ -1,5 +1,9 @@
 export interface GameMap {
   mapName: string;
+  spawnPoint:{
+    x:number,
+    y:number
+  }
   background: Background;
   map: (MapEntity)[];
 }

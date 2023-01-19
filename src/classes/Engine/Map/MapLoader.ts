@@ -5,6 +5,9 @@ import {Display} from "../Display";
 import {Physics} from "../Physics";
 import {Entity} from "../../Entity";
 import {Parallax} from "../../content/Parallax";
+import {Character} from "../../content/Character";
+import {Keyboard} from "../Keyboard";
+import {Camera} from "../Camera";
 
 class _MapLoader {
 
@@ -13,6 +16,7 @@ class _MapLoader {
   async load(resourceMap: string) {
     const readyMapList: MapEntity[] = [];
     const readyParallaxList: BackgroundEntity[] = [];
+
 
     await fetch(resourceMap)
       .then(res => res.json())
@@ -23,6 +27,11 @@ class _MapLoader {
         data.background.items.map((item) =>
           readyParallaxList.push(item)
         );
+        const Kostya = new Character(data.spawnPoint.x, data.spawnPoint.y);
+        Display.addObject(Kostya, 1);
+        Physics.addObject(Kostya);
+        Keyboard.attach(Kostya);
+        Camera.attach(Kostya);
       });
 
     readyMapList.map(item => {

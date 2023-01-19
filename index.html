@@ -7,9 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src='./dist/main.js'></script>
     <title>Document</title>
-</head>
-<body>
-    <canvas id=display></canvas>
     <style>
         #display{
             position: fixed;
@@ -19,6 +16,10 @@
             height: 100vh;
         }
     </style>
+</head>
+<body>
+    <canvas id=display></canvas>
+
     <script>
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
             document.getElementById('display').width = window.innerWidth;

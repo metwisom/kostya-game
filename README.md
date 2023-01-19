@@ -16,8 +16,8 @@
 |   ✔    | TS                          | Done          |
 |   ✔    | Resource loader             | Done          |
 |   ❌    | Sound assets                | `In progress` |
-|   ❌    | Particles                   | `In progress`     |
-|   ❌    | Map loader                  | `In progress`     |
+|   ❌    | Particles                   | `In progress` |
+|   ❌    | Map loader                  | `In progress` |
 |   ❌    | Map editor                  | `planned`     |
 |   ❌    | New assets                  | `planned`     |
 |   ❌    | Task system                 | `planned`     |
