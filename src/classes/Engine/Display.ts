@@ -1,12 +1,12 @@
 import {Layer} from "./Layer";
 import {requestAnimationFrame} from "../../utils/requestAnimationFrame";
-import {GameObject} from "../GameObject";
+import {Entity} from "../Entity";
 import {DisplayAddons} from "./DisplayAddons";
 import {Camera} from "./Camera";
 
-class _Display {
+class MainDisplay {
 
-  private parallax: Layer = new Layer();
+  // private parallax: Layer = new Layer();
   private layers: Layer[] = [];
   readonly addons: DisplayAddons = new DisplayAddons();
   private display: HTMLCanvasElement;
@@ -39,19 +39,14 @@ class _Display {
 
   recalculateSceneSize() {
     const {width, height} = Display.canvas.getBoundingClientRect();
-    Display.width = width;
-    Display.height = height;
+    this.width = width;
+    this.height = height;
     this.scene = this.display.getContext("2d");
     this.scene.imageSmoothingEnabled = false;
     this.scene.fillStyle = "#000";
   }
 
-  addParallax(obj: GameObject) {
-    const {parallax} = this;
-    parallax.addObject(obj);
-  }
-
-  addObject(obj: GameObject, layer: number) {
+  addObject(obj: Entity, layer: number) {
     const {layers} = this;
     if (typeof layers[layer] === "undefined") {
       layers[layer] = new Layer();
@@ -59,35 +54,36 @@ class _Display {
     layers[layer].addObject(obj);
   }
 
+  removeObject(obj: Entity) {
+    for (const layerId in this.layers) {
+      this.layers[layerId].removeObject(obj);
+    }
+  }
+
   startDrawing() {
 
-    const {scene, parallax, layers, addons} = this;
+    const {scene, layers, addons} = this;
 
     scene.imageSmoothingEnabled = false;
     scene.fillStyle = "#000";
 
     const draw = () => {
-      parallax.objects.map(object => object.draw(scene));
-
       scene.translate(Display.width / 2, Display.height / 2);
       scene.translate(-Camera.x, -Camera.y);
 
-      layers.map(layer => {
-        layer.objects.map(object => object.draw(scene));
-      });
+      layers.map(layer => layer.objects.map(object => object.draw(scene)));
 
       scene.resetTransform();
 
       addons.postWork(scene);
 
       requestAnimationFrame(draw);
-
     };
 
     draw();
   }
 }
 
-const Display = new _Display();
+const Display = new MainDisplay();
 
-export {Display, _Display};
+export {Display};

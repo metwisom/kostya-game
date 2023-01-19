@@ -1,4 +1,4 @@
-import {GameObject} from "../GameObject";
+import {Entity} from "../Entity";
 import {GameKeyboard, _GameKeyboard} from "./GameKeyboard";
 
 class _Keyboard {
@@ -15,7 +15,7 @@ class _Keyboard {
     return this.virtualKeys[key];
   }
 
-  attach(slave: GameObject) {
+  attach(slave: Entity) {
     GameKeyboard.setMaster(this);
     GameKeyboard.setSlave(slave);
     this.slave = GameKeyboard;

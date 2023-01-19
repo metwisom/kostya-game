@@ -1,7 +1,8 @@
-import {GameObject} from "../GameObject";
+import {Entity} from "../Entity";
 import {Sprite} from "../Sprite";
 
-class Character extends GameObject {
+
+class Character extends Entity {
 
   constructor(x: number, y: number) {
 
@@ -34,6 +35,15 @@ class Character extends GameObject {
     if (this.momentum == 0 && !audio.paused) {
       audio.pause();
       audio.currentTime = 0;
+    }
+  }
+
+  update(delta: number) {
+    super.update(delta);
+
+    if (this.y > 300 && this instanceof Character) {
+      this.x = 0;
+      this.y = 0;
     }
   }
 }

@@ -3,12 +3,12 @@ import {BackgroundEntity, GameMap, MapEntity} from "./iMap";
 import {Structure} from "../../content/Structure";
 import {Display} from "../Display";
 import {Physics} from "../Physics";
-import {GameObject} from "../../GameObject";
+import {Entity} from "../../Entity";
 import {Parallax} from "../../content/Parallax";
 
 class _MapLoader {
 
-  Map: Array<GameObject[]> = [];
+  Map: Array<Entity[]> = [];
 
   async load(resourceMap: string) {
     const readyMapList: MapEntity[] = [];
@@ -38,7 +38,7 @@ class _MapLoader {
     });
     readyParallaxList.map(item => {
       const plx1 = new Parallax(item.image, item.bias);
-      Display.addParallax(plx1);
+      Display.addObject(plx1,0);
     });
     this.refreshTextures();
   }
@@ -47,7 +47,7 @@ class _MapLoader {
     this.Map.map(line => line.map(item => item.refreshSprite()));
   }
 
-  set(x: number, y: number, object: GameObject) {
+  set(x: number, y: number, object: Entity) {
     if (this.Map[x] == undefined) {
       this.Map[x] = [];
     }

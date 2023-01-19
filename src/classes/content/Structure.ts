@@ -1,8 +1,8 @@
-import {GameObject} from "../GameObject";
+import {Entity} from "../Entity";
 import {Sprite} from "../Sprite";
 import {MapLoader} from "../Engine/Map/MapLoader";
 
-class Structure extends GameObject {
+class Structure extends Entity {
 
   matrixPosX = 0;
   matrixPosY = 0;

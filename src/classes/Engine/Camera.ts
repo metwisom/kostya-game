@@ -1,11 +1,11 @@
 import {createVirtualPoint} from "../../utils/createVirtualPoint";
-import {GameObject} from "../GameObject";
+import {Entity} from "../Entity";
 import {Keyboard, _Keyboard} from "./Keyboard";
 import {Physics} from "./Physics";
 
 class _Camera {
 
-  private attached: GameObject;
+  private attached: Entity;
   private customAttach = false;
 
   get target() {
@@ -27,7 +27,7 @@ class _Camera {
     Physics.addObject(this.attached);
   }
 
-  attach(obj: GameObject | _Keyboard) {
+  attach(obj: Entity | _Keyboard) {
     if (obj instanceof _Keyboard) {
       this.virtualAttach();
 

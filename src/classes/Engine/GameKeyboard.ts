@@ -1,4 +1,4 @@
-import {GameObject} from "../GameObject";
+import {Entity} from "../Entity";
 import {_Keyboard} from "./Keyboard";
 
 class _GameKeyboard {
@@ -7,7 +7,7 @@ class _GameKeyboard {
   private d = false;
   private space = false;
 
-  private slave: GameObject;
+  private slave: Entity;
   private master: _Keyboard;
 
   setMaster(keyboard: _Keyboard) {
@@ -18,7 +18,7 @@ class _GameKeyboard {
   //   this.master = undefined;
   // }
 
-  setSlave(obj: GameObject) {
+  setSlave(obj: Entity) {
     this.slave = obj;
   }
 
