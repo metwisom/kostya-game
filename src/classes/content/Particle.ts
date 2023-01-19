@@ -16,12 +16,12 @@ class Particle extends Entity {
     this.speed = 0.1;
     this.x = x;
     this.y = y;
-    this.size = Math.random() * 10 + 10;
+    this.size = Math.random() * 2 + 2;
   }
 
   draw(scene: CanvasRenderingContext2D) {
     //console.log("draw part");
-    scene.fillRect(this.x, this.y, 10, 10);
+    scene.fillRect(this.x, this.y, this.size, this.size);
   }
 
   update(delta:number) {

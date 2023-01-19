@@ -96,10 +96,11 @@ class Entity {
       if (Math.abs(this.momentum) < 0.001) {
         this.momentum = 0;
       }
-
+      if (inter.length === 0) {
+        this.x += this.momentum * delta;
+      }
       if (this.hasGround) {
         if (inter.length === 0) {
-          this.x += this.momentum * delta;
           this.momentum -= (this.momentum * 0.7);
         } else {
           this.momentum = 0;

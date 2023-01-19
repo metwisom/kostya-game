@@ -1,5 +1,8 @@
 import {Entity} from "../Entity";
 import {Sprite} from "../Sprite";
+import {Particle} from "./Particle";
+import {Display} from "../Engine/Display";
+import {Physics} from "../Engine/Physics";
 
 
 class Character extends Entity {
@@ -40,6 +43,14 @@ class Character extends Entity {
 
   update(delta: number) {
     super.update(delta);
+
+    if(this.momentum != 0 && this.hasGround) {
+      for(let i =0;i < 3;i++) {
+        const part = new Particle(this.x + this.momentum + Math.random() * 30 - 15, this.y + this.height / 2 + Math.random() * 3 - 1.5);
+        Display.addObject(part, 2);
+        Physics.addObject(part);
+      }
+    }
 
     if (this.y > 300 && this instanceof Character) {
       this.x = 0;
