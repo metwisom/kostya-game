@@ -6,6 +6,8 @@ import {Physics} from "./classes/Engine/Physics";
 import {fpsMeter} from "./addons/fps";
 import {ResourceLoader} from "./classes/Engine/ResourceLoader/ResourceLoader";
 import {MapLoader} from "./classes/Engine/Map/MapLoader";
+import {Particle} from "./classes/content/Particle";
+// import {Particle} from "./classes/content/Particle";
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -17,8 +19,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const Kostya = new Character(0, 0);
   Display.addObject(Kostya, 1);
   Physics.addObject(Kostya);
-  // Display.addObject(Kostya1, 1);
-  // Physics.addObject(Kostya1);
+
+  setInterval(() => {
+    const part = new Particle(Kostya.x, Kostya.y + Kostya.height / 2);
+    Display.addObject(part, 2);
+    Physics.addObject(part);
+  }, 100);
 
   Keyboard.attach(Kostya);
   Camera.attach(Kostya);
