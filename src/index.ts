@@ -4,11 +4,12 @@ import {fpsMeter} from "./addons/fps";
 import {ResourceLoader} from "./classes/Engine/ResourceLoader/ResourceLoader";
 import {MapLoader} from "./classes/Engine/Map/MapLoader";
 
+
 document.addEventListener("DOMContentLoaded", async () => {
 
-  await ResourceLoader.load("/resource.json");
+  await ResourceLoader.load("/resources/resource.json");
 
-  await MapLoader.load("/map.json");
+  await MapLoader.load("/resources/map.json");
 
   Display.attach("display");
   Display.addons.add(fpsMeter());
