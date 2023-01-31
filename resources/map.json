@@ -64,6 +64,31 @@
       "x": 5,
       "y": 2,
       "type": "ground"
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 9,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 10,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 11,
+      "y": 3,
+      "type": "ground"
     }
   ]
 }

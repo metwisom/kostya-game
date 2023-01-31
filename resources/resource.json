@@ -1,87 +1,87 @@
 [
   {
-    "file": "block.png",
+    "file": "sprites/block.png",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "block2.png",
+    "file": "sprites/block2.png",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "block_one_foot.png",
+    "file": "sprites/block_one_foot.png",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "block_mouse.png",
+    "file": "sprites/block_mouse.png",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "block3.png",
+    "file": "sprites/block3.png",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "block_left.png",
+    "file": "sprites/block_left.png",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "idle.png",
+    "file": "sprites/idle.png",
     "frames": 12,
     "speed": 0.22
   },
   {
-    "file": "run.png",
+    "file": "sprites/run.png",
     "frames": 8,
     "speed": 0.2
   },
   {
-    "file": "levitate.png",
+    "file": "sprites/levitate.png",
     "frames": 2,
     "speed": 0.1
   },
   {
-    "file": "jump.png",
+    "file": "sprites/jump.png",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "fall.png",
+    "file": "sprites/fall.png",
     "frames": 2,
     "speed": 0.05
   },
   {
-    "file": "landing.png",
+    "file": "sprites/landing.png",
     "frames": 1,
     "speed": 0
   },
 
   {
-    "file": "plx-1.png",
+    "file": "sprites/plx-1.png",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "plx-2.png",
+    "file": "sprites/plx-2.png",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "plx-3.png",
+    "file": "sprites/plx-3.png",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "plx-4.png",
+    "file": "sprites/plx-4.png",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "plx-5.png",
+    "file": "sprites/plx-5.png",
     "frames": 1,
     "speed": 0
   }
