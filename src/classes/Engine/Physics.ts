@@ -6,11 +6,21 @@ import {GameKeyboard} from "./GameKeyboard";
 
 class _Physics {
 
+  private removeList: Entity[] = [];
   private objects: Entity[] = [];
   private lastTime: number = new Date().valueOf();
 
   addObject(obj: Entity) {
     this.objects.push(obj);
+  }
+
+  toRemove(obj: Entity) {
+    this.removeList.push(obj);
+  }
+
+  cleanUp() {
+    this.removeList.map(this.removeObject.bind(this));
+    this.removeList = [];
   }
 
   removeObject(obj: Entity) {
@@ -25,9 +35,15 @@ class _Physics {
     const calc = () => {
       GameKeyboard.update();
       const delta = new Date().valueOf() - this.lastTime;
-      objects.map(object => object.update(delta));
+      objects.map(object => {
+        if (!object.isActual()) {
+          return this.toRemove.apply(this, object);
+        }
+        object.update(delta);
+      });
       requestAnimationFrame(calc);
       this.lastTime = new Date().valueOf();
+      this.cleanUp();
     };
 
     calc();

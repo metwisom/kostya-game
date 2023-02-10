@@ -7,7 +7,7 @@ import {Camera} from "./Camera";
 
 class MainDisplay {
 
-  // private parallax: Layer = new Layer();
+  private removeList: Entity[] = [];
   private layers: Layer[] = [];
   readonly addons: DisplayAddons = new DisplayAddons();
   private display: HTMLCanvasElement;
@@ -55,6 +55,15 @@ class MainDisplay {
     layers[layer].addObject(obj);
   }
 
+  toRemove(obj: Entity) {
+    this.removeList.push(obj);
+  }
+
+  cleanUp() {
+    this.removeList.map(this.removeObject.bind(this));
+    this.removeList = [];
+  }
+
   removeObject(obj: Entity) {
     for (const layerId in this.layers) {
       this.layers[layerId].removeObject(obj);
@@ -71,14 +80,16 @@ class MainDisplay {
     const draw = () => {
       scene.translate(Display.width / 2, Display.height / 2);
       scene.translate(-Camera.x, -Camera.y);
-
-      layers.map(layer => layer.objects.map(object => object.draw(scene)));
-
+      layers.map(layer => layer.items.map(item => {
+        if (!item.isActual()) {
+          return this.toRemove(item);
+        }
+        item.draw(scene);
+      }));
       scene.resetTransform();
-
       addons.postWork(scene);
-
       requestAnimationFrame(draw);
+      this.cleanUp();
     };
 
     draw();

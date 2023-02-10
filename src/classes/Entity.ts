@@ -1,10 +1,11 @@
 import {Sprites} from "./Sprites";
 import {Camera} from "./Engine/Camera";
 import {Direction} from "./Sprite";
-import {Display} from "./Engine/Display";
 import {Physics} from "./Engine/Physics";
 
 class Entity {
+
+  private isDestroyed = false;
 
   readonly id: string;
   state: keyof Sprites = "idle";
@@ -64,6 +65,10 @@ class Entity {
 
   }
 
+  isActual(){
+    return !this.isDestroyed;
+  }
+
   update(delta: number) {
     if (this.mass > 0 || this.eDown != 0 || this.momentum != 0) {
       this.eDown += this.mass;
@@ -114,8 +119,7 @@ class Entity {
   }
 
   destroy() {
-    Physics.removeObject(this);
-    Display.removeObject(this);
+    this.isDestroyed = true;
   }
 
   refreshSprite() {

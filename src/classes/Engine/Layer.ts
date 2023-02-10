@@ -4,10 +4,6 @@ class Layer {
 
   items: Entity[] = [];
 
-  get objects() {
-    return this.items;
-  }
-
   addObject(obj: Entity) {
     this.items.push(obj);
   }
