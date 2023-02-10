@@ -4,6 +4,7 @@ import {Entity} from "../Entity";
 import {DisplayAddons} from "./DisplayAddons";
 import {Camera} from "./Camera";
 
+
 class MainDisplay {
 
   // private parallax: Layer = new Layer();

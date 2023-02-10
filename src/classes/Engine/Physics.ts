@@ -3,6 +3,7 @@ import {intersectRect} from "../../utils/intersectRect";
 import {Entity} from "../Entity";
 import {GameKeyboard} from "./GameKeyboard";
 
+
 class _Physics {
 
   private objects: Entity[] = [];

@@ -1,5 +1,6 @@
 import {Entity} from "../classes/Entity";
 
+
 const createVirtualPoint = (x = 100, y = 100) => {
   const point = new Entity();
   point.x = x;

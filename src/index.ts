@@ -12,7 +12,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   await MapLoader.load("/resources/map.json");
 
   Display.attach("display");
+
+  // Включаем счетчик FPS как аддон дисплея
   Display.addons.add(fpsMeter());
+
   Display.startDrawing();
   Physics.start();
 
