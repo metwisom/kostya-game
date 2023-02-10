@@ -59,7 +59,7 @@ class Character extends Entity {
   }
 }
 
-const audio = new Audio("/resources/step.wav");
+const audio = new Audio("/resources/audio/step.wav");
 audio.playbackRate = 1.8;
 audio.loop = true;
 

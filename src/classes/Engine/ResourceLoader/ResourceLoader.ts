@@ -16,7 +16,7 @@ class _ResourceLoader {
             new Promise((res) => {
               item.image = new Image();
               item.image.onload = () => res(item);
-              item.image.src = "resources/" + item.file;
+              item.image.src = "resources/" + item.path + item.file;
             }))
         );
       });

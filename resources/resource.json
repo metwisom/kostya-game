@@ -1,87 +1,104 @@
 [
   {
-    "file": "sprites/block.png",
+    "file": "block.png",
+    "path": "sprites/",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "sprites/block2.png",
+    "file": "block2.png",
+    "path": "sprites/",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "sprites/block_one_foot.png",
+    "file": "block_one_foot.png",
+    "path": "sprites/",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "sprites/block_mouse.png",
+    "file": "block_mouse.png",
+    "path": "sprites/",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "sprites/block3.png",
+    "file": "block3.png",
+    "path": "sprites/",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "sprites/block_left.png",
+    "file": "block_left.png",
+    "path": "sprites/",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "sprites/idle.png",
+    "file": "idle.png",
+    "path": "sprites/",
     "frames": 12,
     "speed": 0.22
   },
   {
-    "file": "sprites/run.png",
+    "file": "run.png",
+    "path": "sprites/",
     "frames": 8,
     "speed": 0.2
   },
   {
-    "file": "sprites/levitate.png",
+    "file": "levitate.png",
+    "path": "sprites/",
     "frames": 2,
     "speed": 0.1
   },
   {
-    "file": "sprites/jump.png",
+    "file": "jump.png",
+    "path": "sprites/",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "sprites/fall.png",
+    "file": "fall.png",
+    "path": "sprites/",
     "frames": 2,
     "speed": 0.05
   },
   {
-    "file": "sprites/landing.png",
+    "file": "landing.png",
+    "path": "sprites/",
     "frames": 1,
     "speed": 0
   },
 
   {
-    "file": "sprites/plx-1.png",
+    "file": "plx-1.png",
+    "path": "sprites/",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "sprites/plx-2.png",
+    "file": "plx-2.png",
+    "path": "sprites/",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "sprites/plx-3.png",
+    "file": "plx-3.png",
+    "path": "sprites/",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "sprites/plx-4.png",
+    "file": "plx-4.png",
+    "path": "sprites/",
     "frames": 1,
     "speed": 0
   },
   {
-    "file": "sprites/plx-5.png",
+    "file": "plx-5.png",
+    "path": "sprites/",
     "frames": 1,
     "speed": 0
   }
