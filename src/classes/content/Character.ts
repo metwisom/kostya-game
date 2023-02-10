@@ -44,8 +44,8 @@ class Character extends Entity {
   update(delta: number) {
     super.update(delta);
 
-    if(this.momentum != 0 && this.hasGround) {
-      for(let i =0;i < 3;i++) {
+    if (this.momentum != 0 && this.hasGround) {
+      for (let i = 0; i < 1; i++) {
         const part = new Particle(this.x + this.momentum + Math.random() * 30 - 15, this.y + this.height / 2 + Math.random() * 3 - 1.5);
         Display.addObject(part, 2);
         Physics.addObject(part);

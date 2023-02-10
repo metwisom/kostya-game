@@ -2,9 +2,9 @@ import {Entity} from "../Entity";
 
 
 class Particle extends Entity {
-
   angle: number;
   size: number;
+  startSize: number;
 
   constructor(x: number, y: number) {
 
@@ -13,25 +13,25 @@ class Particle extends Entity {
     this.hasCollision = false;
 
     this.angle = Math.random() * Math.PI * 2;
-    this.speed = 0.1;
+    this.speed = 0.05;
     this.x = x;
     this.y = y;
-    this.size = Math.random() * 2 + 2;
+    this.size = this.startSize = Math.random() * 2 + 2;
   }
 
   draw(scene: CanvasRenderingContext2D) {
-    //console.log("draw part");
+    scene.globalAlpha = 1 - 1 / (this.startSize);
     scene.fillRect(this.x, this.y, this.size, this.size);
+    scene.globalAlpha = 1;
   }
 
   update(delta:number) {
     this.x += Math.cos(this.angle) * this.speed * delta;
     this.y += Math.sin(this.angle) * this.speed * delta;
-    this.size *= 0.99;
-    if (this.size < 3) {
+    this.size *= 0.95;
+    if (this.size < 1) {
       this.destroy();
     }
-    // console.log("update part");
   }
 
 
