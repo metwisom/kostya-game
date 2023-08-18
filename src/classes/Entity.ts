@@ -27,8 +27,6 @@ class Entity {
     this.id = Math.random().toString(16).slice(2);
   }
 
-
-
   draw(scene: CanvasRenderingContext2D) {
     const {faced, state} = this;
     const sprite = this.sprites[state];

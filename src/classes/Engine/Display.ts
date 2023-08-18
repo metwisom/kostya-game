@@ -33,9 +33,11 @@ class MainDisplay {
     return this.display;
   }
 
-  attach(id: string) {
-    this.display = document.getElementById(id) as HTMLCanvasElement;
+  attach(canvas: HTMLCanvasElement) {
+    this.display = canvas;
     this.recalculateSceneSize();
+    window.removeEventListener("resize", Display.recalculateSceneSize.bind(this));
+    window.addEventListener("resize", Display.recalculateSceneSize.bind(this));
   }
 
   recalculateSceneSize() {
@@ -87,7 +89,7 @@ class MainDisplay {
         item.draw(scene);
       }));
       scene.resetTransform();
-      addons.postWork(scene);
+      addons.run(scene);
       requestAnimationFrame(draw);
       this.cleanUp();
     };

@@ -1,13 +1,13 @@
 import {Entity} from "../Entity";
 import {_Keyboard} from "./Keyboard";
-import {KeyboardKey} from "./KeyboardKey";
+import {GameKeyboardKey} from "./GameKeyboardKey";
 
 
 class _GameKeyboard {
 
-  private a = new KeyboardKey();
-  private d = new KeyboardKey();
-  private space = new KeyboardKey();
+  private a = new GameKeyboardKey();
+  private d = new GameKeyboardKey();
+  private space = new GameKeyboardKey();
 
   private slave: Entity;
   private master: _Keyboard;
