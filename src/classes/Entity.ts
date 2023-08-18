@@ -2,6 +2,7 @@ import {Sprites} from "./Sprites";
 import {Camera} from "./Engine/Camera";
 import {Direction} from "./Sprite";
 import {Physics} from "./Engine/Physics";
+import {Box} from "./Box";
 
 class Entity {
 
@@ -10,8 +11,8 @@ class Entity {
   readonly id: string;
   state: keyof Sprites = "idle";
   sprites: Sprites;
-  height: number;
-  width: number;
+  phys: Box;
+  view: Box;
   x: number;
   y: number;
   faced: keyof Direction<CanvasRenderingContext2D>;
@@ -26,11 +27,13 @@ class Entity {
     this.id = Math.random().toString(16).slice(2);
   }
 
+
+
   draw(scene: CanvasRenderingContext2D) {
     const {faced, state} = this;
     const sprite = this.sprites[state];
     const image = sprite.image[faced];
-    const proportion = this.height / image.height;
+    const proportion = this.view.height / image.height;
 
     const frameWidth = image.width / (sprite.framesCount);
     const frameHeight = image.height;
@@ -38,9 +41,9 @@ class Entity {
     const resultFrameWidth = image.width * proportion / sprite.framesCount;
     const resultFrameHeight = image.height * proportion;
 
-    const x = this.x - Camera.target.width / 2;
+    const x = this.x;
     // Сдвигаем весь мир на половину высоты нашего объекта в фокусе камеры, что бы он был точно в центре
-    const y = this.y - Camera.target.height / 2;
+    const y = this.y ;
 
     let imagePos = 0;
 
@@ -58,8 +61,8 @@ class Entity {
       resultFrameWidth, resultFrameHeight
     );
 
-    // scene.fillRect( x, y,
-    //   resultFrameWidth, resultFrameHeight)
+    scene.fillRect( x, y,
+      resultFrameWidth, resultFrameHeight)
 
     sprite.update();
 
@@ -78,24 +81,20 @@ class Entity {
       let hitBox;
       let inter: { left: number, top: number, right: number, bottom: number }[];
 
-      newY = this.y + this.eDown;
-      newX = this.x;
-      hitBox = {left: newX, top: newY, right: newX + this.width, bottom: newY + this.height};
+      hitBox = this.phys.get(this.x,this.y + this.eDown);
       inter = Physics.checkCollision(hitBox, this.id);
       if (inter.length === 0) {
         this.y += this.eDown;
         this.hasGround = false;
         this.state = "fall";
       } else {
-        this.y = inter[0].top - this.height;
+        this.y = inter[0].top - 1;
         this.eDown = 0;
         this.hasGround = true;
         this.state = "idle";
       }
 
-      newY = this.y;
-      newX = this.x + this.momentum * delta;
-      hitBox = {left: newX, top: newY, right: newX + this.width, bottom: newY + this.height};
+      hitBox = this.phys.get(this.x + this.momentum * delta,this.y) ;
       inter = Physics.checkCollision(hitBox, this.id);
 
       if (Math.abs(this.momentum) < 0.001) {

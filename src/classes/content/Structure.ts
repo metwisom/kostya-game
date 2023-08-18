@@ -1,6 +1,7 @@
 import {Entity} from "../Entity";
 import {Sprite} from "../Sprite";
 import {MapLoader} from "../Engine/Map/MapLoader";
+import {Box} from "../Box";
 
 class Structure extends Entity {
 
@@ -17,10 +18,9 @@ class Structure extends Entity {
     };
     this.matrixPosX = x;
     this.matrixPosY = y;
-    this.height = 50;
-    this.width = 50;
-    this.x = x * this.width;
-    this.y = y * this.height;
+    this.phys = new Box(50,50,0,0)
+    this.x = x * this.phys.width;
+    this.y = y * this.phys.height;
   }
 
   refreshSprite() {

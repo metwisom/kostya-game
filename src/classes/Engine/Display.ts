@@ -70,7 +70,7 @@ class MainDisplay {
     }
   }
 
-  startDrawing() {
+  start() {
 
     const {scene, layers, addons} = this;
 
@@ -79,7 +79,7 @@ class MainDisplay {
 
     const draw = () => {
       scene.translate(Display.width / 2, Display.height / 2);
-      scene.translate(-Camera.x, -Camera.y);
+      scene.translate(-Camera.x - Camera.target.view.x + Camera.target.view.width , -Camera.y - Camera.target.view.y + Camera.target.view.height);
       layers.map(layer => layer.items.map(item => {
         if (!item.isActual()) {
           return this.toRemove(item);

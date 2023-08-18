@@ -3,6 +3,7 @@ import {Sprite} from "../Sprite";
 import {Particle} from "./Particle";
 import {Display} from "../Engine/Display";
 import {Physics} from "../Engine/Physics";
+import {Box} from "../Box";
 
 
 class Character extends Entity {
@@ -22,16 +23,27 @@ class Character extends Entity {
     };
     this.x = x;
     this.y = y;
-    this.height = 165;
-    this.width = 100;
+    this.phys = new Box(100,165,50,165)
+    this.view = new Box(100,165,50,165)
     this.speed = 0.25;
     this.mass = .5;
-    this.hasGround = false;
     this.hasCollision = false;
   }
 
   draw(scene: CanvasRenderingContext2D) {
     super.draw(scene);
+  }
+
+  update(delta: number) {
+    super.update(delta);
+
+    this.createStepParticle()
+
+    if (this.y > 300 && this instanceof Character) {
+      this.x = 0;
+      this.y = 0;
+    }
+
     if (this.momentum != 0 && audio.paused) {
       audio.play().then();
     }
@@ -41,22 +53,16 @@ class Character extends Entity {
     }
   }
 
-  update(delta: number) {
-    super.update(delta);
-
+  private createStepParticle(){
     if (this.momentum != 0 && this.hasGround) {
       for (let i = 0; i < 1; i++) {
-        const part = new Particle(this.x + this.momentum + Math.random() * 30 - 15, this.y + this.height / 2 + Math.random() * 3 - 1.5);
+        const part = new Particle(this.x + this.momentum + Math.random() * 30 - 15, this.y + Math.random() * 3 - 1.5);
         Display.addObject(part, 2);
         Physics.addObject(part);
       }
     }
-
-    if (this.y > 300 && this instanceof Character) {
-      this.x = 0;
-      this.y = 0;
-    }
   }
+
 }
 
 const audio = new Audio("/resources/audio/step.wav");

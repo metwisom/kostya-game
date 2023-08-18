@@ -2,6 +2,7 @@ import {requestAnimationFrame} from "../../utils/requestAnimationFrame";
 import {intersectRect} from "../../utils/intersectRect";
 import {Entity} from "../Entity";
 import {GameKeyboard} from "./GameKeyboard";
+import {BoxArea} from "../Box";
 
 
 class _Physics {
@@ -49,13 +50,14 @@ class _Physics {
     calc();
   }
 
-  checkCollision(hitBox: Record<string, number>, ignore = "") {
+  checkCollision(hitBox: BoxArea, ignore = "") {
     return this.objects.map(e => {
       if (e.id === ignore || !e.hasCollision) {
         return undefined;
       }
-      if (intersectRect({left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height}, hitBox,)) {
-        return {left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height};
+      const testBox = e.phys.get(e.x, e.y)
+      if (intersectRect(testBox, hitBox,)) {
+        return testBox;
       } else {
         return undefined;
       }

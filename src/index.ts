@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Включаем счетчик FPS как аддон дисплея
   Display.addons.add(fpsMeter());
 
-  Display.startDrawing();
+  Display.start();
   Physics.start();
 
   window.addEventListener("resize", () => {
