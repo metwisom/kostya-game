@@ -21,6 +21,15 @@ class _ResourceLoader {
         );
       });
 
+    await new FontFace(
+      "Press",
+      "url(https://fonts.gstatic.com/s/pressstart2p/v15/e3t4euO8T-267oIAQAu6jDQyK3nRivN04w.woff2)"
+    ).load();
+    await new FontFace(
+      "Press",
+      "url(https://fonts.gstatic.com/s/pressstart2p/v15/e3t4euO8T-267oIAQAu6jDQyK3nVivM.woff2)"
+    ).load();
+
     await Promise.all(readyList)
       .then(list => list.map(item => {
         const key = item.file;

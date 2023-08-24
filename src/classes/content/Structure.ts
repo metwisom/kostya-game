@@ -18,9 +18,9 @@ class Structure extends Entity {
     };
     this.matrixPosX = x;
     this.matrixPosY = y;
-    this.phys = new Box(50,50,0,0)
-    this.x = x * this.phys.width;
-    this.y = y * this.phys.height;
+    this.physBox = new Box(50,50,0,0)
+    this.x = x * this.physBox.width;
+    this.y = y * this.physBox.height;
   }
 
   refreshSprite() {

@@ -23,8 +23,8 @@ class Character extends Entity {
     };
     this.x = x;
     this.y = y;
-    this.phys = new Box(100,165,50,165)
-    this.view = new Box(100,165,50,165)
+    this.physBox = new Box(40,82,20,82)
+    this.viewBox = new Box(50,82,25,82)
     this.speed = 0.25;
     this.mass = .5;
     this.hasCollision = false;

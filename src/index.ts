@@ -3,8 +3,10 @@ import {Physics} from "./classes/Engine/Physics";
 import {fpsMeter} from "./addons/fps";
 import {ResourceLoader} from "./classes/Engine/ResourceLoader/ResourceLoader";
 import {MapLoader} from "./classes/Engine/Map/MapLoader";
-import {Camera} from "./classes/Engine/Camera";
-import {Keyboard} from "./classes/Engine/Keyboard";
+import {objectCounter} from "./addons/objectCount";
+import Element from "./classes/Engine/Gui/Element";
+import {Mouse} from "./classes/Engine/Mouse";
+import Button from "./classes/Engine/Gui/Button";
 
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -20,8 +22,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   // АДДОНЫ
   // Включаем счетчик FPS как аддон дисплея
   Display.addons.add(fpsMeter());
+  Display.addons.add(objectCounter());
 
-  Camera.attach(Keyboard);
+  const testButton = new Button()
+  testButton.x = 100
+  testButton.y = 50
+  testButton.width = 150
+  testButton.height= 50
+  testButton.text = "Press Нажми"
+  testButton.floatX = 'right'
+  testButton.floatY = 'bottom'
+  Display.addObject(testButton)
+  Mouse.addSlave(testButton)
+  testButton.ownEvent = () => {
+    Display.debug.showBoxes = !Display.debug.showBoxes
+  }
+
+  // Camera.attach(Keyboard);
 
 
   // Запускаем рендер и физику

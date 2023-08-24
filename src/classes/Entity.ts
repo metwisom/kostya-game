@@ -1,8 +1,8 @@
 import {Sprites} from "./Sprites";
-import {Camera} from "./Engine/Camera";
 import {Direction} from "./Sprite";
 import {Physics} from "./Engine/Physics";
 import {Box} from "./Box";
+import {Display} from "./Engine/Display";
 
 class Entity {
 
@@ -11,8 +11,8 @@ class Entity {
   readonly id: string;
   state: keyof Sprites = "idle";
   sprites: Sprites;
-  phys: Box;
-  view: Box;
+  _physBox: Box;
+  _viewBox: Box;
   x: number;
   y: number;
   faced: keyof Direction<CanvasRenderingContext2D>;
@@ -23,6 +23,22 @@ class Entity {
   mass = 0;
   hasCollision = true;
 
+  public get physBox() {
+    return this._physBox;
+  }
+
+  public set physBox(box: Box) {
+    this._physBox = box;
+  }
+
+  public get viewBox() {
+    return this._viewBox != undefined ? this._viewBox : this._physBox;
+  }
+
+  public set viewBox(box: Box) {
+    this._viewBox = box;
+  }
+
   constructor() {
     this.id = Math.random().toString(16).slice(2);
   }
@@ -31,17 +47,13 @@ class Entity {
     const {faced, state} = this;
     const sprite = this.sprites[state];
     const image = sprite.image[faced];
-    const proportion = this.view.height / image.height;
+    const proportion = this.viewBox.height / image.height;
 
     const frameWidth = image.width / (sprite.framesCount);
     const frameHeight = image.height;
 
-    const resultFrameWidth = image.width * proportion / sprite.framesCount;
-    const resultFrameHeight = image.height * proportion;
-
-    const x = this.x;
-    // Сдвигаем весь мир на половину высоты нашего объекта в фокусе камеры, что бы он был точно в центре
-    const y = this.y ;
+    const resultFrameWidth = frameWidth * proportion;
+    const resultFrameHeight = frameHeight * proportion;
 
     let imagePos = 0;
 
@@ -52,15 +64,33 @@ class Entity {
       }
     }
 
-    scene.drawImage(
-      image, imagePos, 0,
-      frameWidth, frameHeight,
-      x, y,
-      resultFrameWidth, resultFrameHeight
-    );
+    const x = this.x - this.physBox.x ;
+    // Сдвигаем весь мир на половину высоты нашего объекта в фокусе камеры, что бы он был точно в центре
+    const y = this.y - this.physBox.y  ;
 
-    scene.fillRect( x, y,
-      resultFrameWidth, resultFrameHeight)
+
+
+
+
+      scene.drawImage(
+        image, imagePos, 0,
+        frameWidth, frameHeight,
+        x, y,
+        resultFrameWidth, resultFrameHeight
+      );
+
+    if(Display.debug.showBoxes){
+      scene.strokeStyle = "black"
+      scene.strokeRect(  x, y,
+        resultFrameWidth, resultFrameHeight)
+      scene.strokeStyle = "red"
+      scene.strokeRect(  this.x - this.physBox.x, this.y - this.physBox.y,
+        this.physBox.width, this.physBox.height)
+      scene.strokeStyle = "green"
+      scene.strokeRect(  this.x - this.viewBox.x, this.y - this.viewBox.y,
+        this.viewBox.width, this.viewBox.height)
+    }
+
 
     sprite.update();
 
@@ -74,25 +104,23 @@ class Entity {
     if (this.mass > 0 || this.eDown != 0 || this.momentum != 0) {
       this.eDown += this.mass;
 
-      let newY: number;
-      let newX: number;
       let hitBox;
       let inter: { left: number, top: number, right: number, bottom: number }[];
 
-      hitBox = this.phys.get(this.x,this.y + this.eDown);
+      hitBox = this.physBox.get(this.x,this.y + this.eDown);
       inter = Physics.checkCollision(hitBox, this.id);
       if (inter.length === 0) {
         this.y += this.eDown;
         this.hasGround = false;
         this.state = "fall";
       } else {
-        this.y = inter[0].top - 1;
+        this.y = inter[0].top ;
         this.eDown = 0;
         this.hasGround = true;
         this.state = "idle";
       }
 
-      hitBox = this.phys.get(this.x + this.momentum * delta,this.y) ;
+      hitBox = this.physBox.get(this.x + this.momentum * delta,this.y) ;
       inter = Physics.checkCollision(hitBox, this.id);
 
       if (Math.abs(this.momentum) < 0.001) {

@@ -3,15 +3,25 @@ import {requestAnimationFrame} from "../../utils/requestAnimationFrame";
 import {Entity} from "../Entity";
 import {DisplayAddons} from "./DisplayAddons";
 import {Camera} from "./Camera";
+import Element from "./Gui/Element";
 
 
 class MainDisplay {
 
   private removeList: Entity[] = [];
-  private layers: Layer[] = [];
+  private _layers: Layer[] = [];
+  private _gui: Element[] = [];
   readonly addons: DisplayAddons = new DisplayAddons();
   private display: HTMLCanvasElement;
   private scene: CanvasRenderingContext2D;
+
+  public debug = {
+    showBoxes: false
+  }
+
+  public get layers(): Layer[] {
+    return this._layers;
+  }
 
   get height() {
     return this.display.height;
@@ -49,13 +59,18 @@ class MainDisplay {
     this.scene.fillStyle = "#000";
   }
 
-  addObject(obj: Entity, layer: number) {
-    const {layers} = this;
-    if (typeof layers[layer] === "undefined") {
-      layers[layer] = new Layer();
+  addObject(obj: Entity | Element, layer: number = 0) {
+    if (obj instanceof Entity) {
+      const {_layers} = this;
+      if (typeof _layers[layer] === "undefined") {
+        _layers[layer] = new Layer();
+      }
+      _layers[layer].addObject(obj);
+    }else{
+      this._gui.push(obj)
     }
-    layers[layer].addObject(obj);
   }
+
 
   toRemove(obj: Entity) {
     this.removeList.push(obj);
@@ -67,28 +82,37 @@ class MainDisplay {
   }
 
   removeObject(obj: Entity) {
-    for (const layerId in this.layers) {
-      this.layers[layerId].removeObject(obj);
+    for (const layerId in this._layers) {
+      this._layers[layerId].removeObject(obj);
     }
   }
 
   start() {
 
-    const {scene, layers, addons} = this;
+    const {scene, _layers, addons} = this;
 
     scene.imageSmoothingEnabled = false;
     scene.fillStyle = "#000";
 
     const draw = () => {
       scene.translate(Display.width / 2, Display.height / 2);
-      scene.translate(-Camera.x - Camera.target.view.x + Camera.target.view.width , -Camera.y - Camera.target.view.y + Camera.target.view.height);
-      layers.map(layer => layer.items.map(item => {
+      scene.translate(-Camera.x - Camera.target.viewBox.x + Camera.target.viewBox.width / 2, -Camera.y + Camera.target.viewBox.y - Camera.target.viewBox.height / 2);
+
+      _layers.map(layer => layer.items.map(item => {
+
         if (!item.isActual()) {
           return this.toRemove(item);
         }
         item.draw(scene);
       }));
       scene.resetTransform();
+
+
+      this._gui.map(element => {
+        element.Draw(scene)
+      })
+
+
       addons.run(scene);
       requestAnimationFrame(draw);
       this.cleanUp();

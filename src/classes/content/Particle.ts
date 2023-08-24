@@ -21,6 +21,7 @@ class Particle extends Entity {
 
   draw(scene: CanvasRenderingContext2D) {
     scene.globalAlpha = 1 - 1 / (this.startSize);
+    scene.fillStyle = "#000"
     scene.fillRect(this.x, this.y, this.size, this.size);
     scene.globalAlpha = 1;
   }

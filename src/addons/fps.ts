@@ -7,8 +7,9 @@ const fpsMeter = () => {
     fpsCounter = 0;
   }, 1000);
   return (scene: CanvasRenderingContext2D) => {
+    scene.font = "10px monospace"
     fpsCounter++;
-    scene.fillText(fpsLastCount.toString(), 20, 20);
+    scene.fillText("fps: " + fpsLastCount.toString(), 20, 20);
   };
 };
 

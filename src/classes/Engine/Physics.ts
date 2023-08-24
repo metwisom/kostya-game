@@ -55,7 +55,7 @@ class _Physics {
       if (e.id === ignore || !e.hasCollision) {
         return undefined;
       }
-      const testBox = e.phys.get(e.x, e.y)
+      const testBox = e.physBox.get(e.x, e.y)
       if (intersectRect(testBox, hitBox,)) {
         return testBox;
       } else {
