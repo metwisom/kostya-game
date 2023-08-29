@@ -7,6 +7,7 @@ class _GameKeyboard {
 
   private a = new GameKeyboardKey();
   private d = new GameKeyboardKey();
+  private c = new GameKeyboardKey();
   private space = new GameKeyboardKey();
 
   private slave: Entity;
@@ -32,6 +33,7 @@ class _GameKeyboard {
     this.a.set(this.master.getKey("KeyA") !== undefined);
     this.d.set(this.master.getKey("KeyD") !== undefined);
     this.space.set(this.master.getKey("Space") !== undefined);
+    this.c.set(this.master.getKey("KeyC") !== undefined);
   }
 
   update() {
@@ -48,8 +50,13 @@ class _GameKeyboard {
       this.slave.momentum = this.slave.speed;
     }
 
+    if (this.c.pressed) {
+      this.slave.viewBox.scale = this.slave.viewBox.scale == 1 ? 0.1 : 1
+      this.slave.physBox.scale = this.slave.physBox.scale == 1 ? 0.1 : 1
+    }
+
     if (this.space.pressed && this.slave.hasGround) {
-      this.slave.eDown = -11;
+      this.slave.eDown = -11 * this.slave.physBox.curScale;
       this.slave.hasGround = false;
       this.slave.state = "jump";
     }

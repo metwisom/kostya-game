@@ -42,7 +42,7 @@ class _Physics {
       const delta = new Date().valueOf() - this.lastTime;
       objects.map(object => {
         if (!object.isActual()) {
-          return this.toRemove.apply(this, object);
+          return this.toRemove(object);
         }
         object.update(delta);
       });
@@ -59,7 +59,7 @@ class _Physics {
       if (e.id === ignore || !e.hasCollision) {
         return undefined;
       }
-      const testBox = e.physBox.get(e.x, e.y)
+      const testBox = e.physBox.get(e.x, e.y);
       if (intersectRect(testBox, hitBox,)) {
         return testBox;
       } else {

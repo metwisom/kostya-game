@@ -56,7 +56,7 @@ class Character extends Entity {
   private createStepParticle(){
     if (this.momentum != 0 && this.hasGround) {
       for (let i = 0; i < 1; i++) {
-        const part = new Particle(this.x + this.momentum + Math.random() * 30 - 15, this.y + Math.random() * 3 - 1.5);
+        const part = new Particle(this.x + this.momentum + Math.random() * 30 - 15, this.y + Math.random() * 3 - 1.5,this.physBox.curScale);
         Display.addObject(part, 2);
         Physics.addObject(part);
       }

@@ -6,17 +6,17 @@ class Particle extends Entity {
   size: number;
   startSize: number;
 
-  constructor(x: number, y: number) {
+  constructor(x: number, y: number, size = 1) {
 
     super();
 
     this.hasCollision = false;
 
     this.angle = Math.random() * Math.PI * 2;
-    this.speed = 0.05;
+    this.speed = 0.05 * size;
     this.x = x;
     this.y = y;
-    this.size = this.startSize = Math.random() * 2 + 2;
+    this.size = this.startSize = (Math.random() * 2 + 2) * size;
   }
 
   draw(scene: CanvasRenderingContext2D) {

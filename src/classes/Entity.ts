@@ -3,6 +3,8 @@ import {Direction} from "./Sprite";
 import {Physics} from "./Engine/Physics";
 import {Box} from "./Box";
 import {Display} from "./Engine/Display";
+import {Character} from "./content/Character";
+
 
 class Entity {
 
@@ -20,8 +22,16 @@ class Entity {
   speed = 0;
   momentum = 0;
   eDown = 0;
-  mass = 0;
+  private _mass = 0;
   hasCollision = true;
+
+  public set mass(value:number){
+    this._mass = value
+  }
+
+  public  get mass(){
+    return this._mass * this.physBox.curScale
+  }
 
   public get physBox() {
     return this._physBox;
@@ -47,13 +57,10 @@ class Entity {
     const {faced, state} = this;
     const sprite = this.sprites[state];
     const image = sprite.image[faced];
-    const proportion = this.viewBox.height / image.height;
 
     const frameWidth = image.width / (sprite.framesCount);
     const frameHeight = image.height;
 
-    const resultFrameWidth = frameWidth * proportion;
-    const resultFrameHeight = frameHeight * proportion;
 
     let imagePos = 0;
 
@@ -64,31 +71,27 @@ class Entity {
       }
     }
 
-    const x = this.x - this.physBox.x ;
+    const x = this.x - this.physBox.x;
     // Сдвигаем весь мир на половину высоты нашего объекта в фокусе камеры, что бы он был точно в центре
-    const y = this.y - this.physBox.y  ;
+    const y = this.y - this.physBox.y;
 
 
 
 
+    scene.drawImage(
+      image, imagePos, 0,
+      frameWidth, frameHeight,
+      x, y,
+      this.physBox.width, this.physBox.height
+    );
 
-      scene.drawImage(
-        image, imagePos, 0,
-        frameWidth, frameHeight,
-        x, y,
-        resultFrameWidth, resultFrameHeight
-      );
-
-    if(Display.debug.showBoxes){
-      scene.strokeStyle = "black"
-      scene.strokeRect(  x, y,
-        resultFrameWidth, resultFrameHeight)
-      scene.strokeStyle = "red"
-      scene.strokeRect(  this.x - this.physBox.x, this.y - this.physBox.y,
-        this.physBox.width, this.physBox.height)
-      scene.strokeStyle = "green"
-      scene.strokeRect(  this.x - this.viewBox.x, this.y - this.viewBox.y,
-        this.viewBox.width, this.viewBox.height)
+    if (Display.debug.showBoxes) {
+      scene.strokeStyle = "red";
+      scene.strokeRect(this.x - this.physBox.x, this.y - this.physBox.y,
+        this.physBox.width, this.physBox.height);
+      scene.strokeStyle = "green";
+      scene.strokeRect(this.x - this.viewBox.x, this.y - this.viewBox.y,
+        this.viewBox.width, this.viewBox.height);
     }
 
 
@@ -96,7 +99,7 @@ class Entity {
 
   }
 
-  isActual(){
+  isActual() {
     return !this.isDestroyed;
   }
 
@@ -107,27 +110,27 @@ class Entity {
       let hitBox;
       let inter: { left: number, top: number, right: number, bottom: number }[];
 
-      hitBox = this.physBox.get(this.x,this.y + this.eDown);
+      hitBox = this.physBox.get(this.x, this.y + this.eDown);
       inter = Physics.checkCollision(hitBox, this.id);
       if (inter.length === 0) {
         this.y += this.eDown;
         this.hasGround = false;
         this.state = "fall";
       } else {
-        this.y = inter[0].top ;
+        this.y = inter[0].top;
         this.eDown = 0;
         this.hasGround = true;
         this.state = "idle";
       }
 
-      hitBox = this.physBox.get(this.x + this.momentum * delta,this.y) ;
+      hitBox = this.physBox.get(this.x + this.momentum * delta, this.y);
       inter = Physics.checkCollision(hitBox, this.id);
 
-      if (Math.abs(this.momentum) < 0.001) {
+      if (this.momentum && Math.abs(this.momentum) < 0.001) {
         this.momentum = 0;
       }
       if (inter.length === 0) {
-        this.x += this.momentum * delta;
+        this.x += this.momentum * delta * this.physBox.curScale;
       }
       if (this.hasGround) {
         if (inter.length === 0) {

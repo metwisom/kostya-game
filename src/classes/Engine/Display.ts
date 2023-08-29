@@ -89,16 +89,27 @@ class MainDisplay {
 
   start() {
 
-    const {scene, _layers, addons} = this;
+    const {cleanUp,scene, _layers:Layers,_gui:Gui, addons} = this;
 
     scene.imageSmoothingEnabled = false;
     scene.fillStyle = "#000";
 
     const draw = () => {
+      scene.globalAlpha = 1;
       scene.translate(Display.width / 2, Display.height / 2);
+
+      scene.scale(
+        1 / (Camera.target.physBox.scale == 1 ? Camera.target.physBox.curScale :
+            (Camera.target.physBox.curScale * 3 < 1 ? Camera.target.physBox.curScale * 3 : 1)
+        ),
+        1 / (Camera.target.physBox.scale == 1 ? Camera.target.physBox.curScale :
+          (Camera.target.physBox.curScale * 3 < 1 ? Camera.target.physBox.curScale * 3 : 1))
+      )
+
       scene.translate(-Camera.x - Camera.target.viewBox.x + Camera.target.viewBox.width / 2, -Camera.y + Camera.target.viewBox.y - Camera.target.viewBox.height / 2);
 
-      _layers.map(layer => layer.items.map(item => {
+
+      Layers.map(layer => layer.items.map(item => {
 
         if (!item.isActual()) {
           return this.toRemove(item);
@@ -108,14 +119,14 @@ class MainDisplay {
       scene.resetTransform();
 
 
-      this._gui.map(element => {
+      Gui.map(element => {
         element.Draw(scene)
       })
 
 
       addons.run(scene);
       requestAnimationFrame(draw);
-      this.cleanUp();
+      cleanUp.apply(this,[]);
     };
 
     draw();

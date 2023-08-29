@@ -26,11 +26,10 @@ class _Mouse {
     this.y = e.clientY;
     let hasIntersect = false
     this.slaves.map(element => {
-      if (element.Intersect(this.x, this.y)) {
+      if (element.viewBox.Intersect(this.x, this.y)) {
         hasIntersect = true
       }
     });
-    console.log(hasIntersect)
     if(hasIntersect){
       Display.canvas.style.cursor = "pointer"
     }else{
@@ -42,7 +41,7 @@ class _Mouse {
     if (e.type == "mousedown") {
       this.pressed = true;
       this.slaves.map(element => {
-        if (element.Intersect(this.x, this.y)) {
+        if (element.viewBox.Intersect(this.x, this.y)) {
           element.Event();
         }
       });
