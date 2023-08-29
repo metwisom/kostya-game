@@ -11,6 +11,10 @@ class _Physics {
   private objects: Entity[] = [];
   private lastTime: number = new Date().valueOf();
 
+  public get obj() {
+    return this.objects;
+  }
+
   addObject(obj: Entity) {
     this.objects.push(obj);
   }

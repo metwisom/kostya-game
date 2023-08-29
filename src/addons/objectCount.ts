@@ -1,4 +1,5 @@
 import {Display} from "../classes/Engine/Display";
+import {Physics} from "../classes/Engine/Physics";
 
 
 const objectCounter = () => {
@@ -8,7 +9,7 @@ const objectCounter = () => {
       return prev + cur.items.length
     },0)
 
-    scene.fillText("objects: " + count.toString(), 20, 40);
+    scene.fillText("objects: " + count.toString() + '\nphys: ' + Physics.obj.length ,20, 40);
   };
 };
 
