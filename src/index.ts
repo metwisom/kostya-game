@@ -8,7 +8,6 @@ import {Mouse} from "./classes/Engine/Mouse";
 
 import {FloatX, FloatY} from "./classes/Engine/Gui/GuiBox";
 import {Button} from "./classes/Engine/Gui/Button";
-import {RainEngine} from "./classes/Engine/RainEngine";
 
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -35,8 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     Display.debug.showBoxes = !Display.debug.showBoxes;
   };
 
-  const rainEngine = new RainEngine()
-  rainEngine.start()
+
 
   // Camera.attach(Keyboard);
 

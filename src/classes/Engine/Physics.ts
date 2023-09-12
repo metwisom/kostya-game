@@ -3,6 +3,8 @@ import {intersectRect} from "../../utils/intersectRect";
 import {Entity} from "../Entity";
 import {GameKeyboard} from "./GameKeyboard";
 import {BoxArea} from "../Box";
+import {RainEngine} from "./RainEngine";
+import {Display} from "./Display";
 
 
 class _Physics {
@@ -46,6 +48,12 @@ class _Physics {
         }
         object.update(delta);
       });
+
+      const rain = RainEngine.create()
+      // if(rain != undefined){
+      //   Physics.addObject(rain);
+      //   Display.addObject(rain);
+      // }
       requestAnimationFrame(calc);
       this.lastTime = new Date().valueOf();
       this.cleanUp();

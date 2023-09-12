@@ -2,7 +2,7 @@ import {Entity} from "../Entity";
 import {Camera} from "../Engine/Camera";
 import {Display} from "../Engine/Display";
 import {Box} from "../Box";
-import {getRandom, getRandomFloat} from "../../utils/getRandom";
+import { getRandomFloat} from "../../utils/getRandom";
 
 
 class Rain extends Entity {
@@ -14,7 +14,7 @@ class Rain extends Entity {
 
     super();
 
-    this.hasCollision = true;
+    this.hasCollision = false;
 
     this._physBox = new Box(4, 8, 2, 8);
 
