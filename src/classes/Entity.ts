@@ -2,13 +2,12 @@ import {Sprites} from "./Sprites";
 import {Direction} from "./Sprite";
 import {Physics} from "./Engine/Physics";
 import {Box} from "./Box";
+import GameElement from "./GameElement";
 import {Display} from "./Engine/Display";
-import {Character} from "./content/Character";
 
 
-class Entity {
+class Entity extends GameElement{
 
-  private isDestroyed = false;
 
   readonly id: string;
   state: keyof Sprites = "idle";
@@ -50,6 +49,7 @@ class Entity {
   }
 
   constructor() {
+    super()
     this.id = Math.random().toString(16).slice(2);
   }
 
@@ -99,9 +99,6 @@ class Entity {
 
   }
 
-  isActual() {
-    return !this.isDestroyed;
-  }
 
   update(delta: number) {
     if (this.mass > 0 || this.eDown != 0 || this.momentum != 0) {
@@ -146,9 +143,6 @@ class Entity {
     }
   }
 
-  destroy() {
-    this.isDestroyed = true;
-  }
 
   refreshSprite() {
     return;

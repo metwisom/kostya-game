@@ -1,15 +1,17 @@
 import {GuiBox} from "./GuiBox";
+import GameElement from "../../GameElement";
 
 
-export default class Element {
+export default class Element extends GameElement{
   public viewBox: GuiBox;
   public ownEvent: () => void;
 
   constructor(x: number, y: number, width: number, height: number) {
+    super()
     this.viewBox = new GuiBox(x, y, width, height);
   }
 
-  public Draw(scene: CanvasRenderingContext2D) {
+  public draw(scene: CanvasRenderingContext2D) {
     scene.fillRect(
       this.viewBox.x - this.viewBox.width / 2,
       this.viewBox.y - this.viewBox.height / 2,

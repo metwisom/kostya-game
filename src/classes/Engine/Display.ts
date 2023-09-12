@@ -4,20 +4,21 @@ import {Entity} from "../Entity";
 import {DisplayAddons} from "./DisplayAddons";
 import {Camera} from "./Camera";
 import Element from "./Gui/Element";
+import GameElement from "../GameElement";
 
 
 class MainDisplay {
 
-  private removeList: Entity[] = [];
+  private removeList: GameElement[] = [];
   private _layers: Layer[] = [];
-  private _gui: Element[] = [];
+  private _gui: GameElement[] = [];
   readonly addons: DisplayAddons = new DisplayAddons();
   private display: HTMLCanvasElement;
   private scene: CanvasRenderingContext2D;
 
   public debug = {
     showBoxes: false
-  }
+  };
 
   public get layers(): Layer[] {
     return this._layers;
@@ -66,13 +67,13 @@ class MainDisplay {
         _layers[layer] = new Layer();
       }
       _layers[layer].addObject(obj);
-    }else{
-      this._gui.push(obj)
+    } else {
+      this._gui.push(obj);
     }
   }
 
 
-  toRemove(obj: Entity) {
+  toRemove(obj: GameElement) {
     this.removeList.push(obj);
   }
 
@@ -89,7 +90,7 @@ class MainDisplay {
 
   start() {
 
-    const {cleanUp,scene, _layers:Layers,_gui:Gui, addons} = this;
+    const {cleanUp, scene, _layers: Layers, _gui: Gui, addons} = this;
 
     scene.imageSmoothingEnabled = false;
     scene.fillStyle = "#000";
@@ -104,32 +105,33 @@ class MainDisplay {
         ),
         1 / (Camera.target.physBox.scale == 1 ? Camera.target.physBox.curScale :
           (Camera.target.physBox.curScale * 3 < 1 ? Camera.target.physBox.curScale * 3 : 1))
-      )
+      );
 
       scene.translate(-Camera.x - Camera.target.viewBox.x + Camera.target.viewBox.width / 2, -Camera.y + Camera.target.viewBox.y - Camera.target.viewBox.height / 2);
 
 
-      Layers.map(layer => layer.items.map(item => {
+      this.drawCollection([].concat(...Layers.map(layer => layer.items)))
 
-        if (!item.isActual()) {
-          return this.toRemove(item);
-        }
-        item.draw(scene);
-      }));
       scene.resetTransform();
 
-
-      Gui.map(element => {
-        element.Draw(scene)
-      })
+      this.drawCollection(Gui)
 
 
       addons.run(scene);
       requestAnimationFrame(draw);
-      cleanUp.apply(this,[]);
+      cleanUp.apply(this, []);
     };
 
     draw();
+  }
+
+  private drawCollection(collection: GameElement[]) {
+    collection.map(item => {
+      if (!item.isActual()) {
+        return this.toRemove(item);
+      }
+      item.draw(this.scene);
+    })
   }
 }
 

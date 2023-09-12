@@ -10,7 +10,7 @@ export class Button extends Element {
     this.text = text;
   }
 
-  public Draw(scene: CanvasRenderingContext2D) {
+  public draw(scene: CanvasRenderingContext2D) {
     scene.fillStyle = "rgb(0, 0, 0)";
     scene.fillRect(
       this.viewBox.x,

@@ -8,6 +8,8 @@ import {Mouse} from "./classes/Engine/Mouse";
 
 import {FloatX, FloatY} from "./classes/Engine/Gui/GuiBox";
 import {Button} from "./classes/Engine/Gui/Button";
+import {RainEngine} from "./classes/Engine/RainEngine";
+import {Camera} from "./classes/Engine/Camera";
 
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -25,7 +27,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   Display.addons.add(fpsMeter());
   Display.addons.add(objectCounter());
 
-  const testButton = new Button(100, 50, 150,50,"Press Нажми");
+  const rainButton = new Button(275, 50, 150, 50, "Rain Дождь");
+  rainButton.viewBox.floatX = FloatX.right;
+  rainButton.viewBox.floatY = FloatY.bottom;
+  Display.addObject(rainButton);
+  Mouse.addSlave(rainButton);
+  rainButton.ownEvent = () => {
+    RainEngine.setCamera(Camera)
+    RainEngine.toggle();
+  };
+
+  const testButton = new Button(100, 50, 150, 50, "Press Нажми");
   testButton.viewBox.floatX = FloatX.right;
   testButton.viewBox.floatY = FloatY.bottom;
   Display.addObject(testButton);
@@ -33,7 +45,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   testButton.ownEvent = () => {
     Display.debug.showBoxes = !Display.debug.showBoxes;
   };
-
 
 
   // Camera.attach(Keyboard);

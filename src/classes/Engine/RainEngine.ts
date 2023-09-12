@@ -1,26 +1,38 @@
 import {Rain} from "../content/Rain";
-import {Display} from "./Display";
 import {getRandom} from "../../utils/getRandom";
-import {Camera} from "./Camera";
 
 
 class _RainEngine {
-  is_active: boolean = true;
+  is_active: boolean = false;
 
+  _camera: any;
 
   constructor() {
+  }
 
+  setCamera(camera: any) {
+    this._camera = camera;
   }
 
   start() {
     this.is_active = true;
+    this.create();
+  }
+  stop() {
+    this.is_active = false;
+  }
+  toggle() {
+    this.is_active = !this.is_active;
+    this.create();
   }
 
   create() {
-    if (Camera.target != undefined && this.is_active) {
-      return  new Rain(getRandom(Camera.x - Display.width / 2, Camera.x + Display.width / 2), Camera.y - Display.height / 2);
+    if (this._camera && this._camera.target != undefined && this.is_active) {
+      new Rain(getRandom(this._camera.x - 1000, this._camera.x + 1000), this._camera.y - 1000, this._camera.y + 1000);
     }
-    return undefined
+    if (this.is_active) {
+      setTimeout(this.create.bind(this), 1);
+    }
   }
 }
 
