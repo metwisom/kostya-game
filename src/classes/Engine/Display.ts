@@ -1,17 +1,17 @@
 import {Layer} from "./Layer";
 import {requestAnimationFrame} from "../../utils/requestAnimationFrame";
-import {Entity} from "../Entity";
+import {Statable} from "../Statable";
 import {DisplayAddons} from "./DisplayAddons";
 import {Camera} from "./Camera";
+import {D2Drawable} from "../D2Drawable";
 import Element from "./Gui/Element";
-import GameElement from "../GameElement";
 
 
 class MainDisplay {
 
-  private removeList: GameElement[] = [];
+  private removeList: D2Drawable[] = [];
   private _layers: Layer[] = [];
-  private _gui: GameElement[] = [];
+  private _gui: D2Drawable[] = [];
   readonly addons: DisplayAddons = new DisplayAddons();
   private display: HTMLCanvasElement;
   private scene: CanvasRenderingContext2D;
@@ -24,22 +24,6 @@ class MainDisplay {
     return this._layers;
   }
 
-  get height() {
-    return this.display.height;
-  }
-
-  set height(value: number) {
-    this.display.height = value;
-  }
-
-  get width() {
-    return this.display.width;
-  }
-
-  set width(value: number) {
-    this.display.width = value;
-  }
-
   get canvas() {
     return this.display;
   }
@@ -47,33 +31,33 @@ class MainDisplay {
   attach(canvas: HTMLCanvasElement) {
     this.display = canvas;
     this.recalculateSceneSize();
-    window.removeEventListener("resize", Display.recalculateSceneSize.bind(this));
-    window.addEventListener("resize", Display.recalculateSceneSize.bind(this));
+    window.removeEventListener("resize", this.recalculateSceneSize.bind(this));
+    window.addEventListener("resize", this.recalculateSceneSize.bind(this));
   }
 
   recalculateSceneSize() {
-    const {width, height} = Display.canvas.getBoundingClientRect();
-    this.width = width;
-    this.height = height;
+    const {width, height} = this.canvas.getBoundingClientRect();
+    this.canvas.width = width;
+    this.canvas.height = height;
     this.scene = this.display.getContext("2d");
     this.scene.imageSmoothingEnabled = false;
     this.scene.fillStyle = "#000";
   }
 
-  addObject(obj: Entity | Element, layer: number = 0) {
-    if (obj instanceof Entity) {
+  addObject(obj: D2Drawable, layer: number = 0) {
+    if (obj instanceof Element) {
+      this._gui.push(obj);
+    } else {
       const {_layers} = this;
       if (typeof _layers[layer] === "undefined") {
         _layers[layer] = new Layer();
       }
       _layers[layer].addObject(obj);
-    } else {
-      this._gui.push(obj);
     }
   }
 
 
-  toRemove(obj: GameElement) {
+  toRemove(obj: D2Drawable) {
     this.removeList.push(obj);
   }
 
@@ -82,7 +66,7 @@ class MainDisplay {
     this.removeList = [];
   }
 
-  removeObject(obj: Entity) {
+  removeObject(obj: Statable) {
     for (const layerId in this._layers) {
       this._layers[layerId].removeObject(obj);
     }
@@ -97,24 +81,15 @@ class MainDisplay {
 
     const draw = () => {
       scene.globalAlpha = 1;
-      scene.translate(Display.width / 2, Display.height / 2);
+      scene.translate(
+        Display.canvas.width / 2 - Camera.x,
+        Display.canvas.height / 2 - Camera.y + Camera.target.viewBox.height / 2);
 
-      scene.scale(
-        1 / (Camera.target.physBox.scale == 1 ? Camera.target.physBox.curScale :
-            (Camera.target.physBox.curScale * 3 < 1 ? Camera.target.physBox.curScale * 3 : 1)
-        ),
-        1 / (Camera.target.physBox.scale == 1 ? Camera.target.physBox.curScale :
-          (Camera.target.physBox.curScale * 3 < 1 ? Camera.target.physBox.curScale * 3 : 1))
-      );
-
-      scene.translate(-Camera.x - Camera.target.viewBox.x + Camera.target.viewBox.width / 2, -Camera.y + Camera.target.viewBox.y - Camera.target.viewBox.height / 2);
-
-
-      this.drawCollection([].concat(...Layers.map(layer => layer.items)))
+      this.drawCollection([].concat(...Layers.map(layer => layer.items).filter(i => i)));
 
       scene.resetTransform();
 
-      this.drawCollection(Gui)
+      this.drawCollection(Gui);
 
 
       addons.run(scene);
@@ -125,13 +100,35 @@ class MainDisplay {
     draw();
   }
 
-  private drawCollection(collection: GameElement[]) {
+  private drawCollection(collection: D2Drawable[]) {
     collection.map(item => {
       if (!item.isActual()) {
         return this.toRemove(item);
       }
-      item.draw(this.scene);
-    })
+      const viewBox = item.draw();
+
+      // if(item instanceof Parallax) {
+      //
+      //   console.log(0, 0,
+      //
+      //     viewBox.x,
+      //     viewBox.y,
+      //     viewBox.width,
+      //     viewBox.height)
+      // }
+
+
+      this.scene.drawImage(viewBox.texture.get(),
+        0, 0,
+        viewBox.texture.get().width,
+        viewBox.texture.get().height,
+        viewBox.x,
+        viewBox.y,
+        viewBox.width,
+        viewBox.height);
+
+    });
+
   }
 }
 

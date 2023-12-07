@@ -1,46 +1,60 @@
-import {Entity} from "../Entity";
-import {getRandomFloat} from "../../utils/getRandom";
+import {Statable} from "../Statable";
+import {getRandom, getRandomFloat} from "../../utils/getRandom";
 import {Display} from "../Engine/Display";
-import {Physics} from "../Engine/Physics";
-import {Box} from "../Box";
+import {BoxGravity} from "../Box/BoxGravity";
+import {BoxTextured} from "../Box/BoxTextured";
+import {Camera} from "../Engine/Camera";
+import {TextureRain} from "../Texture/TextureRain";
 
 
-class Rain extends Entity {
+class Rain extends Statable {
 
-  windAngle = getRandomFloat(Math.PI, Math.PI * 2);
+  _physBox: BoxGravity;
+  windAngle = Math.PI / 2 + getRandomFloat(-10,10)
   maxDepth: number;
 
-  hasCollision = false
+  g = true
 
-  constructor(x: number, y: number, maxDepth: number) {
+  speed = 0.5
+  hasCollision = false;
+
+  constructor(maxDepth: number) {
 
     super();
     this.hasCollision = false;
+    this.maxDepth = maxDepth;
 
-    this._physBox = new Box(4, 8, 2, 8);
+    this._physBox = new BoxGravity(4, 8, 5, 11, this);
+    this.physBox.hasCollision = false;
+    this.viewBox = new BoxTextured(0, 0, 5, 11, this);
 
-    this.speed = 0.5;
-    this.x = x;
-    this.y = y;
-    Display.addObject(this);
-    Physics.addObject(this)
 
+    this.respawn()
+
+    const texture = new TextureRain(5, 11);
+    texture.setColor("#65ada0")
+    this.viewBox.setTexture(texture);
   }
 
-  draw(scene: CanvasRenderingContext2D) {
-    for (let size = 4; size > 0; size -= 1) {
-      scene.fillRect(this.x - size / 2, this.y + size * 2, size, size);
-    }
-    this.x += Math.cos(this.windAngle);
+  respawn(){
+    this.x = getRandom(Camera.x - Display.canvas.width / 2, Camera.x + Display.canvas.width / 2);
+    this.y = getRandom(Camera.y - 500, Camera.y - 1500);
+    this.speed = getRandom(18,40);
+  }
+
+  draw() {
+    return this._viewBox.get();
   }
 
   update(delta: number) {
-    this.y += this.speed * delta;
-    // this.y += Math.sin(this.angle) * this.speed * delta;
-    if (this.y > this.maxDepth) {
-      this.destroy();
+    this._physBox.eDown = this.speed
+    this.x += Math.cos(this.windAngle) * 4
+    if (this.y > Display.canvas.height) {
+      this.respawn()
     }
+    super.update(delta);
   }
+
 
 }
 

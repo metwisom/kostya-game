@@ -1,26 +1,25 @@
-import {Entity} from "../Entity";
-import {Sprite} from "../Sprite";
 import {MapLoader} from "../Engine/Map/MapLoader";
-import {Box} from "../Box";
+import {D2Updatable} from "../D2Updatable";
+import {BoxTextured} from "../Box/BoxTextured";
+import {Texture} from "../Texture/Texture";
+import {BoxCollision} from "../Box/BoxCollision";
 
-class Structure extends Entity {
+
+class Structure extends D2Updatable {
 
   matrixPosX = 0;
   matrixPosY = 0;
 
   constructor(x: number, y: number) {
-
     super();
 
-    this.faced = "right";
-    this.sprites = {
-      "idle": new Sprite("block.png")
-    };
     this.matrixPosX = x;
     this.matrixPosY = y;
-    this.physBox = new Box(50,50,0,0)
-    this.x = x * this.physBox.width;
-    this.y = y * this.physBox.height;
+    this.physBox = new BoxCollision(0, 0, 50, 50, this);
+    this.viewBox = new BoxTextured(0, 0, 50, 50, this);
+    this.x = x * 50;
+    this.y = y * 50;
+    this.refreshSprite();
   }
 
   refreshSprite() {
@@ -34,26 +33,28 @@ class Structure extends Entity {
     view += MapLoader.get(this.matrixPosX + 1, this.matrixPosY) ? 64 : 0;
     view += MapLoader.get(this.matrixPosX + 1, this.matrixPosY + 1) ? 128 : 0;
     if (this.byteCalc(view, [1], [4, 16, 64])) {
-      this.sprites["idle"] = new Sprite("block_one_foot.png");
+      this.viewBox.setTexture(new Texture("block_one_foot.png"));
+    } else {
+      if (this.byteCalc(view, [4, 64], [16])) {
+        this.viewBox.setTexture(new Texture("block.png"));
+      } else {
+        if (this.byteCalc(view, [4], [64])) {
+          this.viewBox.setTexture(new Texture("block_right.png"));
+        } else {
+          if (this.byteCalc(view, [64], [4])) {
+            this.viewBox.setTexture(new Texture("block_left.png"));
+          } else {
+            if (this.byteCalc(view, [4, 16, 64], [8, 32])) {
+              this.viewBox.setTexture(new Texture("block_mouse.png"));
+            } else {
+              this.viewBox.setTexture(new Texture("block_mouse.png"));
+            }
+          }
+        }
+      }
     }
-    if (this.byteCalc(view, [4, 64], [16])) {
-      this.sprites["idle"] = [
-        new Sprite("block.png"),
-        new Sprite("block2.png"),
-        new Sprite("block3.png"),
-      ][Math.floor(Math.random() * 3)];
-    }
-    if (this.byteCalc(view, [4], [64])) {
-      this.sprites["idle"] = new Sprite("block_left.png");
-      this.faced = "left";
-    }
-    if (this.byteCalc(view, [64], [4])) {
-      this.sprites["idle"] = new Sprite("block_left.png");
-      this.faced = "right";
-    }
-    if (this.byteCalc(view, [4, 16, 64], [8, 32])) {
-      this.sprites["idle"] = new Sprite("block_mouse.png");
-      this.faced = "right";
+    if (this.viewBox.get().texture == undefined) {
+
     }
   }
 

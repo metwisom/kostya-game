@@ -1,51 +1,34 @@
-import {createVirtualPoint} from "../../utils/createVirtualPoint";
-import {Entity} from "../Entity";
-import {Keyboard, _Keyboard} from "./Keyboard";
-import {Physics} from "./Physics";
+import {Statable} from "../Statable";
+import {BoxTextured} from "../Box/BoxTextured";
 
-class _Camera {
 
-  private attached: Entity;
-  private customAttach = false;
+const Camera = (function () {
 
-  get target() {
-    return this.attached;
-  }
+  let attached: Statable = undefined;
 
-  get x() {
-    return this?.attached.x;
-  }
+  const temp = new Statable();
+  temp.x = 0;
+  temp.y = 0;
 
-  get y() {
-    return this?.attached.y;
-  }
+  temp.viewBox = new BoxTextured(0, 0, 0, 0, temp);
+  attached = temp;
 
-  private virtualAttach() {
-    this.attached = createVirtualPoint();
-    this.customAttach = true;
-    Keyboard.attach(this.attached);
-    Physics.addObject(this.attached);
-  }
+  return Object.freeze({
+    get target() {
+      return attached ? attached : temp;
+    },
+    get x() {
+      return attached ? attached.x : 0;
+    },
+    get y() {
+      return attached ? attached.y : 0;
+    },
+    attach(obj: Statable) {
+      attached = obj;
+    },
+  });
 
-  attach(obj: Entity | _Keyboard) {
-    if (obj instanceof _Keyboard) {
-      this.virtualAttach();
+})();
 
-      return;
-    }
-    this.attached = obj;
-  }
 
-  // unAttach() {
-  //   if (this.customAttach) {
-  //     Keyboard.unAttach();
-  //     Physics.removeObject(this.attached);
-  //     this.customAttach = false;
-  //   }
-  //   this.attached = undefined;
-  // }
-}
-
-const Camera = new _Camera();
-
-export {Camera, _Camera};
+export {Camera};

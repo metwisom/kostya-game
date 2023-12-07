@@ -1,15 +1,14 @@
-import {Entity} from "../Entity";
-import GameElement from "../GameElement";
+import {D2Drawable} from "../D2Drawable";
 
 class Layer {
 
-  items: GameElement[] = [];
+  items: D2Drawable[] = [];
 
-  addObject(obj: GameElement) {
+  addObject(obj: D2Drawable) {
     this.items.push(obj);
   }
 
-  removeObject(obj: GameElement) {
+  removeObject(obj: D2Drawable) {
     if (this.items.includes(obj)) {
       this.items.splice(this.items.indexOf(obj), 1);
     }

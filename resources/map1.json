@@ -1,0 +1,334 @@
+{
+  "mapName": "Level 0",
+  "spawnPoint": {
+    "x": 2900,
+    "y": 0
+  },
+  "background": {
+    "type": "parallax",
+    "items": [
+      {
+        "image": "plx-1.png",
+        "bias": 1
+      },
+      {
+        "image": "plx-2.png",
+        "bias": 2
+      },
+      {
+        "image": "plx-3.png",
+        "bias": 3
+      },
+      {
+        "image": "plx-4.png",
+        "bias": 4
+      },
+      {
+        "image": "plx-5.png",
+        "bias": 5
+      }
+    ]
+  },
+  "map": [
+    {
+      "x": 0,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "type": "ground"
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 9,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 10,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 11,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 12,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 13,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 14,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 15,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 16,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 17,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 18,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 19,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 20,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 21,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 22,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 23,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 24,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 25,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 26,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 27,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 28,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 29,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 30,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 31,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 32,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 33,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 34,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 35,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 36,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 37,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 38,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 39,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 40,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 41,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 42,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 43,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 44,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 45,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 46,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 47,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 48,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 49,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 50,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 51,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 52,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 53,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 54,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 55,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 56,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 57,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 58,
+      "y": 3,
+      "type": "ground"
+    },
+    {
+      "x": 59,
+      "y": 3,
+      "type": "ground"
+    }
+  ]
+}

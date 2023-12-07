@@ -1,28 +1,52 @@
+import {BoxTextured, ViewArea} from "../Box/BoxTextured";
+import {Texture} from "../Texture/Texture";
+import {D2Updatable} from "../D2Updatable";
 import {Camera} from "../Engine/Camera";
 import {Display} from "../Engine/Display";
-import {Entity} from "../Entity";
-import {ResourceLoader} from "../Engine/ResourceLoader/ResourceLoader";
+import {BoxCollision} from "../Box/BoxCollision";
 
 
-class Parallax extends Entity {
+class Parallax extends D2Updatable {
 
-  fon: HTMLImageElement = new Image();
   bias: number;
-
+  _originX = 0;
+  texture: string;
   constructor(image: string, bias: number) {
     super();
-    this.fon = ResourceLoader.get(image).image;
+    this._x = 0;
+    this._y = 0;
+    this.texture = image
+    const texture = new Texture(image)
+
+    const coef = Math.max(Display.canvas.height / texture.referenceImage.height, Display.canvas.width / texture.referenceImage.width);
+
+    const width = texture.referenceImage.width * coef;
+    const height = texture.referenceImage.height * coef;
+
+    this.viewBox = new BoxTextured(0, 0, width, height, this);
+    this.viewBox.setTexture(texture);
+    this._physBox = new BoxCollision(0, 0, width, height, this);
     this.bias = bias;
   }
 
-  draw(scene: CanvasRenderingContext2D) {
-    const {fon} = this;
-    const ar = Display.height / fon.height;
-    const pass = (Camera.x * (this.bias / 50)) % (fon.width * ar);
-    scene.drawImage(fon, 0, 0, fon.width, fon.height, -pass - (fon.width * ar), -Display.height / 2 + Camera.y - Camera.target.viewBox.height / 2, fon.width * ar, Display.height);
-    scene.drawImage(fon, 0, 0, fon.width, fon.height, -pass, -Display.height / 2 + Camera.y - Camera.target.viewBox.height / 2, fon.width * ar, Display.height);
-    scene.drawImage(fon, 0, 0, fon.width, fon.height, -pass + (fon.width * ar), -Display.height / 2 + Camera.y - Camera.target.viewBox.height / 2, fon.width * ar, Display.height);
-    scene.drawImage(fon, 0, 0, fon.width, fon.height, -pass + (fon.width * ar) * 2, -Display.height / 2 + Camera.y - Camera.target.viewBox.height / 2, fon.width * ar, Display.height);
+  setOriginX(x:number){
+    this._originX = x
+  }
+
+  update(delta: number) {
+
+    super.update(delta);
+  }
+
+  draw(): ViewArea {
+    this.y = -Camera.y - Display.canvas.height / 2;
+
+    this.x = this.viewBox.width * Math.floor((Camera.x - this.viewBox.width / 2) / this.viewBox.width)
+    this.x = this.x + this._originX
+    this.y = Camera.y - Display.canvas.height / 2 - Camera.target.viewBox.height / 2;
+
+    return super.draw();
+
   }
 }
 

@@ -1,42 +1,44 @@
 import {Rain} from "../content/Rain";
-import {getRandom} from "../../utils/getRandom";
+import {Camera} from "./Camera";
+import {Display} from "./Display";
+import {Physics} from "./Physics";
 
 
-class _RainEngine {
-  is_active: boolean = false;
+const RainEngine = (function () {
 
-  _camera: any;
+  let couple: Rain[] = [];
 
-  constructor() {
-  }
-
-  setCamera(camera: any) {
-    this._camera = camera;
-  }
-
-  start() {
-    this.is_active = true;
-    this.create();
-  }
-  stop() {
-    this.is_active = false;
-  }
-  toggle() {
-    this.is_active = !this.is_active;
-    this.create();
-  }
-
-  create() {
-    if (this._camera && this._camera.target != undefined && this.is_active) {
-      new Rain(getRandom(this._camera.x - 1000, this._camera.x + 1000), this._camera.y - 1000, this._camera.y + 1000);
+  let is_active: boolean = false;
+  const create = () => {
+    if (Camera && Camera.target != undefined && is_active) {
+      for(let i = 0;i < 250;i++) {
+        let rain = new Rain(Camera.y + 1000);
+        couple.push(rain)
+        Display.addObject(rain);
+        Physics.addObject(rain);
+      }
     }
-    if (this.is_active) {
-      setTimeout(this.create.bind(this), 1);
+  };
+
+  return Object.freeze({
+    couple,
+    start() {
+      is_active = true;
+      create();
+    },
+    stop() {
+      couple.map(i => i.destroy())
+      couple = []
+      is_active = false;
+    },
+    toggle() {
+      is_active = !is_active;
+      if(!is_active){
+        stop()
+      }
+      create();
     }
-  }
-}
-
-const RainEngine = new _RainEngine();
-
+  });
+})();
 
 export {RainEngine};

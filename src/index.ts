@@ -4,50 +4,92 @@ import {fpsMeter} from "./addons/fps";
 import {ResourceLoader} from "./classes/Engine/ResourceLoader/ResourceLoader";
 import {MapLoader} from "./classes/Engine/Map/MapLoader";
 import {objectCounter} from "./addons/objectCount";
-import {Mouse} from "./classes/Engine/Mouse";
-
-import {FloatX, FloatY} from "./classes/Engine/Gui/GuiBox";
-import {Button} from "./classes/Engine/Gui/Button";
+import {Keyboard} from "./classes/Engine/Input/Keyboard";
+import {FloatX, FloatY} from "./classes/Engine/Gui/Element";
 import {RainEngine} from "./classes/Engine/RainEngine";
-import {Camera} from "./classes/Engine/Camera";
+import {Mouse} from "./classes/Engine/Input/Mouse";
+import {InputController} from "./classes/Engine/Input/InputController";
+import {GameKeys} from "./classes/Engine/Input/InputKey";
+import {Button} from "./classes/Engine/Gui/Button";
+import {Touch} from "./classes/Engine/Input/Touch";
 
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-  await ResourceLoader.load("/resources/resource.json");
+  Keyboard.init()
 
-  await MapLoader.load("/resources/map.json");
-
-  // Указываем полотно для дисплея
   const canvas = document.getElementById("display") as HTMLCanvasElement;
   Display.attach(canvas);
+
+  await ResourceLoader.load("/resources/resource.json");
+
+  await MapLoader.load("/resources/map1.json");
 
   // АДДОНЫ
   // Включаем счетчик FPS как аддон дисплея
   Display.addons.add(fpsMeter());
   Display.addons.add(objectCounter());
 
-  const rainButton = new Button(275, 50, 150, 50, "Rain Дождь");
-  rainButton.viewBox.floatX = FloatX.right;
-  rainButton.viewBox.floatY = FloatY.bottom;
+  const rainButton = new Button(0, 200, 150, 50, "Дождь");
+  rainButton.floatX = FloatX.left;
+  rainButton.floatY = FloatY.bottom;
   Display.addObject(rainButton);
-  Mouse.addSlave(rainButton);
-  rainButton.ownEvent = () => {
-    RainEngine.setCamera(Camera)
-    RainEngine.toggle();
+  Mouse.addObject(rainButton);
+  rainButton.ownEvent = (e) => {
+    if(e[GameKeys.LEFT_MOUSE].status(true)) {
+      RainEngine.toggle();
+    }
   };
 
-  const testButton = new Button(100, 50, 150, 50, "Press Нажми");
-  testButton.viewBox.floatX = FloatX.right;
-  testButton.viewBox.floatY = FloatY.bottom;
-  Display.addObject(testButton);
-  Mouse.addSlave(testButton);
-  testButton.ownEvent = () => {
-    Display.debug.showBoxes = !Display.debug.showBoxes;
+  const rainButton2 = new Button(150, 50, 100, 100, "D");
+  rainButton2.floatX = FloatX.left;
+  rainButton2.floatY = FloatY.bottom;
+  Display.addObject(rainButton2);
+  Touch.addObject(rainButton2);
+  rainButton2.ownEvent = (e) => {
+    InputController.updateState(GameKeys.D,e[GameKeys.LEFT_MOUSE].status(true))
+  };
+
+  const rainButton3 = new Button(50, 50, 100, 100, "A");
+  rainButton3.floatX = FloatX.left;
+  rainButton3.floatY = FloatY.bottom;
+  Display.addObject(rainButton3);
+  Touch.addObject(rainButton3);
+  rainButton3.ownEvent = (e) => {
+    InputController.updateState(GameKeys.A,e[GameKeys.LEFT_MOUSE].status(true))
   };
 
 
-  // Camera.attach(Keyboard);
+  const rainButton4 = new Button(50, 50, 100, 100, "Space");
+  rainButton4.floatX = FloatX.right;
+  rainButton4.floatY = FloatY.bottom;
+  Display.addObject(rainButton4);
+  Touch.addObject(rainButton4);
+  rainButton4.ownEvent = (e) => {
+    InputController.updateState(GameKeys.Space,e[GameKeys.LEFT_MOUSE].status(true))
+  };
+
+  const rainButton5 = new Button(150, 50, 100, 100, "Полный экран");
+  rainButton5.floatX = FloatX.left;
+  rainButton5.floatY = FloatY.top;
+  Display.addObject(rainButton5);
+  Touch.addObject(rainButton5);
+  rainButton5.ownEvent = () => {
+    Display.canvas.requestFullscreen();
+  };
+
+  let lastMap = '1'
+
+  const rainButton6 = new Button(150, 150, 100, 100, "Переключить карту");
+  rainButton6.floatX = FloatX.right;
+  rainButton6.floatY = FloatY.top;
+  Display.addObject(rainButton6);
+  Mouse.addObject(rainButton6);
+  rainButton6.ownEvent = (e) => {
+    if(e[GameKeys.LEFT_MOUSE].status(true)) {
+      MapLoader.load("/resources/map" + (lastMap = lastMap == '1' ? '2' : '1') + ".json");
+    }
+  };
 
 
   // Запускаем рендер и физику

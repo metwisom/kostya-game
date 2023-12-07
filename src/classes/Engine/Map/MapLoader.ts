@@ -3,15 +3,16 @@ import {BackgroundEntity, GameMap, MapEntity} from "./iMap";
 import {Structure} from "../../content/Structure";
 import {Display} from "../Display";
 import {Physics} from "../Physics";
-import {Entity} from "../../Entity";
 import {Parallax} from "../../content/Parallax";
+import {D2Drawable} from "../../D2Drawable";
+import {D2Updatable} from "../../D2Updatable";
 import {Character} from "../../content/Character";
-import {Keyboard} from "../Keyboard";
 import {Camera} from "../Camera";
+import {InputController} from "../Input/InputController";
 
 class _MapLoader {
 
-  Map: Array<Entity[]> = [];
+  Map: Array<D2Drawable[]> = [];
 
   async load(resourceMap: string) {
     const readyMapList: MapEntity[] = [];
@@ -28,14 +29,14 @@ class _MapLoader {
           readyParallaxList.push(item)
         );
         const Kostya = new Character(data.spawnPoint.x, data.spawnPoint.y);
-        Display.addObject(Kostya, 1);
+        Display.addObject(Kostya, 2);
         Physics.addObject(Kostya);
-        Keyboard.attach(Kostya);
+        InputController.setSlave(Kostya);
         Camera.attach(Kostya);
       });
 
     readyMapList.map(item => {
-      let someObject = undefined;
+      let someObject:D2Updatable = undefined;
       switch (item.type) {
       case "ground":
         someObject = new Structure(item.x, item.y);
@@ -44,19 +45,24 @@ class _MapLoader {
       Display.addObject(someObject, 1);
       Physics.addObject(someObject);
       this.set(item.x, item.y, someObject);
+      return someObject
+    }).map(i => {
+      if(i instanceof Structure){
+        i.refreshSprite()
+      }
     });
+
     readyParallaxList.map(item => {
       const plx1 = new Parallax(item.image, item.bias);
       Display.addObject(plx1,0);
+        const plx2 = new Parallax(item.image, item.bias);
+        plx2.setOriginX(plx1.draw().width)
+        Display.addObject(plx2,0);
     });
-    this.refreshTextures();
+    // this.refreshTextures();
   }
 
-  refreshTextures() {
-    this.Map.map(line => line.map(item => item.refreshSprite()));
-  }
-
-  set(x: number, y: number, object: Entity) {
+  set(x: number, y: number, object: D2Drawable) {
     if (this.Map[x] == undefined) {
       this.Map[x] = [];
     }

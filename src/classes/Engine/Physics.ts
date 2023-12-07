@@ -1,26 +1,26 @@
 import {requestAnimationFrame} from "../../utils/requestAnimationFrame";
 import {intersectRect} from "../../utils/intersectRect";
-import {Entity} from "../Entity";
-import {GameKeyboard} from "./GameKeyboard";
-import {BoxArea} from "../Box";
-import {RainEngine} from "./RainEngine";
+import {Statable} from "../Statable";
+import {BoxArea} from "../Box/Box";
+import {D2Updatable} from "../D2Updatable";
+import {InputController} from "./Input/InputController";
 
 
 class _Physics {
 
-  private removeList: Entity[] = [];
-  private objects: Entity[] = [];
+  private removeList: D2Updatable[] = [];
+  private objects: D2Updatable[] = [];
   private lastTime: number = new Date().valueOf();
 
   public get obj() {
     return this.objects;
   }
 
-  addObject(obj: Entity) {
+  addObject(obj: D2Updatable) {
     this.objects.push(obj);
   }
 
-  toRemove(obj: Entity) {
+  toRemove(obj: D2Updatable) {
     this.removeList.push(obj);
   }
 
@@ -29,7 +29,7 @@ class _Physics {
     this.removeList = [];
   }
 
-  removeObject(obj: Entity) {
+  removeObject(obj: Statable) {
     if (this.objects.includes(obj)) {
       this.objects.splice(this.objects.indexOf(obj), 1);
     }
@@ -39,7 +39,7 @@ class _Physics {
     const {objects} = this;
 
     const calc = () => {
-      GameKeyboard.update();
+      InputController.update();
       const delta = new Date().valueOf() - this.lastTime;
       objects.map(object => {
         if (!object.isActual()) {
@@ -59,10 +59,10 @@ class _Physics {
 
   checkCollision(hitBox: BoxArea, ignore = "") {
     return this.objects.map(e => {
-      if (e.id === ignore || !e.hasCollision) {
+      if (e.id === ignore || !e.physBox.hasCollision) {
         return undefined;
       }
-      const testBox = e.physBox.get(e.x, e.y);
+      const testBox = e.physBox.shift(0, 0);
       if (intersectRect(testBox, hitBox,)) {
         return testBox;
       } else {
