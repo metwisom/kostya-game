@@ -3,16 +3,12 @@ const CanvasStore = (function () {
 
   return Object.freeze({
     get(): HTMLCanvasElement {
-      const item = store.pop();
-      if (item === undefined) {
-        return document.createElement("canvas");
-      }
-      return item;
+      return store.pop() || document.createElement("canvas");
     },
     release(element: HTMLCanvasElement) {
       store.push(element);
     },
-    count() {
+    get count() {
       return store.length;
     }
   });

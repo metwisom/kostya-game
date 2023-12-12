@@ -11,6 +11,7 @@ class Layer {
   removeObject(obj: D2Drawable) {
     if (this.items.includes(obj)) {
       this.items.splice(this.items.indexOf(obj), 1);
+      return true;
     }
   }
 }

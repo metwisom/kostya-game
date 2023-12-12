@@ -1,12 +1,12 @@
-import {Statable} from "../Statable";
+import {StatableItem} from "../StatableItem";
 import {BoxTextured} from "../Box/BoxTextured";
 
 
 const Camera = (function () {
 
-  let attached: Statable = undefined;
+  let attached: StatableItem = undefined;
 
-  const temp = new Statable();
+  const temp = new StatableItem();
   temp.x = 0;
   temp.y = 0;
 
@@ -23,7 +23,7 @@ const Camera = (function () {
     get y() {
       return attached ? attached.y : 0;
     },
-    attach(obj: Statable) {
+    attach(obj: StatableItem) {
       attached = obj;
     },
   });

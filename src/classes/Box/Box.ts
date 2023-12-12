@@ -24,7 +24,7 @@ class Box {
     this.maintainer = maintainer;
   }
 
-  update(delta: number): void {
+  update(_: number): void {
 
   }
 

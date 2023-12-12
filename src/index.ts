@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   Display.addObject(rainButton5);
   Touch.addObject(rainButton5);
   rainButton5.ownEvent = () => {
-    Display.canvas.requestFullscreen();
+    Display.display.requestFullscreen();
   };
 
   let lastMap = '1'

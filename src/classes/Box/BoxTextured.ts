@@ -2,6 +2,7 @@ import {Texture} from "../Texture/Texture";
 import {TextureCollection} from "../Texture/TextureCollection";
 import {D2Drawable} from "../D2Drawable";
 import {Box} from "./Box";
+import {TextureBlank} from "../Texture/TextureBlank";
 
 
 type ViewArea = {
@@ -13,7 +14,7 @@ class BoxTextured extends Box {
 
   constructor(x: number, y: number, width: number, height: number, maintainer: D2Drawable) {
     super(x, y, width, height, maintainer);
-    this.texture = undefined;
+    this.texture = new TextureBlank(10, 10);
   }
 
   setTexture(texture: Texture) {
@@ -27,12 +28,6 @@ class BoxTextured extends Box {
   }
 
   get(): ViewArea {
-    // if(this.maintainer instanceof  Rain) {
-    // @ts-ignore
-      if(this.maintainer.g != undefined) {
-        // console.log(this.maintainer);
-      }
-    // }
     return {
       x: super.get().x,
       y: super.get().y,

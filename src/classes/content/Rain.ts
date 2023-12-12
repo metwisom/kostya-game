@@ -1,4 +1,4 @@
-import {Statable} from "../Statable";
+import {StatableItem} from "../StatableItem";
 import {getRandom, getRandomFloat} from "../../utils/getRandom";
 import {Display} from "../Engine/Display";
 import {BoxGravity} from "../Box/BoxGravity";
@@ -7,13 +7,11 @@ import {Camera} from "../Engine/Camera";
 import {TextureRain} from "../Texture/TextureRain";
 
 
-class Rain extends Statable {
+class Rain extends StatableItem {
 
   _physBox: BoxGravity;
   windAngle = Math.PI / 2 + getRandomFloat(-10,10)
   maxDepth: number;
-
-  g = true
 
   speed = 0.5
   hasCollision = false;
@@ -37,7 +35,7 @@ class Rain extends Statable {
   }
 
   respawn(){
-    this.x = getRandom(Camera.x - Display.canvas.width / 2, Camera.x + Display.canvas.width / 2);
+    this.x = getRandom(Camera.x - Display.display.width / 2, Camera.x + Display.display.width / 2);
     this.y = getRandom(Camera.y - 500, Camera.y - 1500);
     this.speed = getRandom(18,40);
   }
@@ -49,7 +47,7 @@ class Rain extends Statable {
   update(delta: number) {
     this._physBox.eDown = this.speed
     this.x += Math.cos(this.windAngle) * 4
-    if (this.y > Display.canvas.height) {
+    if (this.y > Display.display.height) {
       this.respawn()
     }
     super.update(delta);

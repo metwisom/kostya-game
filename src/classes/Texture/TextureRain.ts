@@ -4,7 +4,7 @@ import {TextureBlank} from "./TextureBlank";
 class TextureRain extends TextureBlank{
 
 
-  protected render(position: number){
+  protected render(_: number){
     this.virtualScene.fillStyle = this.fillColor
     const maxWidth = this.virtualCanvas.height - this.virtualCanvas.width
     for(let i = 1;i < maxWidth;i++){

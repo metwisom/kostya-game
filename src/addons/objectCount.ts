@@ -12,7 +12,7 @@ const objectCounter = () => {
 
     scene.fillText("objects: " + count.toString() ,20, 40);
     scene.fillText(`phys: ` + Physics.obj.length  ,20, 50);
-    scene.fillText( '\ncanvas: ' + CanvasStore.count() ,20, 60);
+    scene.fillText( '\ncanvas: ' + CanvasStore.count ,20, 60);
 
   };
 };

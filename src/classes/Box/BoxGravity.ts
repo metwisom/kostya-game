@@ -1,7 +1,6 @@
 import {Physics} from "../Engine/Physics";
 import {D2Updatable} from "../D2Updatable";
-import {BoxArea} from "./Box";
-import {Statable} from "../Statable";
+import {StatableItem} from "../StatableItem";
 import {BoxCollision} from "./BoxCollision";
 
 
@@ -10,7 +9,7 @@ class BoxGravity extends BoxCollision {
   momentum = 0;
   public eDown = 1;
 
-  protected readonly maintainer: D2Updatable & Statable;
+  protected readonly maintainer: D2Updatable & StatableItem;
 
   constructor(x: number, y: number, width: number, height: number, maintainer: D2Updatable) {
     super(x, y, width, height, maintainer);
@@ -19,7 +18,7 @@ class BoxGravity extends BoxCollision {
   update(delta: number) {
     if (this.eDown != 0 || this.momentum != 0) {
 
-      let inter: BoxArea[] = [];
+      let inter: D2Updatable[] = [];
 
       const xCollision = this.shift(this.momentum * delta, 0);
       if (this.hasCollision) {

@@ -1,4 +1,4 @@
-import {Statable} from "../Statable";
+import {StatableItem} from "../StatableItem";
 import {BoxTextured} from "../Box/BoxTextured";
 import {TextureCollection} from "../Texture/TextureCollection";
 import {Texture} from "../Texture/Texture";
@@ -11,7 +11,7 @@ import {Physics} from "../Engine/Physics";
 import {Particle} from "./Particle";
 
 
-class Character extends Statable implements Eventful {
+class Character extends StatableItem implements Eventful {
 
   protected _physBox: BoxGravity;
 

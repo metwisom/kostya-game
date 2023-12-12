@@ -6,11 +6,11 @@ class D2Updatable extends D2Drawable {
 
   protected _physBox: BoxCollision;
 
-  public set physBox(newPhysBox: typeof this._physBox) {
+  public set physBox(newPhysBox) {
     this._physBox = newPhysBox;
   }
 
-  public get physBox(): typeof this._physBox {
+  public get physBox() {
     return this._physBox;
   }
 

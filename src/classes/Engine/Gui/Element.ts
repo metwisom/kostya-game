@@ -36,10 +36,10 @@ export default class Element extends D2Drawable {
     this._origX = value;
     switch (this.floatX) {
     case FloatX.center:
-      this._x = value + Display.canvas.width / 2 - this.width / 2;
+      this._x = value + Display.display.width / 2 - this.width / 2;
       break;
     case FloatX.right:
-      this._x = Display.canvas.width - this.width / 2  - value ;
+      this._x = Display.display.width - this.width / 2  - value ;
       break;
     default:
       this._x = value - this.width / 2;
@@ -54,10 +54,10 @@ export default class Element extends D2Drawable {
     this._origY = value;
     switch (this.floatY) {
     case FloatY.center:
-      this._y = value + Display.canvas.height / 2 - this.height / 2;
+      this._y = value + Display.display.height / 2 - this.height / 2;
       break;
     case FloatY.bottom:
-      this._y = Display.canvas.height - this.height / 2 - value;
+      this._y = Display.display.height - this.height / 2 - value;
       break;
     default:
       this._y = value - this.height / 2;

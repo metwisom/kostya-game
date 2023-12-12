@@ -13,15 +13,15 @@ class Parallax extends D2Updatable {
   texture: string;
   constructor(image: string, bias: number) {
     super();
-    this._x = 0;
-    this._y = 0;
+    this.x = 0;
+    this.y = 0;
     this.texture = image
     const texture = new Texture(image)
 
-    const coef = Math.max(Display.canvas.height / texture.referenceImage.height, Display.canvas.width / texture.referenceImage.width);
+    const ratio = Math.max(Display.display.height / texture.referenceImage.height, Display.display.width / texture.referenceImage.width);
 
-    const width = texture.referenceImage.width * coef;
-    const height = texture.referenceImage.height * coef;
+    const width = texture.referenceImage.width * ratio;
+    const height = texture.referenceImage.height * ratio;
 
     this.viewBox = new BoxTextured(0, 0, width, height, this);
     this.viewBox.setTexture(texture);
@@ -39,11 +39,11 @@ class Parallax extends D2Updatable {
   }
 
   draw(): ViewArea {
-    this.y = -Camera.y - Display.canvas.height / 2;
+    this.y = -Camera.y - Display.display.height / 2;
 
     this.x = this.viewBox.width * Math.floor((Camera.x - this.viewBox.width / 2) / this.viewBox.width)
     this.x = this.x + this._originX
-    this.y = Camera.y - Display.canvas.height / 2 - Camera.target.viewBox.height / 2;
+    this.y = Camera.y - Display.display.height / 2 - Camera.target.viewBox.height / 2;
 
     return super.draw();
 

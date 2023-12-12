@@ -1,9 +1,9 @@
-import {Statable} from "../Statable";
+import {StatableItem} from "../StatableItem";
 import {BoxCollision} from "../Box/BoxCollision";
 import {TextureBlank} from "../Texture/TextureBlank";
 
 
-class Particle extends Statable {
+class Particle extends StatableItem {
   angle: number;
   size: number;
   startSize: number;
