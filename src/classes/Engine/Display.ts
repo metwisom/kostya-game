@@ -29,13 +29,16 @@ const Display = (function () {
         removeList.map(item => layers.map(layer => layer.removeObject(item)))
         removeList.length = 0;
     }
-
+    let i = 0
     const drawCollection = (collection: D2Drawable[]) => {
         collection.map(item => {
             if (!item.isActual()) {
                 return removeList.push(item);
             }
             const viewBox = item.draw();
+
+
+            // console.log(Camera.x)
 
             scene.drawImage(viewBox.texture.get(),
                 0, 0,
@@ -50,9 +53,9 @@ const Display = (function () {
     }
 
     return Object.freeze({
-        layers,
-        addons,
-        display,
+        get layers(){return layers},
+        get addons(){return addons},
+        get display(){return display},
         addObject(obj: D2Drawable, layer: number = 0) {
             if (obj instanceof Element) {
                 gui.push(obj);
@@ -72,9 +75,10 @@ const Display = (function () {
         start() {
 
             const draw = () => {
+                // console.log(display.width)
                 scene.translate(
-                    Display.display.width / 2 - Camera.x,
-                    Display.display.height / 2 - Camera.y + Camera.target.viewBox.height / 2);
+                    display.width / 2 - Camera.x,
+                    display.height / 2 - Camera.y + Camera.target.viewBox.height / 2);
 
                 drawCollection([].concat(...layers.map(layer => layer.items).filter(i => i)));
 

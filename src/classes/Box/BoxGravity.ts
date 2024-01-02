@@ -15,10 +15,13 @@ class BoxGravity extends BoxCollision {
     super(x, y, width, height, maintainer);
   }
 
-  update(delta: number) {
+  update(delta: number = 1) {
     if (this.eDown != 0 || this.momentum != 0) {
 
       let inter: D2Updatable[] = [];
+
+      // console.log(this.momentum)
+      // console.log(delta)
 
       const xCollision = this.shift(this.momentum * delta, 0);
       if (this.hasCollision) {

@@ -8,57 +8,58 @@ import {InputController} from "./Input/InputController";
 
 const Physics = (function () {
 
-    const removeList: D2Updatable[] = [];
-    let objects: D2Updatable[] = [];
+  const removeList: D2Updatable[] = [];
+  let objects: D2Updatable[] = [];
 
-    const removeObject = (obj: StatableItem) => {
-        if (objects.includes(obj)) {
-            objects.splice(objects.indexOf(obj), 1);
-        }
+  const removeObject = (obj: StatableItem) => {
+    if (objects.includes(obj)) {
+      objects.splice(objects.indexOf(obj), 1);
     }
+  }
 
-    const cleanUp = () => {
-        removeList.map(removeObject)
-        removeList.length = 0;
-    }
-    const toRemove = (obj: D2Updatable) => {
-        removeList.push(obj);
-    };
+  const cleanUp = () => {
+    removeList.map(removeObject)
+    removeList.length = 0;
+  }
+  const toRemove = (obj: D2Updatable) => {
+    removeList.push(obj);
+  };
 
-    return Object.freeze({
-        get obj() {
-            return objects;
-        },
-        addObject(obj: D2Updatable) {
-            objects.push(obj);
-        },
+  return Object.freeze({
+    get obj() {
+      return objects;
+    },
+    addObject(obj: D2Updatable) {
+      objects.push(obj);
+    },
 
-        start() {
-            const calc = () => {
-                InputController.update();
-                const delta = new Date().valueOf() - this;
-                objects.map(object => {
-                    if (!object.isActual()) {
-                        return toRemove(object);
-                    }
-                    object.update(delta);
-                });
+    start() {
+      const calc = (time: number) => {
+        InputController.update();
+        const delta = new Date().valueOf() - time;
+        // console.log(delta)
+        objects.map(object => {
+          if (!object.isActual()) {
+            return toRemove(object);
+          }
+          object.update(delta);
+        });
 
-                requestAnimationFrame(calc.bind(new Date().valueOf()));
-                cleanUp();
-            };
+        requestAnimationFrame(calc.bind(undefined,[new Date().valueOf()]));
+        cleanUp();
+      };
 
-            calc.call(new Date().valueOf());
-        },
-        checkCollision(hitBox: BoxArea, ignore = "") {
-            return objects.filter(e => {
-                if (e.id !== ignore && e.physBox.hasCollision) {
-                    const testBox = e.physBox.shift(0, 0);
-                    return intersectRect(testBox, hitBox);
-                }
-            });
+      calc(new Date().valueOf());
+    },
+    checkCollision(hitBox: BoxArea, ignore = "") {
+      return objects.filter(e => {
+        if (e.id !== ignore && e.physBox.hasCollision) {
+          const testBox = e.physBox.shift(0, 0);
+          return intersectRect(testBox, hitBox);
         }
-    })
+      });
+    }
+  })
 
 
 })();

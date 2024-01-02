@@ -18,6 +18,11 @@ class Parallax extends D2Updatable {
     this.texture = image
     const texture = new Texture(image)
 
+    // console.log(Display.display)
+    // console.log(texture.referenceImage)
+    // console.log(Display.display)
+    // console.log(texture.referenceImage)
+
     const ratio = Math.max(Display.display.height / texture.referenceImage.height, Display.display.width / texture.referenceImage.width);
 
     const width = texture.referenceImage.width * ratio;

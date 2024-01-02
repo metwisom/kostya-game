@@ -19,8 +19,16 @@ class Character extends StatableItem implements Eventful {
     return this._physBox;
   }
 
+
+  protected audio = new Audio("/resources/audio/step.wav");
+
+
+
   constructor(x: number, y: number) {
     super();
+
+    this.audio.playbackRate = 1.8;
+    this.audio.loop = true;
 
     this.x = x;
     this.y = y;
@@ -82,18 +90,19 @@ class Character extends StatableItem implements Eventful {
       this.y = 0;
     }
 
-    if (this.physBox.momentum != 0 && audio.paused) {
-        audio.play().then();
+    if (this.physBox.momentum != 0 && this.audio.paused) {
+        this.audio.play().then();
+        console.log(1)
     }
-    if (this.physBox.momentum == 0 && !audio.paused) {
-        audio.pause();
-        audio.currentTime = 0;
+    if (this.physBox.momentum == 0 && !this.audio.paused) {
+      this.audio.pause();
+      this.audio.currentTime = 0;
     }
   }
 
   private createStepParticle() {
     if (this.physBox.momentum != 0 && this.physBox.hasGround) {
-      console.log('test')
+      // console.log('test')
         for (let i = 0; i < 1; i++) {
             const part = new Particle(this.x + this.physBox.momentum + Math.random() * 30 - 15, this.y + Math.random() * 3 - 1.5, 1);
             Display.addObject(part, 2);
@@ -103,9 +112,5 @@ class Character extends StatableItem implements Eventful {
   }
 
 }
-
-const audio = new Audio("/resources/audio/step.wav");
-audio.playbackRate = 1.8;
-audio.loop = true;
 
 export {Character};

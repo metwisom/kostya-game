@@ -29,7 +29,7 @@ class Particle extends StatableItem {
     this.size *= 0.95;
     this._viewBox.width = this.size
     this._viewBox.height = this.size
-    console.log(this.size)
+    // console.log(this.size)
     if (this.size < 1) {
       this.destroy();
     }

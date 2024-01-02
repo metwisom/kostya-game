@@ -3,7 +3,7 @@ import {InputKey, GameKeys} from "./InputKey";
 
 
 export type InputMap = {
-   [value in GameKeys]: InputKey
+  [value in GameKeys]: InputKey
 }
 
 const InputController = (function () {
@@ -19,7 +19,9 @@ const InputController = (function () {
   let slave: Eventful = undefined;
 
   return Object.freeze({
-    keyboard,
+    get keyboard() {
+      return keyboard
+    },
     update() {
       if (slave !== undefined) {
         slave.Event(keyboard);
@@ -36,7 +38,7 @@ const InputController = (function () {
           keyboard[key].position.y = meta.y;
         }
         if (state !== keyboard[key].status(true)) {
-          keyboard[key].set(state,propagation);
+          keyboard[key].set(state, propagation);
         }
       }
     }

@@ -18,7 +18,7 @@ const Camera = (function () {
       return attached ? attached : temp;
     },
     get x() {
-      return attached ? attached.x : 0;
+      return attached && attached.x ? attached.x : 0;
     },
     get y() {
       return attached ? attached.y : 0;

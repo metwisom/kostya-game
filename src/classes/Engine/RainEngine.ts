@@ -11,7 +11,7 @@ const RainEngine = (function () {
   let is_active: boolean = false;
   const create = () => {
     if (Camera && Camera.target != undefined && is_active) {
-      for(let i = 0;i < 250;i++) {
+      for (let i = 0; i < 250; i++) {
         let rain = new Rain(Camera.y + 1000);
         couple.push(rain)
         Display.addObject(rain);
@@ -21,7 +21,9 @@ const RainEngine = (function () {
   };
 
   return Object.freeze({
-    couple,
+    get couple() {
+      return couple
+    },
     start() {
       is_active = true;
       create();
@@ -33,7 +35,7 @@ const RainEngine = (function () {
     },
     toggle() {
       is_active = !is_active;
-      if(!is_active){
+      if (!is_active) {
         stop()
       }
       create();
