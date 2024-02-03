@@ -1,50 +1,67 @@
 import {BoxTextured, ViewArea} from "./Box/BoxTextured";
 
 
+/**
+ * @class
+ * @classdesc Отрисовываемый объект
+ * @property {string} id - Уникальный идентификатор объекта
+ * @property {number} x - Положение обьекта в мире по оси X
+ * @property {number} y - Положение обьекта в мире по оси Y
+ * @property {string} viewBox - Уникальный идентификатор объекта
+ * @property {string} id - Уникальный идентификатор объекта
+ * @property {string} id - Уникальный идентификатор объекта
+ * @property {string} id - Уникальный идентификатор объекта
+ */
 class D2Drawable {
 
-    readonly id: string = Math.random().toString(16).slice(2);
-    private isDestroyed = false;
-    protected _viewBox: BoxTextured;
-    protected _y: number = 0;
-    protected _x: number = 0;
+  readonly id: string = Math.random().toString(16).slice(2);
+  private isDestroyed = false;
+  protected _viewBox: BoxTextured;
+  protected _y: number = 0;
+  protected _x: number = 0;
 
-    public get y() {
-        return this._y;
-    }
+  constructor(x: number = 0, y: number = 0) {
+    this._viewBox = new BoxTextured(0,0,0,0,this);
+    this.x = x;
+    this.y = y;
+  }
 
-    public set y(newY: number) {
-        this._y = newY;
-    }
+  public get y() {
+    return this._y;
+  }
 
-    public get x() {
-        return this._x;
-    }
+  public set y(newY: number) {
+    this._y = newY;
+  }
 
-    public set x(newX: number) {
-        this._x = newX;
-    }
+  public get x() {
+    return this._x;
+  }
 
-    public get viewBox() {
-        return this._viewBox;
-    }
+  public set x(newX: number) {
+    this._x = newX;
+  }
 
-    public set viewBox(newViewBox: BoxTextured) {
-        this._viewBox = newViewBox;
-    }
+  public get viewBox() {
+    return this._viewBox;
+  }
 
-    draw(): ViewArea {
-        return this._viewBox.get();
-    }
+  public set viewBox(newViewBox: BoxTextured) {
+    this._viewBox = newViewBox;
+  }
 
-    isActual() {
-        return !this.isDestroyed;
-    }
+  draw(): ViewArea {
+    return this._viewBox.prop();
+  }
 
-    destroy() {
-        this.isDestroyed = true;
-        this._viewBox.destroy();
-    }
+  isActual() {
+    return !this.isDestroyed;
+  }
+
+  destroy() {
+    this.isDestroyed = true;
+    this._viewBox.destroy();
+  }
 }
 
 export {D2Drawable};

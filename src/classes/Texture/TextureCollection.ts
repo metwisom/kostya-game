@@ -1,4 +1,4 @@
-import {Texture} from "./Texture";
+import {Texture} from './Texture';
 
 
 class TextureCollection extends Texture {
@@ -10,18 +10,16 @@ class TextureCollection extends Texture {
   }
 
   get() {
-    // console.log(this.states[this.currentState].get())
     return this.states[this.currentState].get();
   }
 
-  setState(stateName: string) {
-    if (this.states[stateName] === undefined) {
-      console.trace("StateNotFound");
-      throw "";
+  set state(newState: string) {
+    if (this.states[newState] === undefined) {
+      console.trace('StateNotFound');
+      throw '';
     }
-    this.currentState = stateName
+    this.currentState = newState;
   }
-
 }
 
 export {TextureCollection};

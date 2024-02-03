@@ -1,6 +1,6 @@
 import {GuiBox} from "./GuiBox";
 import {D2Drawable} from "../../D2Drawable";
-import {Display} from "../Display";
+import {Engine} from "../Engine";
 
 
 export enum FloatX {
@@ -24,10 +24,8 @@ export default class Element extends D2Drawable {
   private _floatY: FloatY;
 
   constructor(x: number, y: number, width: number, height: number) {
-    super();
+    super(x,y);
     this.viewBox = new GuiBox(0, 0, width, height, this);
-    this.x = x;
-    this.y = y;
     this.floatX = FloatX.left;
     this.floatY = FloatY.top;
   }
@@ -36,10 +34,10 @@ export default class Element extends D2Drawable {
     this._origX = value;
     switch (this.floatX) {
     case FloatX.center:
-      this._x = value + Display.display.width / 2 - this.width / 2;
+      this._x = value + Engine.display.width / 2 - this.width / 2;
       break;
     case FloatX.right:
-      this._x = Display.display.width - this.width / 2  - value ;
+      this._x = Engine.display.width - this.width / 2  - value ;
       break;
     default:
       this._x = value - this.width / 2;
@@ -54,10 +52,10 @@ export default class Element extends D2Drawable {
     this._origY = value;
     switch (this.floatY) {
     case FloatY.center:
-      this._y = value + Display.display.height / 2 - this.height / 2;
+      this._y = value + Engine.display.height / 2 - this.height / 2;
       break;
     case FloatY.bottom:
-      this._y = Display.display.height - this.height / 2 - value;
+      this._y = Engine.display.height - this.height / 2 - value;
       break;
     default:
       this._y = value - this.height / 2;

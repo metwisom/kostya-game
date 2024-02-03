@@ -1,11 +1,17 @@
 import {BoxArea} from "../classes/Box/Box";
 
-
-const intersectRect = (r1: BoxArea, r2: BoxArea) => {
-  return !(r2.x >= r1.width + r1.x ||
-    r2.x + r2.width <= r1.x ||
-    r2.y >= r1.height + r1.y ||
-    r2.y + r2.height <= r1.y);
+/**
+ * Проверяет пересечение двух прямоугольных областей.
+ *
+ * @param {BoxArea} first - Первая прямоугольная область.
+ * @param {BoxArea} second - Вторая прямоугольная область.
+ * @returns {boolean} - Возвращает true, если области пересекаются, иначе false.
+ */
+const intersectRect = (first: BoxArea, second: BoxArea): boolean => {
+  return !(second.x >= first.width + first.x ||
+    second.x + second.width <= first.x ||
+    second.y >= first.height + first.y ||
+    second.y + second.height <= first.y);
 };
 
 export {intersectRect};

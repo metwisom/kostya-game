@@ -1,7 +1,6 @@
-import {D2Drawable} from "../D2Drawable";
+import {D2Drawable} from '../D2Drawable';
 
-
-type BoxArea = {
+interface BoxArea {
   x: number;
   y: number;
   width: number;
@@ -15,6 +14,7 @@ class Box {
   protected _width: number;
   protected _height: number;
   protected readonly maintainer: D2Drawable;
+  private _hasCollision: boolean = false;
 
   constructor(x: number, y: number, width: number, height: number, maintainer: D2Drawable) {
     this._width = width;
@@ -24,49 +24,35 @@ class Box {
     this.maintainer = maintainer;
   }
 
-  update(_: number): void {
-
+  public get hasCollision(){
+    return this._hasCollision
   }
-
-  public get width() {
-    return this._width;
+  public set hasCollision(newCollisionState){
+    this._hasCollision = newCollisionState
   }
 
   public get height() {
     return this._height;
   }
 
-  public set width(newWidth: number) {
-    this._width = newWidth;
-  }
-
   public set height(newHeight: number) {
     this._height = newHeight;
   }
 
-  public get x() {
-    return this.maintainer.x - this._x;
+  public get width() {
+    return this._width;
   }
 
-  public get y() {
-    return this.maintainer.y - this._y;
+  public set width(newWidth: number) {
+    this._width = newWidth;
   }
 
-  public shift(x: number, y: number): BoxArea {
+  prop(x: number = 0, y: number = 0): BoxArea {
     return {
-      x: this.x + x,
-      y: this.y + y,
+      x: this.maintainer.x - this._x + x,
+      y: this.maintainer.y - this._y + y,
       width: this.width,
-      height: this.height
-    };
-  }
-
-  get(): BoxArea {
-    return {
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      height: this.height
+      height: this.height,
     };
   }
 

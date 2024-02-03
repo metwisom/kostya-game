@@ -1,4 +1,4 @@
-import {D2Drawable} from "../D2Drawable";
+import {D2Drawable} from '../D2Drawable';
 
 class Layer {
 

@@ -1,19 +1,25 @@
-import {Display} from "../classes/Engine/Display";
-import {Physics} from "../classes/Engine/Physics";
+import {Engine} from "../classes/Engine/Engine";
 import {CanvasStore} from "../classes/CanvasStore";
+import {Graphic} from "../classes/Engine/Graphic";
 
 
 const objectCounter = () => {
-  return (scene: CanvasRenderingContext2D) => {
+  let skipCount = 0;
+  let drawCount = '';
+  let physCount = '';
+  let canvasStoreCount = '';
+  return (graphic: Graphic) => {
 
-    const count = Display.layers.reduce((prev,cur) => {
-      return prev + cur.items.length
-    },0)
+    skipCount = skipCount > 30 ? skipCount = 0 : skipCount + 1
+    if (skipCount === 0) {
+      drawCount = Engine.layers.reduce((prev, cur) => {
+        return prev + cur.items.length
+      }, 0).toString();
+      physCount = Engine.obj.length.toString();
+      canvasStoreCount = CanvasStore.count.toString();
+    }
 
-    scene.fillText("objects: " + count.toString() ,20, 40);
-    scene.fillText(`phys: ` + Physics.obj.length  ,20, 50);
-    scene.fillText( '\ncanvas: ' + CanvasStore.count ,20, 60);
-
+    graphic.drawText(`objects: ${drawCount}\nphys: ${physCount}\ncanvas: ${canvasStoreCount}`, 20, 60)
   };
 };
 

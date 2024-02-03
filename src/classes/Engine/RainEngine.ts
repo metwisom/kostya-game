@@ -1,7 +1,6 @@
 import {Rain} from "../content/Rain";
 import {Camera} from "./Camera";
-import {Display} from "./Display";
-import {Physics} from "./Physics";
+import {Engine} from "./Engine";
 
 
 const RainEngine = (function () {
@@ -11,11 +10,16 @@ const RainEngine = (function () {
   let is_active: boolean = false;
   const create = () => {
     if (Camera && Camera.target != undefined && is_active) {
-      for (let i = 0; i < 250; i++) {
-        let rain = new Rain(Camera.y + 1000);
-        couple.push(rain)
-        Display.addObject(rain);
-        Physics.addObject(rain);
+
+      let rain = new Rain(Camera.y + 1000);
+      couple.push(rain)
+      Engine.addObject(rain);
+      Engine.addObjectPhys(rain);
+
+      if(couple.length < 100){
+        setTimeout(() => {
+          create()
+        },10)
       }
     }
   };
@@ -36,9 +40,10 @@ const RainEngine = (function () {
     toggle() {
       is_active = !is_active;
       if (!is_active) {
-        stop()
+        this.stop()
+      }else {
+        create();
       }
-      create();
     }
   });
 })();

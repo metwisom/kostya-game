@@ -2,7 +2,7 @@ import {MapLoader} from "../Engine/Map/MapLoader";
 import {D2Updatable} from "../D2Updatable";
 import {BoxTextured} from "../Box/BoxTextured";
 import {Texture} from "../Texture/Texture";
-import {BoxCollision} from "../Box/BoxCollision";
+import {Box} from '../Box/Box';
 
 
 class Structure extends D2Updatable {
@@ -15,7 +15,8 @@ class Structure extends D2Updatable {
 
     this.matrixPosX = x;
     this.matrixPosY = y;
-    this.physBox = new BoxCollision(0, 0, 50, 50, this);
+    this.physBox = new Box(0, 0, 50, 50, this);
+    this._physBox.hasCollision = true;
     this.viewBox = new BoxTextured(0, 0, 50, 50, this);
     this.x = x * 50;
     this.y = y * 50;
@@ -33,27 +34,27 @@ class Structure extends D2Updatable {
     view += MapLoader.get(this.matrixPosX + 1, this.matrixPosY) ? 64 : 0;
     view += MapLoader.get(this.matrixPosX + 1, this.matrixPosY + 1) ? 128 : 0;
     if (this.byteCalc(view, [1], [4, 16, 64])) {
-      this.viewBox.setTexture(new Texture("block_one_foot.png"));
+      this.viewBox.texture = new Texture("block_one_foot.png");
     } else {
       if (this.byteCalc(view, [4, 64], [16])) {
-        this.viewBox.setTexture(new Texture("block.png"));
+        this.viewBox.texture = new Texture("block.png");
       } else {
         if (this.byteCalc(view, [4], [64])) {
-          this.viewBox.setTexture(new Texture("block_right.png"));
+          this.viewBox.texture = new Texture("block_right.png");
         } else {
           if (this.byteCalc(view, [64], [4])) {
-            this.viewBox.setTexture(new Texture("block_left.png"));
+            this.viewBox.texture = new Texture("block_left.png");
           } else {
             if (this.byteCalc(view, [4, 16, 64], [8, 32])) {
-              this.viewBox.setTexture(new Texture("block_mouse.png"));
+              this.viewBox.texture = new Texture("block_mouse.png");
             } else {
-              this.viewBox.setTexture(new Texture("block_mouse.png"));
+              this.viewBox.texture = new Texture("block_mouse.png");
             }
           }
         }
       }
     }
-    if (this.viewBox.get().texture == undefined) {
+    if (this.viewBox.prop().texture == undefined) {
 
     }
   }

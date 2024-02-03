@@ -1,33 +1,34 @@
-import {StatableItem} from "../StatableItem";
-import {BoxTextured} from "../Box/BoxTextured";
+import {D2Drawable} from '../D2Drawable';
 
+type Camera = {
+  readonly target: D2Drawable
+  readonly x: number
+  readonly y: number
+  attach(obj: D2Drawable): void
+}
 
 const Camera = (function () {
-
-  let attached: StatableItem = undefined;
-
-  const temp = new StatableItem();
-  temp.x = 0;
-  temp.y = 0;
-
-  temp.viewBox = new BoxTextured(0, 0, 0, 0, temp);
-  attached = temp;
-
-  return Object.freeze({
-    get target() {
-      return attached ? attached : temp;
-    },
-    get x() {
-      return attached && attached.x ? attached.x : 0;
-    },
-    get y() {
-      return attached ? attached.y : 0;
-    },
-    attach(obj: StatableItem) {
-      attached = obj;
-    },
+  const camera: Camera = Object.create(null);
+  let attached = new D2Drawable();
+  Object.defineProperty(camera, 'target', {
+    get: () => attached,
+    enumerable: false,
+    configurable: false,
   });
-
+  Object.defineProperty(camera, 'x', {
+    get: () => attached.x,
+    enumerable: false,
+    configurable: false,
+  });
+  Object.defineProperty(camera, 'y', {
+    get: () => attached.y,
+    enumerable: false,
+    configurable: false,
+  });
+  camera.attach = (obj: D2Drawable) => {
+    attached = obj;
+  };
+  return camera;
 })();
 
 

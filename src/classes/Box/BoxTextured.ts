@@ -1,44 +1,44 @@
-import {Texture} from "../Texture/Texture";
-import {TextureCollection} from "../Texture/TextureCollection";
-import {D2Drawable} from "../D2Drawable";
-import {Box} from "./Box";
-import {TextureBlank} from "../Texture/TextureBlank";
+import {Texture} from '../Texture/Texture';
+import {TextureCollection} from '../Texture/TextureCollection';
+import {D2Drawable} from '../D2Drawable';
+import {Box, BoxArea} from './Box';
+import {TextureBlank} from '../Texture/TextureBlank';
 
 
-type ViewArea = {
-  x: number; y: number; width: number; height: number; texture: Texture;
+type ViewArea = BoxArea & {
+  texture: Texture;
 }
 
 class BoxTextured extends Box {
-  private texture: Texture;
+  private _texture: Texture;
 
-  constructor(x: number, y: number, width: number, height: number, maintainer: D2Drawable) {
+  constructor(x: number, y: number, width: number, height: number, maintainer: D2Drawable, texture: TextureBlank = undefined) {
     super(x, y, width, height, maintainer);
-    this.texture = new TextureBlank(10, 10);
+    this._texture = texture;
   }
 
-  setTexture(texture: Texture) {
-    this.texture = texture;
+  set texture(newTexture: Texture) {
+    this._texture = newTexture;
+  }
+  get texture() {
+    return this._texture;
   }
 
-  setState(state: string) {
+  set state(newState: string) {
     if (this.texture instanceof TextureCollection) {
-      this.texture.setState(state);
+      this.texture.state = newState;
     }
   }
 
-  get(): ViewArea {
+  prop(): ViewArea {
     return {
-      x: super.get().x,
-      y: super.get().y,
-      width: super.get().width,
-      height: super.get().height,
-      texture: this.texture
+      ...super.prop(),
+      texture: this.texture,
     };
   }
 
-  destroy(){
-    this.texture.destroy()
+  destroy() {
+    this.texture.destroy();
   }
 }
 

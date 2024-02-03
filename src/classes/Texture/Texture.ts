@@ -10,21 +10,21 @@ class Texture {
   private readonly framesCount: number;
 
   protected virtualCanvas = CanvasStore.get()
-  protected virtualScene: CanvasRenderingContext2D = this.virtualCanvas.getContext("2d");
+  protected virtualScene = this.virtualCanvas.getContext("2d");
 
   constructor(src: string = undefined) {
     if (src != undefined) {
       this.referenceImage = ResourceLoader.get(src).image;
       this.speed = ResourceLoader.get(src).speed;
       this.framesCount = ResourceLoader.get(src).frames;
-      this.virtualCanvas.width = this.referenceImage.width / (this.framesCount);
+      this.virtualCanvas.width = this.referenceImage.width / this.framesCount;
       this.virtualCanvas.height = this.referenceImage.height;
       this.render(0);
     }
   }
 
   protected render(position: number) {
-    const imagePos = this.referenceImage.width / this.framesCount * position;
+    const imagePos = this.virtualCanvas.width * position;
     this.virtualScene.clearRect(0, 0, this.virtualCanvas.width, this.virtualCanvas.height);
     this.virtualScene.drawImage(this.referenceImage, imagePos, 0, this.virtualCanvas.width, this.virtualCanvas.height, 0, 0, this.virtualCanvas.width, this.virtualCanvas.height);
   }
@@ -41,10 +41,11 @@ class Texture {
         this.render(lastCur);
       }
     }
+
     return this.virtualCanvas as unknown as HTMLImageElement;
   }
 
-  destroy(){
+  destroy() {
     CanvasStore.release(this.virtualCanvas)
   }
 }

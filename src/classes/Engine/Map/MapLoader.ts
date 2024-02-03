@@ -1,8 +1,7 @@
 import fetch from "node-fetch";
 import {BackgroundEntity, GameMap, MapEntity} from "./iMap";
 import {Structure} from "../../content/Structure";
-import {Display} from "../Display";
-import {Physics} from "../Physics";
+import {Engine} from "../Engine";
 import {Parallax} from "../../content/Parallax";
 import {D2Drawable} from "../../D2Drawable";
 import {D2Updatable} from "../../D2Updatable";
@@ -29,8 +28,8 @@ class _MapLoader {
           readyParallaxList.push(item)
         );
         const Kostya = new Character(data.spawnPoint.x, data.spawnPoint.y);
-        Display.addObject(Kostya, 2);
-        Physics.addObject(Kostya);
+        Engine.addObject(Kostya, 2);
+        Engine.addObjectPhys(Kostya);
         InputController.setSlave(Kostya);
         Camera.attach(Kostya);
       });
@@ -42,8 +41,8 @@ class _MapLoader {
         someObject = new Structure(item.x, item.y);
         break;
       }
-      Display.addObject(someObject, 1);
-      Physics.addObject(someObject);
+      Engine.addObject(someObject, 1);
+      Engine.addObjectPhys(someObject);
       this.set(item.x, item.y, someObject);
       return someObject
     }).map(i => {
@@ -54,10 +53,10 @@ class _MapLoader {
 
     readyParallaxList.map(item => {
       const plx1 = new Parallax(item.image, item.bias);
-      Display.addObject(plx1,0);
+      Engine.addObject(plx1,0);
         const plx2 = new Parallax(item.image, item.bias);
         plx2.setOriginX(plx1.draw().width)
-        Display.addObject(plx2,0);
+        Engine.addObject(plx2,0);
     });
     // this.refreshTextures();
   }
