@@ -8,24 +8,19 @@
     "type": "parallax",
     "items": [
       {
-        "image": "plx-1.png",
-        "bias": 4
+        "image": "plx-1.png"
       },
       {
-        "image": "plx-2.png",
-        "bias": 3
+        "image": "plx-2.png"
       },
       {
-        "image": "plx-3.png",
-        "bias": 2
+        "image": "plx-3.png"
       },
       {
-        "image": "plx-4.png",
-        "bias": 1
+        "image": "plx-4.png"
       },
       {
-        "image": "plx-5.png",
-        "bias": 0
+        "image": "plx-5.png"
       }
     ]
   },

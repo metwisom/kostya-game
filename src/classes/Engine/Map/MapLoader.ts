@@ -51,15 +51,15 @@ class _MapLoader {
       }
     });
 
-    readyParallaxList.map(item => {
-      const plx0 = new Parallax(item.image, item.bias);
+    readyParallaxList.map((item, index) => {
+      const plx0 = new Parallax(item.image, readyParallaxList.length - 1 - index);
       plx0.setOriginX(-plx0.draw().width);
       Engine.addObject(plx0, 0);
 
-      const plx1 = new Parallax(item.image, item.bias);
+      const plx1 = new Parallax(item.image, readyParallaxList.length - 1 - index);
       Engine.addObject(plx1, 0);
 
-      const plx2 = new Parallax(item.image, item.bias);
+      const plx2 = new Parallax(item.image, readyParallaxList.length - 1 - index);
       plx2.setOriginX(plx1.draw().width);
       Engine.addObject(plx2, 0);
     });
