@@ -28,6 +28,8 @@ export default class Element extends D2Drawable {
     this.viewBox = new GuiBox(0, 0, width, height, this);
     this.floatX = FloatX.left;
     this.floatY = FloatY.top;
+
+    window.addEventListener('resize', () => {this.x = this._origX});
   }
 
   public set x(value: number) {

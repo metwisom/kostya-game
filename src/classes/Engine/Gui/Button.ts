@@ -1,7 +1,7 @@
 import Element from './Element';
 import {Eventful} from '../interfaces/Eventful';
-import {TextureBlank} from '../../Texture/TextureBlank';
 import {InputMap} from '../Input/InputController';
+import {TextureButton} from '../../Texture/TextureButton';
 
 
 export class Button extends Element implements Eventful {
@@ -25,8 +25,8 @@ export class Button extends Element implements Eventful {
   constructor(x: number, y: number, width: number, height: number, text: string) {
     super(x, y, width, height);
     this.text = text;
-    const texture = new TextureBlank(width, height);
-    texture.setText(text, 'red');
+    const texture = new TextureButton('panel_brown.png',width,height);
+    texture.setText(text, '#ccc');
     this.viewBox.texture = texture;
   }
 

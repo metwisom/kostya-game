@@ -173,5 +173,11 @@
     "path": "sprites/",
     "frames": 1,
     "speed": 0
+  },
+  {
+    "file": "panel_brown.png",
+    "path": "sprites/",
+    "frames": 1,
+    "speed": 0
   }
 ]

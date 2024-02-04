@@ -29,9 +29,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   Engine.addons.add(fpsMeter());
   Engine.addons.add(objectCounter());
 
-  const rainButton = new Button(0, 200, 150, 50, 'Дождь');
-  rainButton.floatX = FloatX.left;
-  rainButton.floatY = FloatY.bottom;
+  const rainButton = new Button(150, 80, 120, 50, 'Дождь');
+  rainButton.floatX = FloatX.right;
+  rainButton.floatY = FloatY.top;
   Engine.addObject(rainButton);
   Mouse.addObject(rainButton);
   rainButton.ownEvent = (e) => {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   };
 
-  const rainButton2 = new Button(150, 50, 100, 100, 'D');
+  const rainButton2 = new Button(150, 50, 50, 50, 'D');
   rainButton2.floatX = FloatX.left;
   rainButton2.floatY = FloatY.bottom;
   Engine.addObject(rainButton2);
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     InputController.updateState(GameKeys.D, e[GameKeys.LEFT_MOUSE].status(true));
   };
 
-  const rainButton3 = new Button(50, 50, 100, 100, 'A');
+  const rainButton3 = new Button(50, 50, 50, 50, 'A');
   rainButton3.floatX = FloatX.left;
   rainButton3.floatY = FloatY.bottom;
   Engine.addObject(rainButton3);
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     InputController.updateState(GameKeys.A, e[GameKeys.LEFT_MOUSE].status(true));
   };
 
-  const rainButton4 = new Button(50, 50, 100, 100, 'Space');
+  const rainButton4 = new Button(50, 50, 80, 50, 'Space');
   rainButton4.floatX = FloatX.right;
   rainButton4.floatY = FloatY.bottom;
   Engine.addObject(rainButton4);
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     InputController.updateState(GameKeys.Space, e[GameKeys.LEFT_MOUSE].status(true));
   };
 
-  const rainButton5 = new Button(350, 50, 100, 100, 'Полный экран');
+  const rainButton5 = new Button(350, 50, 120, 50, 'Полный экран');
   rainButton5.floatX = FloatX.left;
   rainButton5.floatY = FloatY.top;
   Engine.addObject(rainButton5);
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let lastMap = '1';
 
-  const rainButton6 = new Button(150, 150, 100, 100, 'Переключить карту');
+  const rainButton6 = new Button(150, 150, 120, 50, 'Переключить карту');
   rainButton6.floatX = FloatX.right;
   rainButton6.floatY = FloatY.top;
   Engine.addObject(rainButton6);
