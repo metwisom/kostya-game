@@ -18,6 +18,18 @@
     "speed": 0
   },
   {
+    "file": "sub_corner_right.png",
+    "path": "sprites/",
+    "frames": 1,
+    "speed": 0
+  },
+  {
+    "file": "sub_corner_left.png",
+    "path": "sprites/",
+    "frames": 1,
+    "speed": 0
+  },
+  {
     "file": "block_mouse.png",
     "path": "sprites/",
     "frames": 1,
