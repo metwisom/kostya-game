@@ -41,6 +41,7 @@ class Rain extends ItemWithStates implements Gravitational{
   }
 
   respawn() {
+    this.eDown = 1;
     this.x = getRandom(Camera.x - Engine.display.width / 2, Camera.x + Engine.display.width / 2);
     this.y = getRandom(Camera.y - 500, Camera.y - 1500);
     this.speed = getRandom(18, 40);
