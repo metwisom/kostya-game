@@ -5,10 +5,10 @@ class TextureRain extends TextureBlank{
 
   constructor(w: number, h: number) {
     super(w,h);
-    this.render(undefined)
+    this.render()
   }
 
-  protected render(_: number){
+  protected render(){
     this.virtualScene.fillStyle = this.fillColor
     const maxWidth = this.virtualCanvas.height - this.virtualCanvas.width
     for(let i = 1;i < maxWidth;i++){

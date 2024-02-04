@@ -3,7 +3,7 @@ import {Engine} from '../classes/Engine/Engine';
 
 let fpsCounter = 0;
 let recordedFPS = 0;
-let frameTimeCache: number[] = [];
+const frameTimeCache: number[] = [];
 
 const recordFPS = () => {
   recordedFPS = fpsCounter;

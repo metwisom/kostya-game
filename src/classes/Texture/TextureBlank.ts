@@ -15,7 +15,7 @@ class TextureBlank extends Texture {
     this.setSize(w, h);
   }
 
-  protected render(_: number) {
+  protected render() {
     this.virtualScene.fillStyle = this.fillColor;
     this.virtualScene.fillRect(0, 0, this.virtualCanvas.width, this.virtualCanvas.height);
     // 16;
@@ -38,18 +38,18 @@ class TextureBlank extends Texture {
   setSize(w: number, h: number) {
     this.virtualCanvas.width = w;
     this.virtualCanvas.height = h;
-    this.render(0);
+    this.render();
   }
 
   setColor(color: string) {
     this.fillColor = color;
-    this.render(0);
+    this.render();
   }
 
   setText(text: string, color: string) {
     this.text = text;
     this.textColor = color;
-    this.render(0);
+    this.render();
   }
 }
 

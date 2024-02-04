@@ -8,7 +8,7 @@ export class GuiBox extends BoxTextured {
     super(x, y, width, height, maintainer);
   }
 
-  update(_: number): string {
+  update(): string {
     return "";
   }
 }

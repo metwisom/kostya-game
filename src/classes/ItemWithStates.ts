@@ -1,10 +1,8 @@
 import {D2Updatable} from "./D2Updatable";
-import {Eventful} from "./Engine/interfaces/Eventful";
-import {InputMap} from "./Engine/Input/InputController";
 
 type FacedStates = "right" | "left";
 
-class ItemWithStates extends D2Updatable implements Eventful {
+class ItemWithStates extends D2Updatable{
 
   _state: string = "idle";
 
@@ -13,9 +11,6 @@ class ItemWithStates extends D2Updatable implements Eventful {
   constructor() {
     super();
     //this._viewBox = new BoxTextured(0, 0, 0, 0, this);
-  }
-
-  public Event(_: InputMap) {
   }
 
   public set state(state: string) {

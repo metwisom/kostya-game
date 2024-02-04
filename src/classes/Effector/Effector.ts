@@ -15,7 +15,7 @@ abstract class IEffect {
 class Effector {
   private effects: IEffect[] = [];
 
-  addEffect<T>(effect: IEffect) {
+  addEffect(effect: IEffect) {
     this.effects.push(effect);
   }
 

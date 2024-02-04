@@ -1,9 +1,14 @@
-# Workspace
+# kostya-game
+
+A 2d game engine with a basic implementation of a platformer
+
+---
+## Build
 
 `npm install`  
 `npm run dev`  
-`npm run build`
-`npm run lint`
+`npm run build`  
+`npm run lint`  
 
 ---
 
@@ -15,9 +20,9 @@
 |   ✔    | Objective code              | Done          |
 |   ✔    | TS                          | Done          |
 |   ✔    | Resource loader             | Done          |
+|   ✔    | Map loader                  | Done          |
 |   ❌    | Sound assets                | `In progress` |
 |   ❌    | Particles                   | `In progress` |
-|   ❌    | Map loader                  | `In progress` |
 |   ❌    | Map editor                  | `planned`     |
 |   ❌    | New assets                  | `planned`     |
 |   ❌    | Task system                 | `planned`     |

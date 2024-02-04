@@ -11,7 +11,7 @@ const RainEngine = (function () {
   const create = () => {
     if (Camera && Camera.target != undefined && is_active) {
 
-      let rain = new Rain(Camera.y + 1000);
+      const rain = new Rain(Camera.y + 1000);
       couple.push(rain)
       Engine.addObject(rain);
       Engine.addObjectPhys(rain);

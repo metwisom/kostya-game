@@ -102,7 +102,7 @@ export default class Element extends D2Drawable {
     return this.viewBox.height;
   }
 
-  public update(_: number) {
+  public update() {
     return;
   }
 

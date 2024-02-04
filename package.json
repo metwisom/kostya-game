@@ -5,7 +5,8 @@
   "main": "./src/main.js",
   "scripts": {
     "dev": "webpack --config webpack.dev.js -w",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "lint": "eslint src/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -19,8 +20,11 @@
   "homepage": "https://github.com/metwisom/kostya-game#readme",
   "devDependencies": {
     "@types/node-fetch": "^2.6.2",
+    "@typescript-eslint/eslint-plugin": "^6.20.0",
+    "@typescript-eslint/parser": "^6.20.0",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
+    "eslint": "^8.56.0",
     "node-fetch": "^2.6.9",
     "stream-browserify": "^3.0.0",
     "ts-loader": "^9.4.2",
