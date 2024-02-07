@@ -3,7 +3,7 @@ const CanvasStore = (function () {
 
   return Object.freeze({
     get(): HTMLCanvasElement {
-      return store.pop() || document.createElement("canvas");
+      return document.createElement("canvas") || document.createElement("canvas");
     },
     release(element: HTMLCanvasElement) {
       store.push(element);
