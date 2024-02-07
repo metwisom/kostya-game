@@ -131,7 +131,7 @@ class _Engine {
         if (!object.isActual()) {
           return this.toRemove(object);
         }
-        object.update(delta);
+        object.update(Math.min(delta,100));
       });
 
 
