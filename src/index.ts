@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       Engine.clearLayers()
       Engine.cleanUp()
       setTimeout(() => {
-        MapLoader.load('/resources/map' + (lastMap = lastMap == '1' ? '1' : '1') + '.json');
+        MapLoader.load('/resources/map' + (lastMap = lastMap == '1' ? '2' : '1') + '.json');
       },1)
 
     }
