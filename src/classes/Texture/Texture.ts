@@ -47,6 +47,7 @@ class Texture {
 
   destroy() {
     CanvasStore.release(this.virtualCanvas)
+    this.virtualCanvas = undefined
   }
 }
 
