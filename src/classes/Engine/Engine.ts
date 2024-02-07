@@ -53,7 +53,7 @@ class _Engine {
     this.removeListU.push(obj);
   };
 
-  private cleanUp() {
+  public cleanUp() {
     this.removeList.map(item => this._layers.map(layer => layer.removeObject(item)));
     this.removeList.length = 0;
 
@@ -112,7 +112,6 @@ class _Engine {
 
   public start() {
     const drawWorld = () => {
-      //this.layers.map(i => console.log(i))
       this.graphic.centerTo(Camera.x, Camera.y + Camera.target.viewBox.height / 2);
       this.layers.map(({items}) => this.drawCollection(items));
     };
@@ -128,7 +127,6 @@ class _Engine {
 
       InputController.update();
       const delta = performance.now() - time;
-      // console.log(delta)
       this.objects.map(object => {
         if (!object.isActual()) {
           return this.toRemove(object);
@@ -141,7 +139,6 @@ class _Engine {
       drawGui();
       requestAnimationFrame(draw.bind(undefined, [performance.now()]));
       this.cleanUp();
-      //console.log(1)
       this.drawTime = performance.now() - startDraw;
     };
     requestAnimationFrame(draw);
