@@ -16,10 +16,8 @@ const RainEngine = (function () {
       Engine.addObject(rain);
       Engine.addObjectPhys(rain);
 
-      if(couple.length < 100){
-        setTimeout(() => {
+      if(couple.length < 100 && is_active){
           create()
-        },10)
       }
     }
   };
@@ -30,6 +28,7 @@ const RainEngine = (function () {
     },
     start() {
       is_active = true;
+      for(let i =0;i< 100;i++)
       create();
     },
     stop() {
