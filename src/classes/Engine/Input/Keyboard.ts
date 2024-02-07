@@ -13,7 +13,6 @@ const Keyboard = (function () {
   };
 
   const updateState = (code: string, event: KeyboardEvent, state: boolean) => {
-    // console.log(state)
     if (keyMap[code] !== undefined) {
       slave.updateState(keyMap[code], state);
     }

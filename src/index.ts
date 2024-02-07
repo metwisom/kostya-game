@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   rainButton.ownEvent = (e) => {
     if (e[GameKeys.LEFT_MOUSE].status(true)) {
       RainEngine.toggle();
-      console.log(1);
     }
   };
 
@@ -84,10 +83,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   rainButton6.floatY = FloatY.top;
   Engine.addObject(rainButton6);
   Mouse.addObject(rainButton6);
-  rainButton6.ownEvent = (e) => {
+  rainButton6.ownEvent = async (e) => {
     if (e[GameKeys.LEFT_MOUSE].status(true)) {
+      RainEngine.stop()
       Engine.clearLayers()
-      MapLoader.load('/resources/map' + (lastMap = lastMap == '1' ? '2' : '1') + '.json');
+      Engine.cleanUp()
+      setTimeout(() => {
+        MapLoader.load('/resources/map' + (lastMap = lastMap == '1' ? '1' : '1') + '.json');
+      },1)
+
     }
   };
 

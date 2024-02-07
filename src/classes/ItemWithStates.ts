@@ -19,7 +19,6 @@ class ItemWithStates extends D2Updatable{
     }
     this._state = state;
     this.viewBox.state = state;
-    // console.log(state)
   }
 
   public get state() {
