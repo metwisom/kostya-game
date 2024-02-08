@@ -25,7 +25,7 @@ class Item extends ItemWithStates implements Eventful {
     this._physBox.hasCollision = false;
     this.viewBox = new BoxTextured(18, 18, 36, 36, this);
 
-    this.effector.addEffect(new Takenable(this));
+    this.effector.addEffect(new Attainable(this));
 
     this.viewBox.texture = new Texture('cherries.png');
     this.state = 'idle';
@@ -35,9 +35,6 @@ class Item extends ItemWithStates implements Eventful {
     if (event.taken != undefined) {
       this.audio.play().then();
       event.taken.effector.addEffect(new Poper(event.taken));
-      console.log(event.taken);
-      console.log(event.taken.effector);
-
     }
   }
 
