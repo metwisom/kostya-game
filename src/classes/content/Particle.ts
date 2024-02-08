@@ -8,11 +8,13 @@ class Particle extends D2Updatable {
   size: number;
   startSize: number;
   speed: number;
+  destroyTime: number;
 
-  constructor(x: number, y: number, size = 1) {
+  constructor(x: number, y: number, size = 1, speed = 0.05, destroyTime = 0.95) {
     super();
+    this.destroyTime = destroyTime
     this.angle = Math.random() * Math.PI * 2;
-    this.speed = 0.05 * size;
+    this.speed = speed * size;
     this.x = x;
     this.y = y;
     this.size = this.startSize = (Math.random() * 2 + 2) * size;
@@ -26,7 +28,7 @@ class Particle extends D2Updatable {
   update(delta: number) {
     this.x += Math.cos(this.angle) * this.speed * delta;
     this.y += Math.sin(this.angle) * this.speed * delta;
-    this.size *= 0.95;
+    this.size *= this.destroyTime;
     this._viewBox.width = this.size;
     this._viewBox.height = this.size;
     if (this.size < 1) {
