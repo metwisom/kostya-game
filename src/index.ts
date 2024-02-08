@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   await ResourceLoader.load('/resources/resource.json');
 
-  await MapLoader.load('/resources/map1.json');
+  await MapLoader.load('/resources/menu.json');
 
   // АДДОНЫ
   // Включаем счетчик FPS как аддон дисплея

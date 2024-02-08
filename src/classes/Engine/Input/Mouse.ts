@@ -50,6 +50,9 @@ const Mouse = (function () {
   return Object.freeze({
     addObject(obj: Eventful & Element) {
       objects.push(obj);
+    },
+    removeObject(obj: Eventful & Element) {
+      objects.splice(objects.indexOf(obj), 1);
     }
   });
 })();
