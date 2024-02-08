@@ -1,5 +1,5 @@
 import {D2Drawable} from "./D2Drawable";
-import {Effector} from './Effector/Effector';
+import {Effector} from '../effector/Effector';
 import {Box} from './Box/Box';
 
 
@@ -7,7 +7,7 @@ class D2Updatable extends D2Drawable {
 
   protected _physBox: Box;
 
-  protected effector: Effector = undefined;// = new Effector(this);
+  protected effector: Effector = undefined;// = new effector(this);
 
   public get _effector(){
     if(this.effector == undefined){

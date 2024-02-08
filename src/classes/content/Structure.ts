@@ -1,8 +1,8 @@
 import {MapLoader} from '../Engine/Map/MapLoader';
-import {D2Updatable} from '../D2Updatable';
-import {BoxTextured} from '../Box/BoxTextured';
-import {Texture} from '../Texture/Texture';
-import {Box} from '../Box/Box';
+import {D2Updatable} from '../Engine/D2Updatable';
+import {BoxTextured} from '../Engine/Box/BoxTextured';
+import {Texture} from '../Engine/Texture/Texture';
+import {Box} from '../Engine/Box/Box';
 
 
 class Structure extends D2Updatable {

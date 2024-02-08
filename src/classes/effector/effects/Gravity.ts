@@ -1,7 +1,7 @@
-import {D2Updatable} from '../D2Updatable';
-import {ItemWithStates} from '../ItemWithStates';
-import {IEffect} from './Effector';
-import {Engine} from '../Engine/Engine';
+import {D2Updatable} from '../../Engine/D2Updatable';
+import {ItemWithStates} from '../../Engine/ItemWithStates';
+import {Engine} from '../../Engine/Engine';
+import {IEffect} from '../IEffect';
 
 
 interface Gravitational {
@@ -11,7 +11,7 @@ interface Gravitational {
 
 class Gravity extends IEffect {
 
-  protected readonly maintainer: D2Updatable & ItemWithStates & Gravitational;
+  protected readonly maintainer: ItemWithStates & Gravitational;
 
   constructor(maintainer: typeof Gravity.prototype.maintainer) {
     super(maintainer);

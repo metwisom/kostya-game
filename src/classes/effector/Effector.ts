@@ -1,12 +1,4 @@
-import {D2Updatable} from '../D2Updatable';
-
-abstract class IEffect {
-
-  protected maintainer: D2Updatable;
-
-  protected constructor(maintainer: D2Updatable) {
-    this.maintainer = maintainer;
-  }
+import {IEffect} from './IEffect';
 
   abstract update(delta: number):void
 
@@ -24,6 +16,6 @@ class Effector {
   }
 }
 
-export {IEffect, Effector};
+export {Effector};
 
 

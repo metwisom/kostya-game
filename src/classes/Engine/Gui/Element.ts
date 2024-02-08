@@ -1,5 +1,5 @@
 import {GuiBox} from "./GuiBox";
-import {D2Drawable} from "../../D2Drawable";
+import {D2Drawable} from "../D2Drawable";
 import {Engine} from "../Engine";
 
 

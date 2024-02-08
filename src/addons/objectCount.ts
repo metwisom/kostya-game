@@ -1,5 +1,5 @@
 import {Engine} from "../classes/Engine/Engine";
-import {CanvasStore} from "../classes/CanvasStore";
+import {CanvasStore} from "../classes/Engine/CanvasStore";
 import {Graphic} from "../classes/Engine/Graphic";
 
 

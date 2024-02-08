@@ -1,5 +1,5 @@
 import {Texture} from './Texture';
-import {ResourceLoader} from '../Engine/ResourceLoader/ResourceLoader';
+import {ResourceLoader} from '../ResourceLoader/ResourceLoader';
 
 
 class TextureButton extends Texture {

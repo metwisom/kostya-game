@@ -1,4 +1,4 @@
-import {CanvasStore} from '../CanvasStore';
+import {CanvasStore} from './CanvasStore';
 
 class Graphic {
   private readonly _display: HTMLCanvasElement;

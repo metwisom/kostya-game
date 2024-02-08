@@ -1,5 +1,5 @@
-import {BoxTextured} from "../../Box/BoxTextured";
-import {D2Drawable} from "../../D2Drawable";
+import {BoxTextured} from "../Box/BoxTextured";
+import {D2Drawable} from "../D2Drawable";
 
 
 export class GuiBox extends BoxTextured {

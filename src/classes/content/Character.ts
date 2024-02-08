@@ -3,13 +3,17 @@ import {BoxTextured} from '../Box/BoxTextured';
 import {TextureCollection} from '../Texture/TextureCollection';
 import {Texture} from '../Texture/Texture';
 import {Eventful} from '../Engine/interfaces/Eventful';
+import {ItemWithStates} from '../Engine/ItemWithStates';
+import {BoxTextured} from '../Engine/Box/BoxTextured';
+import {TextureCollection} from '../Engine/Texture/TextureCollection';
+import {Texture} from '../Engine/Texture/Texture';
 import {GameKeys} from '../Engine/Input/InputKey';
 import {InputMap} from '../Engine/Input/InputController';
 import {Engine} from '../Engine/Engine';
 import {Particle} from './Particle';
-import {Box} from '../Box/Box';
-import {Gravitational, Gravity} from '../Effector/Gravity';
-import {Inertia, Inertial} from '../Effector/Inertia';
+import {Box} from '../Engine/Box/Box';
+import {Gravitational, Gravity} from '../effector/effects/Gravity';
+import {Inertia, Inertial} from '../effector/effects/Inertia';
 
 class Character extends ItemWithStates implements Eventful, Gravitational, Inertial {
 

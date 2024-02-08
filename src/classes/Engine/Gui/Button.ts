@@ -1,7 +1,7 @@
 import Element from './Element';
 import {Eventful} from '../interfaces/Eventful';
 import {InputMap} from '../Input/InputController';
-import {TextureButton} from '../../Texture/TextureButton';
+import {TextureButton} from '../Texture/TextureButton';
 
 
 export class Button extends Element implements Eventful {

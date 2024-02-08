@@ -1,9 +1,12 @@
 import {BoxTextured, ViewArea} from '../Box/BoxTextured';
 import {Texture} from '../Texture/Texture';
 import {D2Updatable} from '../D2Updatable';
+import {BoxTextured, ViewArea} from '../Engine/Box/BoxTextured';
+import {Texture} from '../Engine/Texture/Texture';
+import {D2Updatable} from '../Engine/D2Updatable';
 import {Camera} from '../Engine/Camera';
 import {Engine} from '../Engine/Engine';
-import {Box} from '../Box/Box';
+import {Box} from '../Engine/Box/Box';
 
 
 class Parallax extends D2Updatable {

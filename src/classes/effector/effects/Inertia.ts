@@ -1,7 +1,7 @@
-import {D2Updatable} from '../D2Updatable';
-import {ItemWithStates} from '../ItemWithStates';
-import {IEffect} from './Effector';
-import {Engine} from '../Engine/Engine';
+import {D2Updatable} from '../../Engine/D2Updatable';
+import {ItemWithStates} from '../../Engine/ItemWithStates';
+import {Engine} from '../../Engine/Engine';
+import {IEffect} from '../IEffect';
 
 
 interface Inertial {
@@ -11,7 +11,7 @@ interface Inertial {
 
 class Inertia extends IEffect {
 
-  protected readonly maintainer: D2Updatable & ItemWithStates & Inertial;
+  protected readonly maintainer: ItemWithStates & Inertial;
 
   constructor(maintainer: typeof Inertia.prototype.maintainer) {
     super(maintainer);

@@ -1,4 +1,4 @@
-import {ResourceLoader} from "../Engine/ResourceLoader/ResourceLoader";
+import {ResourceLoader} from "../ResourceLoader/ResourceLoader";
 import {CanvasStore} from "../CanvasStore";
 
 

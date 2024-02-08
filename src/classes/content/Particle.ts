@@ -1,6 +1,6 @@
-import {TextureBlank} from '../Texture/TextureBlank';
-import {Box} from '../Box/Box';
-import {D2Updatable} from '../D2Updatable';
+import {TextureBlank} from '../Engine/Texture/TextureBlank';
+import {Box} from '../Engine/Box/Box';
+import {D2Updatable} from '../Engine/D2Updatable';
 
 
 class Particle extends D2Updatable {

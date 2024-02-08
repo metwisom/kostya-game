@@ -1,11 +1,11 @@
 import {getRandom, getRandomFloat} from '../../utils/getRandom';
 import {Engine} from '../Engine/Engine';
 import {Camera} from '../Engine/Camera';
-import {TextureRain} from '../Texture/TextureRain';
-import {Box} from '../Box/Box';
-import {Gravitational, Gravity} from '../Effector/Gravity';
-import {BoxTextured} from '../Box/BoxTextured';
-import {ItemWithStates} from '../ItemWithStates';
+import {TextureRain} from '../Engine/Texture/TextureRain';
+import {Box} from '../Engine/Box/Box';
+import {Gravitational, Gravity} from '../effector/effects/Gravity';
+import {BoxTextured} from '../Engine/Box/BoxTextured';
+import {ItemWithStates} from '../Engine/ItemWithStates';
 
 const texture = new TextureRain(5, 11);
 texture.setColor('#65ada0');

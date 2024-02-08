@@ -2,13 +2,13 @@ import {Layer} from './Layer';
 import {requestAnimationFrame} from '../../utils/requestAnimationFrame';
 import {DisplayAddons} from './DisplayAddons';
 import {Camera} from './Camera';
-import {D2Drawable} from '../D2Drawable';
+import {D2Drawable} from './D2Drawable';
 import Element from './Gui/Element';
 import {Graphic} from './Graphic';
-import {D2Updatable} from '../D2Updatable';
+import {D2Updatable} from './D2Updatable';
 import {InputController} from './Input/InputController';
-import {ItemWithStates} from '../ItemWithStates';
-import {BoxArea} from '../Box/Box';
+import {ItemWithStates} from './ItemWithStates';
+import {BoxArea} from './Box/Box';
 import {intersectRect} from '../../utils/intersectRect';
 
 
