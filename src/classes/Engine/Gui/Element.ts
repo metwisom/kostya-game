@@ -1,6 +1,6 @@
-import {GuiBox} from "./GuiBox";
-import {D2Drawable} from "../D2Drawable";
-import {Engine} from "../Engine";
+import {GuiBox} from './GuiBox';
+import {D2Drawable} from '../D2Drawable';
+import {Engine} from '../Engine';
 
 
 export enum FloatX {
@@ -24,25 +24,27 @@ export default class Element extends D2Drawable {
   private _floatY: FloatY;
 
   constructor(x: number, y: number, width: number, height: number) {
-    super(x,y);
+    super(x, y);
     this.viewBox = new GuiBox(0, 0, width, height, this);
     this.floatX = FloatX.left;
     this.floatY = FloatY.top;
 
-    window.addEventListener('resize', () => {this.x = this._origX});
+    window.addEventListener('resize', () => {
+      this.x = this._origX;
+    });
   }
 
   public set x(value: number) {
     this._origX = value;
     switch (this.floatX) {
-    case FloatX.center:
-      this._x = value + Engine.display.width / 2 - this.width / 2;
-      break;
-    case FloatX.right:
-      this._x = Engine.display.width - this.width / 2  - value ;
-      break;
-    default:
-      this._x = value - this.width / 2;
+      case FloatX.center:
+        this._x = value + Engine.display.width / 2 - this.width / 2;
+        break;
+      case FloatX.right:
+        this._x = Engine.display.width - this.width / 2 - value;
+        break;
+      default:
+        this._x = value - this.width / 2;
     }
   }
 
@@ -53,14 +55,14 @@ export default class Element extends D2Drawable {
   public set y(value: number) {
     this._origY = value;
     switch (this.floatY) {
-    case FloatY.center:
-      this._y = value + Engine.display.height / 2 - this.height / 2;
-      break;
-    case FloatY.bottom:
-      this._y = Engine.display.height - this.height / 2 - value;
-      break;
-    default:
-      this._y = value - this.height / 2;
+      case FloatY.center:
+        this._y = value + Engine.display.height / 2 - this.height / 2;
+        break;
+      case FloatY.bottom:
+        this._y = Engine.display.height - this.height / 2 - value;
+        break;
+      default:
+        this._y = value - this.height / 2;
     }
   }
 

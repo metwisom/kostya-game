@@ -38,8 +38,8 @@ class Inertia extends IEffect {
       }
 
       if (inter.length === 0) {
-        if(this.maintainer.hasGround)
-        this.maintainer.momentum -= (this.maintainer.momentum * 0.5);
+        if (this.maintainer.hasGround)
+          this.maintainer.momentum -= (this.maintainer.momentum * 0.5);
       } else {
         this.maintainer.momentum = 0;
       }

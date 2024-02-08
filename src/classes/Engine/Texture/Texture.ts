@@ -1,5 +1,5 @@
-import {ResourceLoader} from "../ResourceLoader/ResourceLoader";
-import {CanvasStore} from "../CanvasStore";
+import {ResourceLoader} from '../ResourceLoader/ResourceLoader';
+import {CanvasStore} from '../CanvasStore';
 
 
 class Texture {
@@ -9,8 +9,8 @@ class Texture {
   private readonly speed: number;
   private readonly framesCount: number;
 
-  protected virtualCanvas = CanvasStore.get()
-  protected virtualScene = this.virtualCanvas.getContext("2d");
+  protected virtualCanvas = CanvasStore.get();
+  protected virtualScene = this.virtualCanvas.getContext('2d');
 
   constructor(src: string = undefined) {
     if (src != undefined) {
@@ -46,8 +46,8 @@ class Texture {
   }
 
   destroy() {
-    CanvasStore.release(this.virtualCanvas)
-    this.virtualCanvas = undefined
+    CanvasStore.release(this.virtualCanvas);
+    this.virtualCanvas = undefined;
   }
 }
 

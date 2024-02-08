@@ -42,12 +42,12 @@ class _MapLoader {
       data.background.items.map((item) =>
         readyParallaxList.push(item),
       );
-      if(data.spawnPoint.fakeAnimate){
+      if (data.spawnPoint.fakeAnimate) {
         const fake = new FakeAnimate(data.spawnPoint.x, data.spawnPoint.y);
         Engine.addObject(fake, 2);
         Engine.addObjectPhys(fake);
         Camera.attach(fake);
-      }else {
+      } else {
         const Kostya = new Character(data.spawnPoint.x, data.spawnPoint.y);
         Engine.addObject(Kostya, 2);
         Engine.addObjectPhys(Kostya);
@@ -67,32 +67,32 @@ class _MapLoader {
       Engine.addObject(someObject, 1);
       Engine.addObjectPhys(someObject);
       this.set(item.x, item.y, someObject);
-    })
+    });
 
     readyButtonList.map(item => {
       const button = new Button(item.x, item.y, item.width, item.height, item.text);
       button.floatX = FloatX[item.floatX];
       button.floatY = FloatY[item.floatY];
-      button.viewBox.texture.setFont('50px monospace')
+      button.viewBox.texture.setFont('50px monospace');
       Engine.addObject(button);
       Mouse.addObject(button);
-      if(item.action.loadMap != undefined){
+      if (item.action.loadMap != undefined) {
         button.ownEvent = async (e) => {
           if (e.keyMap[GameKeys.LEFT_MOUSE].status(true)) {
-            RainEngine.stop()
-            Engine.clearLayers()
-            Engine.clearGui()
-            Engine.cleanUp()
-            Mouse.removeObject(button)
+            RainEngine.stop();
+            Engine.clearLayers();
+            Engine.clearGui();
+            Engine.cleanUp();
+            Mouse.removeObject(button);
             setTimeout(() => {
               MapLoader.load('/resources/' + item.action.loadMap);
-            },1)
+            }, 1);
 
           }
         };
       }
 
-    })
+    });
 
     readyMapList.map(item => {
       let someObject: D2Updatable = undefined;

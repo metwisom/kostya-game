@@ -12,7 +12,7 @@ class InputKey {
   private propagation: boolean = true;
   public position = {
     x: 0,
-    y: 0
+    y: 0,
   };
 
   status(abs = false) {

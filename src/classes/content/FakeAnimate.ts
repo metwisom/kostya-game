@@ -3,7 +3,7 @@ import {Texture} from '../Engine/Texture/Texture';
 import {Box} from '../Engine/Box/Box';
 import {D2Updatable} from '../Engine/D2Updatable';
 
-class FakeAnimate extends D2Updatable  {
+class FakeAnimate extends D2Updatable {
 
   protected _physBox: Box;
 
@@ -23,10 +23,9 @@ class FakeAnimate extends D2Updatable  {
   }
 
 
-
-  draw(){
-    this.x += 0.9 ;
-    return super.draw()
+  draw() {
+    this.x += 0.9;
+    return super.draw();
   }
 
 

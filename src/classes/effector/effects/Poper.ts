@@ -10,13 +10,13 @@ class Poper extends IEffect {
   constructor(maintainer: typeof Poper.prototype.maintainer) {
     super(maintainer);
     setTimeout(() => {
-      this.maintainer.effector.removeEffect(this)
-    },500)
+      this.maintainer.effector.removeEffect(this);
+    }, 500);
   }
 
   update(delta: number = 1) {
 
-     this.maintainer.eDown -= 0.01 * delta
+    this.maintainer.eDown -= 0.01 * delta;
 
   }
 }

@@ -10,10 +10,10 @@ import {ItemWithStates} from '../Engine/ItemWithStates';
 const texture = new TextureRain(5, 11);
 texture.setColor('#65ada0');
 
-class Rain extends ItemWithStates implements Gravitational{
+class Rain extends ItemWithStates implements Gravitational {
 
   public eDown = 1;
-  public hasGround = false
+  public hasGround = false;
 
   _physBox: Box;
   windAngle = Math.PI / 2 + getRandomFloat(-10, 10);
@@ -26,12 +26,12 @@ class Rain extends ItemWithStates implements Gravitational{
 
     super();
 
-   this.effector.addEffect(new Gravity(this));
+    this.effector.addEffect(new Gravity(this));
 
     this.hasCollision = false;
     this.maxDepth = maxDepth;
 
-     this._physBox = new Box(4, 8, 5, 11, this);
+    this._physBox = new Box(4, 8, 5, 11, this);
     this.physBox.hasCollision = false;
 
     this.viewBox = new BoxTextured(0, 0, 5, 11, this, texture);

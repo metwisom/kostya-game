@@ -1,7 +1,7 @@
-import {GameKeys} from "./InputKey";
-import {InputController} from "./InputController";
-import Element from "../Gui/Element";
-import {Eventful} from "../interfaces/Eventful";
+import {GameKeys} from './InputKey';
+import {InputController} from './InputController';
+import Element from '../Gui/Element';
+import {Eventful} from '../interfaces/Eventful';
 
 
 const Touch = (function () {
@@ -11,8 +11,8 @@ const Touch = (function () {
   const objects: (Element & Eventful)[] = [];
 
   const mouse: Record<string, GameKeys> = {
-    "touchstart": GameKeys.LEFT_MOUSE,
-    "touchend": GameKeys.LEFT_MOUSE,
+    'touchstart': GameKeys.LEFT_MOUSE,
+    'touchend': GameKeys.LEFT_MOUSE,
   };
 
   let x = 0;
@@ -34,7 +34,7 @@ const Touch = (function () {
       const buttons = objects.filter(obj => {
           return obj.x <= x && obj.x + obj.width >= x &&
             obj.y <= y && obj.y + obj.height >= y;
-        }
+        },
       );
 
       if (mouse[e.type]) {
@@ -50,14 +50,14 @@ const Touch = (function () {
     });
   };
 
-  document.addEventListener("touchstart", updateState.bind(this, true));
-  document.addEventListener("touchend", updateState.bind(this, false));
-  document.addEventListener("touchmove", move.bind(this));
+  document.addEventListener('touchstart', updateState.bind(this, true));
+  document.addEventListener('touchend', updateState.bind(this, false));
+  document.addEventListener('touchmove', move.bind(this));
 
   return Object.freeze({
     addObject(obj: Eventful & Element) {
       objects.push(obj);
-    }
+    },
   });
 })();
 

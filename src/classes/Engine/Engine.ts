@@ -78,6 +78,7 @@ class _Engine {
   public clearLayers() {
     this._layers.map(i => i.items.map(i => i.destroy()));
   }
+
   public clearGui() {
     this.gui.map(i => i.destroy());
     this.gui.length = 0;

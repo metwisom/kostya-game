@@ -20,6 +20,7 @@ class BoxTextured extends Box {
   set texture(newTexture: Texture) {
     this._texture = newTexture;
   }
+
   get texture() {
     return this._texture;
   }

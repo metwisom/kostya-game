@@ -1,4 +1,4 @@
-import {BoxArea} from "../classes/Engine/Box/Box";
+import {BoxArea} from '../classes/Engine/Box/Box';
 
 /**
  * Проверяет пересечение двух прямоугольных областей.

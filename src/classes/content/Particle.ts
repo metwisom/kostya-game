@@ -12,7 +12,7 @@ class Particle extends D2Updatable {
 
   constructor(x: number, y: number, size = 1, speed = 0.05, destroyTime = 0.95) {
     super();
-    this.destroyTime = destroyTime
+    this.destroyTime = destroyTime;
     this.angle = Math.random() * Math.PI * 2;
     this.speed = speed * size;
     this.x = x;

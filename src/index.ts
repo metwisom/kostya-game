@@ -85,12 +85,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   Mouse.addObject(rainButton6);
   rainButton6.ownEvent = async (e) => {
     if (e.keyMap[GameKeys.LEFT_MOUSE].status(true)) {
-      RainEngine.stop()
-      Engine.clearLayers()
-      Engine.cleanUp()
+      RainEngine.stop();
+      Engine.clearLayers();
+      Engine.cleanUp();
       setTimeout(() => {
         MapLoader.load('/resources/map' + (lastMap = lastMap == '1' ? '2' : '1') + '.json');
-      },1)
+      }, 1);
 
     }
   };

@@ -44,7 +44,6 @@ class Item extends ItemWithStates implements Eventful {
   }
 
 
-
   public destroy() {
     super.destroy();
   }

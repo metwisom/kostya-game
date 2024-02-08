@@ -29,17 +29,17 @@ class Graphic {
   }
 
   set font(newFont: string) {
-    if(this.font != newFont) {
+    if (this.font != newFont) {
       this.scene.font = newFont;
     }
   }
 
   private recalculateSceneSize() {
-    if(this._display != undefined) {
+    if (this._display != undefined) {
       const {width, height} = this._display.getBoundingClientRect();
       this._display.width = width;
       this._display.height = height;
-      if(this.scene != undefined) {
+      if (this.scene != undefined) {
         this.scene.imageSmoothingEnabled = false;
       }
     }

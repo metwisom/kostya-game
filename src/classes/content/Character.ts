@@ -56,7 +56,7 @@ class Character extends ItemWithStates implements Eventful, Gravitational, Inert
   }
 
   public Event(event: SomeEvent) {
-    if(event.keyMap == undefined){
+    if (event.keyMap == undefined) {
       return;
     }
     if (event.keyMap[GameKeys.A].status()) {
@@ -103,9 +103,9 @@ class Character extends ItemWithStates implements Eventful, Gravitational, Inert
   private createStepParticle() {
     if (this.momentum != 0 && this.hasGround) {
 
-        const part = new Particle(this.x + this.momentum + Math.random() * 30 - 15, this.y + Math.random() * 3 - 1.5, 1);
-        Engine.addObject(part, 2);
-        Engine.addObjectPhys(part);
+      const part = new Particle(this.x + this.momentum + Math.random() * 30 - 15, this.y + Math.random() * 3 - 1.5, 1);
+      Engine.addObject(part, 2);
+      Engine.addObjectPhys(part);
 
     }
   }

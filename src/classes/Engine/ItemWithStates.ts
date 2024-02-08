@@ -1,12 +1,12 @@
-import {D2Updatable} from "./D2Updatable";
+import {D2Updatable} from './D2Updatable';
 
-type FacedStates = "right" | "left";
+type FacedStates = 'right' | 'left';
 
-class ItemWithStates extends D2Updatable{
+class ItemWithStates extends D2Updatable {
 
-  _state: string = "idle";
+  _state: string = 'idle';
 
-  public faced: FacedStates = "right";
+  public faced: FacedStates = 'right';
 
   constructor() {
     super();
@@ -14,7 +14,7 @@ class ItemWithStates extends D2Updatable{
   }
 
   public set state(state: string) {
-    if(this._state == state){
+    if (this._state == state) {
       return;
     }
     this._state = state;

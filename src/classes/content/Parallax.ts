@@ -42,9 +42,9 @@ class Parallax extends D2Updatable {
 
     this.x = this.viewBox.width * Math.floor(Camera.x / this.viewBox.width);
 
-     this.x = this.x +  ( Camera.x * this.bias / 20  ) % this.viewBox.width;
+    this.x = this.x + (Camera.x * this.bias / 20) % this.viewBox.width;
 
-    this.x = (this.x + this._originX) ;
+    this.x = (this.x + this._originX);
     this.y = Camera.y - Engine.display.height / 2 + Camera.target.viewBox.height / 2;
 
     return super.draw();

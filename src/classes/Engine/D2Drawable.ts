@@ -1,4 +1,4 @@
-import {BoxTextured, ViewArea} from "./Box/BoxTextured";
+import {BoxTextured, ViewArea} from './Box/BoxTextured';
 
 
 /**
@@ -21,7 +21,7 @@ class D2Drawable {
   protected _x: number = 0;
 
   constructor(x: number = 0, y: number = 0) {
-    this._viewBox = new BoxTextured(0,0,0,0,this);
+    this._viewBox = new BoxTextured(0, 0, 0, 0, this);
     this.x = x;
     this.y = y;
   }

@@ -1,4 +1,4 @@
-import {D2Drawable} from "./D2Drawable";
+import {D2Drawable} from './D2Drawable';
 import {Effector} from '../effector/Effector';
 import {Box} from './Box/Box';
 
@@ -9,11 +9,11 @@ class D2Updatable extends D2Drawable {
 
   protected _effector: Effector = undefined;// = new effector(this);
 
-  public get effector(){
-    if(this._effector == undefined){
+  public get effector() {
+    if (this._effector == undefined) {
       this._effector = new Effector();
     }
-    return this._effector
+    return this._effector;
   }
 
   public set physBox(newPhysBox) {
@@ -25,7 +25,7 @@ class D2Updatable extends D2Drawable {
   }
 
   update(delta: number) {
-    this.effector.run(delta)
+    this.effector.run(delta);
   }
 
 }

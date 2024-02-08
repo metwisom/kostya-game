@@ -8,7 +8,7 @@ class Effector {
     this.effects.push(effect);
   }
 
-  removeEffect(effect: IEffect){
+  removeEffect(effect: IEffect) {
     this.effects.splice(this.effects.indexOf(effect), 1);
   }
 

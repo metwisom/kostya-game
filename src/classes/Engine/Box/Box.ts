@@ -24,11 +24,12 @@ class Box {
     this.maintainer = maintainer;
   }
 
-  public get hasCollision(){
-    return this._hasCollision
+  public get hasCollision() {
+    return this._hasCollision;
   }
-  public set hasCollision(newCollisionState){
-    this._hasCollision = newCollisionState
+
+  public set hasCollision(newCollisionState) {
+    this._hasCollision = newCollisionState;
   }
 
   public get height() {
