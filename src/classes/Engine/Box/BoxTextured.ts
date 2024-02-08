@@ -10,7 +10,7 @@ type ViewArea = BoxArea & {
 }
 
 class BoxTextured extends Box {
-  private _texture: Texture;
+  protected _texture: Texture;
 
   constructor(x: number, y: number, width: number, height: number, maintainer: D2Drawable, texture: TextureBlank = undefined) {
     super(x, y, width, height, maintainer);

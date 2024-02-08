@@ -1,0 +1,42 @@
+{
+  "mapName": "Menu",
+  "spawnPoint": {
+    "x": 0,
+    "y": 0,
+    "fakeAnimate": true
+  },
+  "buttons": [
+    {
+      "text": "Играть",
+      "floatX": "center",
+      "floatY": "center",
+      "x": 0,
+      "y": 0,
+      "width": 320,
+      "height": 120,
+      "action": {
+        "loadMap": "map1.json"
+      }
+    }
+  ],
+  "background": {
+    "type": "parallax",
+    "items": [
+      {
+        "image": "plx-1.png"
+      },
+      {
+        "image": "plx-2.png"
+      },
+      {
+        "image": "plx-3.png"
+      },
+      {
+        "image": "plx-4.png"
+      },
+      {
+        "image": "plx-5.png"
+      }
+    ]
+  }
+}

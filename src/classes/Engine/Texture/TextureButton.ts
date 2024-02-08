@@ -13,7 +13,7 @@ class TextureButton extends Texture {
     super();
     this.referenceImage = ResourceLoader.get(src).image;
     this.virtualScene.textAlign = 'left';
-    this.virtualScene.textBaseline = "bottom";
+    this.virtualScene.textBaseline = 'bottom';
     this.setSize(w, h);
   }
 
@@ -51,7 +51,7 @@ class TextureButton extends Texture {
       this.virtualScene.strokeStyle = this.textColor;
       const metrics = this.virtualScene.measureText(this.text); // TextMetrics object
       const lineHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
-      this.virtualScene.strokeText(this.text, this.virtualCanvas.width / 2 - metrics.width / 2, this.virtualCanvas.height / 2 + lineHeight / 2 * 0.7 );
+      this.virtualScene.strokeText(this.text, this.virtualCanvas.width / 2 - metrics.width / 2, this.virtualCanvas.height / 2 + lineHeight / 2 * 0.7);
     }
     this.cacheImg.src = this.virtualCanvas.toDataURL();
   }
@@ -66,6 +66,11 @@ class TextureButton extends Texture {
   setSize(w: number, h: number) {
     this.virtualCanvas.width = w;
     this.virtualCanvas.height = h;
+    this.render();
+  }
+
+  setFont(font: string) {
+    this.virtualScene.font = font;
     this.render();
   }
 

@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import {BackgroundEntity, GameMap, MapEntity} from './iMap';
+import {BackgroundEntity, ButtonEntity, GameMap, MapEntity} from './iMap';
 import {Structure} from '../../content/Structure';
 import {Engine} from '../Engine';
 import {Parallax} from '../../content/Parallax';
@@ -9,6 +9,12 @@ import {Character} from '../../content/Character';
 import {Camera} from '../Camera';
 import {InputController} from '../Input/InputController';
 import {Item} from '../../content/Item';
+import {FakeAnimate} from '../../content/FakeAnimate';
+import {Button} from '../Gui/Button';
+import {FloatX, FloatY} from '../Gui/Element';
+import {Mouse} from '../Input/Mouse';
+import {GameKeys} from '../Input/InputKey';
+import {RainEngine} from '../RainEngine';
 
 class _MapLoader {
 
@@ -17,26 +23,37 @@ class _MapLoader {
   async load(resourceMap: string) {
     const readyMapList: MapEntity[] = [];
     const readyPickupList: MapEntity[] = [];
+    const readyButtonList: ButtonEntity[] = [];
     const readyParallaxList: BackgroundEntity[] = [];
 
 
     await fetch(resourceMap)
     .then(res => res.json())
     .then((data: GameMap) => {
-      data.map.map((item) =>
+      data.map?.map((item) =>
         readyMapList.push(item),
       );
       data.pickup?.map((item) =>
         readyPickupList.push(item),
       );
+      data.buttons?.map((item) =>
+        readyButtonList.push(item),
+      );
       data.background.items.map((item) =>
         readyParallaxList.push(item),
       );
-      const Kostya = new Character(data.spawnPoint.x, data.spawnPoint.y);
-      Engine.addObject(Kostya, 2);
-      Engine.addObjectPhys(Kostya);
-      InputController.setSlave(Kostya);
-      Camera.attach(Kostya);
+      if(data.spawnPoint.fakeAnimate){
+        const fake = new FakeAnimate(data.spawnPoint.x, data.spawnPoint.y);
+        Engine.addObject(fake, 2);
+        Engine.addObjectPhys(fake);
+        Camera.attach(fake);
+      }else {
+        const Kostya = new Character(data.spawnPoint.x, data.spawnPoint.y);
+        Engine.addObject(Kostya, 2);
+        Engine.addObjectPhys(Kostya);
+        InputController.setSlave(Kostya);
+        Camera.attach(Kostya);
+      }
     });
 
 
@@ -50,6 +67,31 @@ class _MapLoader {
       Engine.addObject(someObject, 1);
       Engine.addObjectPhys(someObject);
       this.set(item.x, item.y, someObject);
+    })
+
+    readyButtonList.map(item => {
+      const button = new Button(item.x, item.y, item.width, item.height, item.text);
+      button.floatX = FloatX[item.floatX];
+      button.floatY = FloatY[item.floatY];
+      button.viewBox.texture.setFont('50px monospace')
+      Engine.addObject(button);
+      Mouse.addObject(button);
+      if(item.action.loadMap != undefined){
+        button.ownEvent = async (e) => {
+          if (e.keyMap[GameKeys.LEFT_MOUSE].status(true)) {
+            RainEngine.stop()
+            Engine.clearLayers()
+            Engine.clearGui()
+            Engine.cleanUp()
+            Mouse.removeObject(button)
+            setTimeout(() => {
+              MapLoader.load('/resources/' + item.action.loadMap);
+            },1)
+
+          }
+        };
+      }
+
     })
 
     readyMapList.map(item => {
