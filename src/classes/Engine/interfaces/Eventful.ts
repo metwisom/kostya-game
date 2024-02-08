@@ -1,9 +1,10 @@
 import {InputMap} from '../Input/InputController';
+import {Character} from '../../content/Character';
 
 
 interface SomeEvent {
   keyMap?: InputMap;
-  eventType?: 'taken';
+  taken?: Character;
 }
 
 interface Eventful {

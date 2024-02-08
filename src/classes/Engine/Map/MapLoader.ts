@@ -8,6 +8,7 @@ import {D2Updatable} from '../D2Updatable';
 import {Character} from '../../content/Character';
 import {Camera} from '../Camera';
 import {InputController} from '../Input/InputController';
+import {Item} from '../../content/Item';
 
 class _MapLoader {
 
@@ -15,6 +16,7 @@ class _MapLoader {
 
   async load(resourceMap: string) {
     const readyMapList: MapEntity[] = [];
+    const readyPickupList: MapEntity[] = [];
     const readyParallaxList: BackgroundEntity[] = [];
 
 
@@ -23,6 +25,9 @@ class _MapLoader {
     .then((data: GameMap) => {
       data.map.map((item) =>
         readyMapList.push(item),
+      );
+      data.pickup?.map((item) =>
+        readyPickupList.push(item),
       );
       data.background.items.map((item) =>
         readyParallaxList.push(item),
@@ -33,6 +38,19 @@ class _MapLoader {
       InputController.setSlave(Kostya);
       Camera.attach(Kostya);
     });
+
+
+    readyPickupList.map(item => {
+      let someObject: D2Updatable = undefined;
+      switch (item.type) {
+        case 'health':
+          someObject = new Item(item.x, item.y);
+          break;
+      }
+      Engine.addObject(someObject, 1);
+      Engine.addObjectPhys(someObject);
+      this.set(item.x, item.y, someObject);
+    })
 
     readyMapList.map(item => {
       let someObject: D2Updatable = undefined;

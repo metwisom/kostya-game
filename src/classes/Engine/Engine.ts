@@ -61,13 +61,14 @@ class _Engine {
     this.removeListU.length = 0;
   };
 
-  public checkCollision(hitBox: BoxArea, ignore = '') {
+  public checkCollision<T = D2Updatable>(hitBox: BoxArea, ignore = '', onlyType: any = undefined): T[] {
     return this.objects.filter(e => {
-      if (e.id !== ignore && e.physBox.hasCollision) {
+      const typeExact = onlyType != undefined ? e instanceof onlyType : true;
+      if (e.id !== ignore && e.physBox.hasCollision && typeExact) {
         const testBox = e.physBox.prop();
         return intersectRect(testBox, hitBox);
       }
-    });
+    }) as T[];
   }
 
   public get layers() {
@@ -131,7 +132,7 @@ class _Engine {
         if (!object.isActual()) {
           return this.toRemove(object);
         }
-        object.update(Math.min(delta,100));
+        object.update(Math.min(delta, 100));
       });
 
 

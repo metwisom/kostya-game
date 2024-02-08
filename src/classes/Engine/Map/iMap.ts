@@ -4,6 +4,11 @@ export interface GameMap {
     x: number,
     y: number
   };
+  pickup: {
+    x: number,
+    y: number,
+    type: string
+  }[];
   background: Background;
   map: (MapEntity)[];
 }
