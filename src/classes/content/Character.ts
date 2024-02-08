@@ -102,11 +102,11 @@ class Character extends ItemWithStates implements Eventful, Gravitational, Inert
 
   private createStepParticle() {
     if (this.momentum != 0 && this.hasGround) {
-      for (let i = 0; i < 1; i++) {
+
         const part = new Particle(this.x + this.momentum + Math.random() * 30 - 15, this.y + Math.random() * 3 - 1.5, 1);
         Engine.addObject(part, 2);
         Engine.addObjectPhys(part);
-      }
+
     }
   }
 
