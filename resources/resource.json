@@ -6,6 +6,12 @@
     "speed": 0
   },
   {
+    "file": "cherries.png",
+    "path": "sprites/",
+    "frames": 17,
+    "speed": 0.1
+  },
+  {
     "file": "block2.png",
     "path": "sprites/",
     "frames": 1,

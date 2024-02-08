@@ -4,6 +4,11 @@
     "x": 2900,
     "y": 0
   },
+  "pickup": [{
+    "x": 2600,
+    "y": 100,
+    "type": "health"
+  }],
   "background": {
     "type": "parallax",
     "items": [
