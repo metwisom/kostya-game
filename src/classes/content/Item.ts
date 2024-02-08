@@ -3,7 +3,7 @@ import {BoxTextured} from '../Engine/Box/BoxTextured';
 import {Texture} from '../Engine/Texture/Texture';
 import {Eventful, SomeEvent} from '../Engine/interfaces/Eventful';
 import {Box} from '../Engine/Box/Box';
-import {Takenable} from '../effector/effects/Takenable';
+import {Attainable} from '../effector/effects/Attainable';
 import {Poper} from '../effector/effects/Poper';
 
 class Item extends ItemWithStates implements Eventful {

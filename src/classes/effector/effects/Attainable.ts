@@ -6,15 +6,15 @@ import {Character} from '../../content/Character';
 import {Particle} from '../../content/Particle';
 
 
-class Takenable extends IEffect {
+class Attainable extends IEffect {
 
   protected readonly maintainer: ItemWithStates & Eventful;
 
-  constructor(maintainer: typeof Takenable.prototype.maintainer) {
+  constructor(maintainer: typeof Attainable.prototype.maintainer) {
     super(maintainer);
   }
 
-  update(delta: number) {
+  update(_: number) {
 
     const xCollision = this.maintainer.physBox.prop();
     const inter = Engine.checkCollision<Character>(xCollision, this.maintainer.id, Character);
@@ -39,4 +39,4 @@ class Takenable extends IEffect {
 
 
 
-export {Takenable};
+export {Attainable};
