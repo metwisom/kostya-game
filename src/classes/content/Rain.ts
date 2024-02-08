@@ -26,7 +26,7 @@ class Rain extends ItemWithStates implements Gravitational{
 
     super();
 
-   this._effector.addEffect(new Gravity(this));
+   this.effector.addEffect(new Gravity(this));
 
     this.hasCollision = false;
     this.maxDepth = maxDepth;
