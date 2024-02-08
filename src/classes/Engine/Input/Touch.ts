@@ -40,7 +40,7 @@ const Touch = (function () {
       if (mouse[e.type]) {
         if (buttons.length > 0) {
           slave.updateState(GameKeys.LEFT_MOUSE, state, false, {x: x, y: y});
-          return buttons[0].Event(InputController.keyboard);
+          return buttons[0].Event({keyMap: InputController.keyboard});
         }
 
         slave.updateState(GameKeys.LEFT_MOUSE, state, true, {x: x, y: y});

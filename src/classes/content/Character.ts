@@ -1,14 +1,9 @@
-import {ItemWithStates} from '../ItemWithStates';
-import {BoxTextured} from '../Box/BoxTextured';
-import {TextureCollection} from '../Texture/TextureCollection';
-import {Texture} from '../Texture/Texture';
-import {Eventful} from '../Engine/interfaces/Eventful';
 import {ItemWithStates} from '../Engine/ItemWithStates';
 import {BoxTextured} from '../Engine/Box/BoxTextured';
 import {TextureCollection} from '../Engine/Texture/TextureCollection';
 import {Texture} from '../Engine/Texture/Texture';
+import {Eventful, SomeEvent} from '../Engine/interfaces/Eventful';
 import {GameKeys} from '../Engine/Input/InputKey';
-import {InputMap} from '../Engine/Input/InputController';
 import {Engine} from '../Engine/Engine';
 import {Particle} from './Particle';
 import {Box} from '../Engine/Box/Box';
@@ -60,18 +55,21 @@ class Character extends ItemWithStates implements Eventful, Gravitational, Inert
     this.state = 'idle';
   }
 
-  public Event(keyMap: InputMap) {
-    if (keyMap[GameKeys.A].status()) {
+  public Event(event: SomeEvent) {
+    if(event.keyMap == undefined){
+      return;
+    }
+    if (event.keyMap[GameKeys.A].status()) {
       if (this.hasGround) {
         this.momentum = -0.55;
       }
     }
-    if (keyMap[GameKeys.D].status()) {
+    if (event.keyMap[GameKeys.D].status()) {
       if (this.hasGround) {
         this.momentum = 0.55;
       }
     }
-    if (keyMap[GameKeys.Space].status()) {
+    if (event.keyMap[GameKeys.Space].status()) {
       if (this.hasGround) {
         this.eDown = -1;
       }

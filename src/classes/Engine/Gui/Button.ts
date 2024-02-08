@@ -1,14 +1,13 @@
 import Element from './Element';
-import {Eventful} from '../interfaces/Eventful';
-import {InputMap} from '../Input/InputController';
+import {Eventful, SomeEvent} from '../interfaces/Eventful';
 import {TextureButton} from '../Texture/TextureButton';
 
 
 export class Button extends Element implements Eventful {
   public text: string;
-  protected _ownEvent: (keymap: InputMap) => void;
+  protected _ownEvent: (event: SomeEvent) => void;
 
-  public set ownEvent(cb: (keymap: InputMap) => void) {
+  public set ownEvent(cb: (event: SomeEvent) => void) {
     this._ownEvent = cb;
   }
 
@@ -16,9 +15,9 @@ export class Button extends Element implements Eventful {
     return this._ownEvent;
   }
 
-  readonly Event = (keymap: InputMap) => {
+  readonly Event = (event: SomeEvent) => {
     if (this._ownEvent != undefined) {
-      this.ownEvent(keymap);
+      this.ownEvent(event);
     }
   };
 

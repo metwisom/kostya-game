@@ -20,11 +20,11 @@ const InputController = (function () {
 
   return Object.freeze({
     get keyboard() {
-      return keyboard
+      return keyboard;
     },
     update() {
       if (slave !== undefined) {
-        slave.Event(keyboard);
+        slave.Event({keyMap: keyboard});
       }
     },
     setSlave: (obj: Eventful) => {
@@ -41,7 +41,7 @@ const InputController = (function () {
           keyboard[key].set(state, propagation);
         }
       }
-    }
+    },
   });
 })();
 

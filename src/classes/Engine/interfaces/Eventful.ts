@@ -1,8 +1,14 @@
-import {InputMap} from "../Input/InputController";
+import {InputMap} from '../Input/InputController';
+
+
+interface SomeEvent {
+  keyMap?: InputMap;
+  eventType?: 'taken';
+}
 
 interface Eventful {
-  readonly Event: (keyMap: InputMap)=> void;
+  readonly Event: (event: SomeEvent) => void;
 }
 
 
-export {Eventful}
+export {Eventful, SomeEvent};

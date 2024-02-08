@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   Engine.addObject(rainButton);
   Mouse.addObject(rainButton);
   rainButton.ownEvent = (e) => {
-    if (e[GameKeys.LEFT_MOUSE].status(true)) {
+    if (e.keyMap[GameKeys.LEFT_MOUSE].status(true)) {
       RainEngine.toggle();
     }
   };
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   Engine.addObject(rainButton2);
   Touch.addObject(rainButton2);
   rainButton2.ownEvent = (e) => {
-    InputController.updateState(GameKeys.D, e[GameKeys.LEFT_MOUSE].status(true));
+    InputController.updateState(GameKeys.D, e.keyMap[GameKeys.LEFT_MOUSE].status(true));
   };
 
   const rainButton3 = new Button(50, 50, 50, 50, 'A');
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   Engine.addObject(rainButton3);
   Touch.addObject(rainButton3);
   rainButton3.ownEvent = (e) => {
-    InputController.updateState(GameKeys.A, e[GameKeys.LEFT_MOUSE].status(true));
+    InputController.updateState(GameKeys.A, e.keyMap[GameKeys.LEFT_MOUSE].status(true));
   };
 
   const rainButton4 = new Button(50, 50, 80, 50, 'Space');
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   Engine.addObject(rainButton4);
   Touch.addObject(rainButton4);
   rainButton4.ownEvent = (e) => {
-    InputController.updateState(GameKeys.Space, e[GameKeys.LEFT_MOUSE].status(true));
+    InputController.updateState(GameKeys.Space, e.keyMap[GameKeys.LEFT_MOUSE].status(true));
   };
 
   const rainButton5 = new Button(350, 50, 120, 50, 'Полный экран');
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   Engine.addObject(rainButton6);
   Mouse.addObject(rainButton6);
   rainButton6.ownEvent = async (e) => {
-    if (e[GameKeys.LEFT_MOUSE].status(true)) {
+    if (e.keyMap[GameKeys.LEFT_MOUSE].status(true)) {
       RainEngine.stop()
       Engine.clearLayers()
       Engine.cleanUp()
