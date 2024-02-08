@@ -7,13 +7,13 @@ class D2Updatable extends D2Drawable {
 
   protected _physBox: Box;
 
-  protected effector: Effector = undefined;// = new effector(this);
+  protected _effector: Effector = undefined;// = new effector(this);
 
-  public get _effector(){
-    if(this.effector == undefined){
-      this.effector = new Effector();
+  public get effector(){
+    if(this._effector == undefined){
+      this._effector = new Effector();
     }
-    return this.effector
+    return this._effector
   }
 
   public set physBox(newPhysBox) {
@@ -25,7 +25,7 @@ class D2Updatable extends D2Drawable {
   }
 
   update(delta: number) {
-    this._effector.run(delta)
+    this.effector.run(delta)
   }
 
 }
