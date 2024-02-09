@@ -29,8 +29,8 @@ class Character extends ItemWithStates implements Eventful, Gravitational, Inert
     this.audio.playbackRate = 1.8;
     this.audio.loop = true;
 
-    this.effector.addEffect(new Gravity(this));
     this.effector.addEffect(new Inertia(this));
+    this.effector.addEffect(new Gravity(this));
 
     this.x = x;
     this.y = y;

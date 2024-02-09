@@ -45,6 +45,7 @@ class Gravity extends IEffect {
       this.maintainer.state = 'fall';
 
     } else {
+      if (this.maintainer.state == 'jump' || this.maintainer.state == 'fall')
       this.maintainer.state = 'idle';
     }
 
