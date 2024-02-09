@@ -14,7 +14,7 @@ class Attainable extends IEffect {
     super(maintainer);
   }
 
-  update(_: number) {
+  update() {
 
     const xCollision = this.maintainer.physBox.prop();
     const inter = Engine.checkCollision<Character>(xCollision, this.maintainer.id, Character);

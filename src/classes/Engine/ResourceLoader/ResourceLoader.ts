@@ -1,5 +1,5 @@
-import fetch from 'node-fetch';
 import {Resource} from './iResource';
+import {loadFile} from '../../../utils/loadFile';
 
 
 const ResourceLoader = (function () {
@@ -10,9 +10,8 @@ const ResourceLoader = (function () {
     load: async function (resourceMap: string) {
       const readyList: Promise<Resource>[] = [];
 
-      await fetch(resourceMap)
-      .then(res => res.json())
-      .then((data: Resource[]) => {
+      await loadFile<Resource[]>(resourceMap)
+      .then(data => {
         data.map((item) =>
           readyList.push(
             new Promise((res) => {

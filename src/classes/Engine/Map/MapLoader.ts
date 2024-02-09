@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import {BackgroundEntity, ButtonEntity, GameMap, MapEntity} from './iMap';
 import {Structure} from '../../content/Structure';
 import {Engine} from '../Engine';
@@ -15,6 +14,7 @@ import {FloatX, FloatY} from '../Gui/Element';
 import {Mouse} from '../Input/Mouse';
 import {GameKeys} from '../Input/InputKey';
 import {RainEngine} from '../RainEngine';
+import {loadFile} from '../../../utils/loadFile';
 
 class _MapLoader {
 
@@ -27,9 +27,8 @@ class _MapLoader {
     const readyParallaxList: BackgroundEntity[] = [];
 
 
-    await fetch(resourceMap)
-    .then(res => res.json())
-    .then((data: GameMap) => {
+    await loadFile<GameMap>(resourceMap)
+    .then(data => {
       data.map?.map((item) =>
         readyMapList.push(item),
       );
