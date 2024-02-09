@@ -15,7 +15,7 @@ import {BoxTextured, ViewArea} from './Box/BoxTextured';
 class D2Drawable {
 
   readonly id: string = Math.random().toString(16).slice(2);
-  private isDestroyed = false;
+  protected isDestroyed = false;
   protected _viewBox: BoxTextured;
   protected _y: number = 0;
   protected _x: number = 0;

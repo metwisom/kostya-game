@@ -5,10 +5,10 @@ import {Texture} from '../Engine/Texture/Texture';
 import {Eventful, SomeEvent} from '../Engine/interfaces/Eventful';
 import {GameKeys} from '../Engine/Input/InputKey';
 import {Engine} from '../Engine/Engine';
-import {Particle} from './Particle';
 import {Box} from '../Engine/Box/Box';
 import {Gravitational, Gravity} from '../effector/effects/Gravity';
 import {Inertia, Inertial} from '../effector/effects/Inertia';
+import {ParticleFabric} from './ParticleFabric';
 
 class Character extends ItemWithStates implements Eventful, Gravitational, Inertial {
 
@@ -84,7 +84,7 @@ class Character extends ItemWithStates implements Eventful, Gravitational, Inert
   update(delta: number) {
     super.update(delta);
 
-    this.createStepParticle();
+     this.createStepParticle();
 
     if (this.y > 300) {
       this.x = 0;
@@ -103,7 +103,7 @@ class Character extends ItemWithStates implements Eventful, Gravitational, Inert
   private createStepParticle() {
     if (this.momentum != 0 && this.hasGround) {
 
-      const part = new Particle(this.x + this.momentum + Math.random() * 30 - 15, this.y + Math.random() * 3 - 1.5, 1);
+      const part = ParticleFabric.getParticle(this.x + this.momentum + Math.random() * 30 - 15, this.y + Math.random() * 3 - 1.5, 1);
       Engine.addObject(part, 2);
       Engine.addObjectPhys(part);
 
