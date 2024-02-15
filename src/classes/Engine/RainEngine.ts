@@ -2,49 +2,38 @@ import {Rain} from '../content/Rain';
 import {Camera} from './Camera';
 import {Engine} from './Engine';
 
+const RainEngine = (() => {
+  let rainDrops: Rain[] = [];
+  let isActive: boolean = false;
 
-const RainEngine = (function () {
+  const create = (): void => {
+    if (!isActive) return;
+    const rain = new Rain(Camera.y + 1000);
+    rainDrops.push(rain);
+    Engine.addObject(rain);
+    Engine.addObjectPhys(rain);
+  };
 
-  let couple: Rain[] = [];
+  const _rainEngine = Object.create(null);
 
-  let is_active: boolean = false;
-  const create = () => {
-    if (Camera && Camera.target != undefined && is_active) {
-
-      const rain = new Rain(Camera.y + 1000);
-      couple.push(rain);
-      Engine.addObject(rain);
-      Engine.addObjectPhys(rain);
-
-      if (couple.length < 100 && is_active) {
-        create();
-      }
+  _rainEngine.start = (): void => {
+    isActive = true;
+    for (let i = 0; i < 100; i++) {
+      create();
     }
   };
 
-  return Object.freeze({
-    get couple() {
-      return couple;
-    },
-    start() {
-      is_active = true;
-      for (let i = 0; i < 100; i++)
-        create();
-    },
-    stop() {
-      couple.map(i => i.destroy());
-      couple = [];
-      is_active = false;
-    },
-    toggle() {
-      is_active = !is_active;
-      if (!is_active) {
-        this.stop();
-      } else {
-        create();
-      }
-    },
-  });
+  _rainEngine.stop = (): void => {
+    isActive = false;
+    rainDrops.forEach(rain => rain.destroy());
+    rainDrops = [];
+  };
+
+  _rainEngine.toggle = (): void => {
+    isActive ? _rainEngine.stop() : _rainEngine.start();
+  };
+
+  return Object.freeze(_rainEngine);
 })();
 
 export {RainEngine};
