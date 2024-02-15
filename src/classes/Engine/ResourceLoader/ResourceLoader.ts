@@ -48,7 +48,7 @@ const ResourceLoader = (function () {
                   break;
                 case 'font':
                   item.content = new FontFace('Press', 'url(' + item.path + item.file + ')');
-                  item.content.load().then(e => res(item));
+                  item.content.load().then(() => res(item));
                   break;
                 case 'sound':
                   item.content = new Audio(item.path + item.file);

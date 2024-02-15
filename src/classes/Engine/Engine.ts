@@ -61,7 +61,7 @@ class _Engine {
     this.removeListU.length = 0;
   };
 
-  public checkCollision<T = D2Updatable>(hitBox: BoxArea, ignore = '', onlyType?: new (...args: any[]) => T): T[] {
+  public checkCollision<T = D2Updatable>(hitBox: BoxArea, ignore = '', onlyType?: typeof D2Drawable): T[] {
     return this.objects.filter(e => {
       const typeExact = onlyType != undefined ? e instanceof onlyType : true;
       if (e.id !== ignore && e.physBox.hasCollision && typeExact) {

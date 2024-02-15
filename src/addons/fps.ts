@@ -24,10 +24,6 @@ const fpsMeter = () => {
   };
 
   const calculateAverageFrameTime = () => {
-    let totalFrameTime = 0;
-    for (const time of frameTimeCache) {
-      totalFrameTime += time;
-    }
     return (frameTimeCache.reduce(((p, i) => p + i), 0) / frameTimeCache.length).toFixed(1);
   };
 
