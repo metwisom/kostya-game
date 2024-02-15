@@ -28,8 +28,7 @@ const Camera = (function () {
   camera.attach = (obj: D2Drawable) => {
     attached = obj;
   };
-  return camera;
+  return Object.freeze(camera);
 })();
-
 
 export {Camera};
