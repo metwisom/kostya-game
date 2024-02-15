@@ -3,7 +3,8 @@ export enum GameKeys {
   D,
   C,
   Space,
-  LEFT_MOUSE
+  LEFT_MOUSE,
+  SHIFT
 }
 
 class InputKey {

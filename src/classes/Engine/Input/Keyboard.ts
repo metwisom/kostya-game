@@ -10,6 +10,7 @@ const Keyboard = (function () {
     'KeyD': GameKeys.D,
     'Space': GameKeys.Space,
     'KeyC': GameKeys.C,
+    'ShiftLeft': GameKeys.SHIFT,
   };
 
   const updateState = (code: string, event: KeyboardEvent, state: boolean) => {

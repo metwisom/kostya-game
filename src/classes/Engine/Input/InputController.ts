@@ -12,6 +12,7 @@ const InputController = (function () {
     [GameKeys.A]: new InputKey(GameKeys.A),
     [GameKeys.D]: new InputKey(GameKeys.D),
     [GameKeys.C]: new InputKey(GameKeys.C),
+    [GameKeys.SHIFT]: new InputKey(GameKeys.SHIFT),
     [GameKeys.Space]: new InputKey(GameKeys.Space),
     [GameKeys.LEFT_MOUSE]: new InputKey(GameKeys.LEFT_MOUSE),
   };

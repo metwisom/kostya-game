@@ -15,6 +15,7 @@ class Character extends ItemWithStates implements Eventful, Gravitational, Inert
   public hasGround = false;
   public eDown = 0;
   public momentum = 0;
+  public sprint = 1;
 
   protected _physBox: Box;
 
@@ -61,13 +62,18 @@ class Character extends ItemWithStates implements Eventful, Gravitational, Inert
     }
     if (event.keyMap[GameKeys.A].status()) {
       if (this.hasGround) {
-        this.momentum = -0.55;
+        this.momentum = -0.55 * this.sprint;
       }
     }
     if (event.keyMap[GameKeys.D].status()) {
       if (this.hasGround) {
-        this.momentum = 0.55;
+        this.momentum = 0.55 * this.sprint;
       }
+    }
+    if (event.keyMap[GameKeys.SHIFT].status()) {
+      this.sprint = 1.3;
+    }else{
+      this.sprint = 1;
     }
     if (event.keyMap[GameKeys.Space].status()) {
       if (this.hasGround) {
