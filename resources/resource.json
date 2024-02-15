@@ -290,7 +290,7 @@
     "path": "https://fonts.gstatic.com/s/pressstart2p/v15/"
   },
   {
-    "type": "audio",
+    "type": "sound",
     "file": "step.wav",
     "path": "/resources/audio/"
   }

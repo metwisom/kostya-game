@@ -47,17 +47,13 @@ const ResourceLoader = (function () {
                   item.content.src = item.path + item.file;
                   break;
                 case 'font':
-                  item.content = await new FontFace(
-                    'Press',
-                    'url(' + item.path + item.file + ')',
-                  ).load();
+                  item.content = new FontFace('Press', 'url(' + item.path + item.file + ')');
+                  item.content.load().then(e => res(item));
                   break;
                 case 'sound':
                   item.content = new Audio(item.path + item.file);
-                  item.content.onload = () => res(item);
-                  item.content.src = 'resources/' + item.path + item.file;
+                  item.content.addEventListener('canplaythrough', res.bind(undefined,item), {once: true});
                   break;
-
               }
             })),
         );
