@@ -1,5 +1,5 @@
 import {Texture} from './Texture';
-import {ResourceLoader} from '../ResourceLoader/ResourceLoader';
+import {ImageResource, ResourceLoader} from '../ResourceLoader/ResourceLoader';
 
 
 class TextureButton extends Texture {
@@ -11,7 +11,7 @@ class TextureButton extends Texture {
 
   constructor(src: string, w: number, h: number) {
     super();
-    this.referenceImage = ResourceLoader.get(src).image;
+    this.referenceImage = ResourceLoader.get<ImageResource>(src).content;
     this.virtualScene.textAlign = 'left';
     this.virtualScene.textBaseline = 'bottom';
     this.setSize(w, h);

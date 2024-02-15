@@ -9,6 +9,7 @@ import {Box} from '../Engine/Box/Box';
 import {Gravitational, Gravity} from '../effector/effects/Gravity';
 import {Inertia, Inertial} from '../effector/effects/Inertia';
 import {ParticleFabric} from './ParticleFabric';
+import {ResourceLoader, SoundResource} from '../Engine/ResourceLoader/ResourceLoader';
 
 class Character extends ItemWithStates implements Eventful, Gravitational, Inertial {
 
@@ -23,7 +24,7 @@ class Character extends ItemWithStates implements Eventful, Gravitational, Inert
     return this._physBox;
   }
 
-  protected audio = new Audio('/resources/audio/step.wav');
+  protected audio = ResourceLoader.get<SoundResource>('step.wav').content;
 
   constructor(x: number, y: number) {
     super();

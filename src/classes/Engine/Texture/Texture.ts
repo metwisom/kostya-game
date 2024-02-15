@@ -1,4 +1,4 @@
-import {ResourceLoader} from '../ResourceLoader/ResourceLoader';
+import {ImageResource, ResourceLoader} from '../ResourceLoader/ResourceLoader';
 import {CanvasStore} from '../CanvasStore';
 
 
@@ -14,9 +14,9 @@ class Texture {
 
   constructor(src: string = undefined) {
     if (src != undefined) {
-      this.referenceImage = ResourceLoader.get(src).image;
-      this.speed = ResourceLoader.get(src).speed;
-      this.framesCount = ResourceLoader.get(src).frames;
+      this.referenceImage = ResourceLoader.get<ImageResource>(src).content;
+      this.speed = ResourceLoader.get<ImageResource>(src).params.speed;
+      this.framesCount = ResourceLoader.get<ImageResource>(src).params.frames;
       this.virtualCanvas.width = this.referenceImage.width / this.framesCount;
       this.virtualCanvas.height = this.referenceImage.height;
       this.render(0);

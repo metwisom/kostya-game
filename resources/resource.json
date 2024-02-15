@@ -1,189 +1,297 @@
 [
   {
+    "type": "image",
     "file": "block.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "cherries.png",
-    "path": "sprites/",
-    "frames": 17,
-    "speed": 0.1
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 17,
+      "speed": 0.1
+    }
   },
   {
+    "type": "image",
     "file": "block2.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "block_one_foot.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "sub_corner_right.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "sub_corner_left.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "block_mouse.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "block3.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "block_left.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "block_right.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "right_idle.png",
-    "path": "sprites/",
-    "frames": 12,
-    "speed": 0.08
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 12,
+      "speed": 0.08
+    }
   },
   {
+    "type": "image",
     "file": "left_idle.png",
-    "path": "sprites/",
-    "frames": 12,
-    "speed": 0.08
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 12,
+      "speed": 0.08
+    }
   },
   {
+    "type": "image",
     "file": "left_run.png",
-    "path": "sprites/",
-    "frames": 8,
-    "speed": 0.07
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 8,
+      "speed": 0.07
+    }
   },
   {
+    "type": "image",
     "file": "right_run.png",
-    "path": "sprites/",
-    "frames": 8,
-    "speed": 0.07
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 8,
+      "speed": 0.07
+    }
   },
   {
+    "type": "image",
     "file": "left_levitate.png",
-    "path": "sprites/",
-    "frames": 2,
-    "speed": 0.1
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 2,
+      "speed": 0.1
+    }
   },
   {
+    "type": "image",
     "file": "right_levitate.png",
-    "path": "sprites/",
-    "frames": 2,
-    "speed": 0.1
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 2,
+      "speed": 0.1
+    }
   },
   {
+    "type": "image",
     "file": "left_jump.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "right_jump.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "left_fall.png",
-    "path": "sprites/",
-    "frames": 2,
-    "speed": 0.05
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 2,
+      "speed": 0.05
+    }
   },
   {
+    "type": "image",
     "file": "right_fall.png",
-    "path": "sprites/",
-    "frames": 2,
-    "speed": 0.05
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 2,
+      "speed": 0.05
+    }
   },
   {
+    "type": "image",
     "file": "left_landing.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "right_landing.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
 
   {
+    "type": "image",
     "file": "plx-1.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "plx-2.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "plx-3.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "plx-4.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "plx-5.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "plx2-1.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "plx2-2.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "plx2-3.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
   },
   {
+    "type": "image",
     "file": "panel_brown.png",
-    "path": "sprites/",
-    "frames": 1,
-    "speed": 0
+    "path": "/resources/sprites/",
+    "params": {
+      "frames": 1,
+      "speed": 0
+    }
+  },
+  {
+    "type": "font",
+    "file": "e3t4euO8T-267oIAQAu6jDQyK3nRivN04w.woff2",
+    "path": "https://fonts.gstatic.com/s/pressstart2p/v15/"
+  },
+  {
+    "type": "font",
+    "file": "e3t4euO8T-267oIAQAu6jDQyK3nVivM.woff2",
+    "path": "https://fonts.gstatic.com/s/pressstart2p/v15/"
+  },
+  {
+    "type": "audio",
+    "file": "step.wav",
+    "path": "/resources/audio/"
   }
 ]
