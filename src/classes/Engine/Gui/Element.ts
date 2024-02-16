@@ -25,7 +25,7 @@ export default class Element extends D2Drawable {
 
   constructor(x: number, y: number, width: number, height: number) {
     super(x, y);
-    this.viewBox = new GuiBox(0, 0, width, height, this);
+    this._viewBox = new GuiBox(0, 0, width, height, this);
     this.floatX = FloatX.left;
     this.floatY = FloatY.top;
 

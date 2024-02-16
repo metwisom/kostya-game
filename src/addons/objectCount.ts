@@ -15,16 +15,13 @@ const objectCounter = () => {
 
     if (skipCount === 0) {
       let totalDrawCount = 0;
-      for (const layer of Engine.layers) {
-        totalDrawCount += layer.items.length;
-      }
+      Engine.layers.map(layer => totalDrawCount += layer.items.length)
       drawCount = `Objects: ${totalDrawCount}`;
       physCount = `Physics: ${Engine.obj.length}`;
       canvasStoreCount = `Canvas: ${CanvasStore.count}`;
       particlesStoreCount = `Particles: ${ParticleFabric.particle}`;
     }
 
-    // Отображение информации на холсте
     graphic.drawText(
       `${drawCount}\n${physCount}\n${canvasStoreCount}\n${particlesStoreCount}`,
       20,

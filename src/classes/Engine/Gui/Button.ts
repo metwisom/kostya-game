@@ -6,22 +6,11 @@ import {GuiBox} from './GuiBox';
 
 export class Button extends Element implements Eventful {
 
-  protected _viewBox: GuiBox & { texture: TextureButton };
-
   public text: string;
   protected _ownEvent: (event: SomeEvent) => void;
 
   public set ownEvent(cb: (event: SomeEvent) => void) {
     this._ownEvent = cb;
-  }
-
-  get viewBox() {
-    return this._viewBox;
-  }
-
-
-  public set viewBox(newViewBox: GuiBox & { texture: TextureButton }) {
-    this._viewBox = newViewBox;
   }
 
   public get ownEvent() {

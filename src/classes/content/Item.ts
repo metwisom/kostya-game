@@ -4,11 +4,12 @@ import {Texture} from '../Engine/Texture/Texture';
 import {Eventful, SomeEvent} from '../Engine/interfaces/Eventful';
 import {Box} from '../Engine/Box/Box';
 import {Attainable} from '../effector/effects/Attainable';
-import {Poper} from '../effector/effects/Poper';
+import {AntiGravity} from '../effector/effects/AntiGravity';
+import {ResourceLoader, SoundResource} from '../Engine/ResourceLoader/ResourceLoader';
 
 class Item extends ItemWithStates implements Eventful {
 
-  protected audio = new Audio('/resources/audio/taken.ogg');
+  protected audio = ResourceLoader.get<SoundResource>('taken.ogg');
 
   protected _physBox: Box;
 
@@ -25,7 +26,7 @@ class Item extends ItemWithStates implements Eventful {
     this._physBox.hasCollision = false;
     this.viewBox = new BoxTextured(18, 18, 36, 36, this);
 
-    this.effector.addEffect(new Attainable(this));
+    this.effector.addEffect(Attainable(this));
 
     this.viewBox.texture = new Texture('cherries.png');
     this.state = 'idle';
@@ -33,8 +34,8 @@ class Item extends ItemWithStates implements Eventful {
 
   public Event(event: SomeEvent) {
     if (event.taken != undefined) {
-      this.audio.play().then();
-      event.taken.effector.addEffect(new Poper(event.taken));
+      this.audio.content.play().then();
+      event.taken.effector.addEffect(AntiGravity(event.taken));
     }
   }
 
