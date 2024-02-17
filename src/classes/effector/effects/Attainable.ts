@@ -1,39 +1,34 @@
-import {ItemWithStates} from '../../Engine/ItemWithStates';
 import {Engine} from '../../Engine/Engine';
 import {IEffect} from '../IEffect';
-import {Eventful} from '../../Engine/interfaces/Eventful';
 import {Character} from '../../content/Character';
 import {Particle} from '../../content/Particle';
+import {ItemWithStates} from '../../Engine/ItemWithStates';
+import {Eventful} from '../../Engine/interfaces/Eventful';
 
 
-class Attainable extends IEffect {
+class Attainable implements IEffect {
+  private _maintainer;
 
-  protected readonly maintainer: ItemWithStates & Eventful;
-
-  constructor(maintainer: typeof Attainable.prototype.maintainer) {
-    super(maintainer);
+  constructor(maintainer: ItemWithStates & Eventful) {
+    this._maintainer = maintainer;
   }
-
   update() {
-
-    const xCollision = this.maintainer.physBox.prop();
-    const inter = Engine.checkCollision<Character>(xCollision, this.maintainer.id, Character);
-
+    const xCollision = this._maintainer.physBox.prop();
+    const inter = Engine.checkCollision<Character>(xCollision, this._maintainer.id, Character);
     if (inter.length !== 0) {
-      this.maintainer.Event({taken: inter[0]});
-      this.createStepParticle();
-      this.maintainer.destroy();
+      this._maintainer.Event({taken: inter[0]});
+      this.createParticle();
+      this._maintainer.destroy();
     }
   }
 
-  private createStepParticle() {
+  private createParticle() {
     for (let i = 0; i < 10; i++) {
       setTimeout(() => {
-        const part = new Particle(this.maintainer.x + Math.random() * 30 - 15, this.maintainer.y - 1.5, 2, 0.05, 0.94);
+        const part = new Particle(this._maintainer.x + Math.random() * 30 - 15, this._maintainer.y - 1.5, 2, 0.05, 0.94);
         Engine.addObject(part, 2);
         Engine.addObjectPhys(part);
       }, i * 10);
-
     }
   }
 }

@@ -1,6 +1,5 @@
 import {IEffect} from './IEffect';
 
-
 class Effector {
   private effects: IEffect[] = [];
 

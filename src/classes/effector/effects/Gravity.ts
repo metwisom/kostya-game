@@ -8,40 +8,41 @@ interface Gravitational {
   eDown: number;
 }
 
-class Gravity extends IEffect {
-  constructor(protected readonly maintainer: ItemWithStates & Gravitational) {
-    super(maintainer);
-  }
+class Gravity implements IEffect {
+  private _maintainer;
 
+  constructor(maintainer: ItemWithStates & Gravitational) {
+    this._maintainer = maintainer;
+  }
   update(delta: number = 1) {
-    const {physBox, id} = this.maintainer;
+    const {physBox, id} = this._maintainer;
     let inter: D2Updatable[] = [];
 
-    this.maintainer.eDown += 0.1;
-    const yCollision = physBox.prop(0, this.maintainer.eDown * delta);
+    this._maintainer.eDown += 0.1;
+    const yCollision = physBox.prop(0, this._maintainer.eDown * delta);
 
     if (physBox.hasCollision) {
       inter = Engine.checkCollision(yCollision, id);
     }
 
     if (inter.length === 0) {
-      this.maintainer.y += this.maintainer.eDown * delta;
-      this.maintainer.hasGround = false;
+      this._maintainer.y += this._maintainer.eDown * delta;
+      this._maintainer.hasGround = false;
     } else {
       const {y} = inter[0];
-      if (this.maintainer.y !== y) {
-        this.maintainer.y = y;
-        this.maintainer.hasGround = true;
+      if (this._maintainer.y !== y) {
+        this._maintainer.y = y;
+        this._maintainer.hasGround = true;
       }
-      this.maintainer.eDown = 0;
+      this._maintainer.eDown = 0;
     }
 
-    if (this.maintainer.eDown > 0) {
-      this.maintainer.state = 'jump';
-    } else if (this.maintainer.eDown < 0) {
-      this.maintainer.state = 'fall';
-    } else if (this.maintainer.state === 'jump' || this.maintainer.state === 'fall') {
-      this.maintainer.state = 'idle';
+    if (this._maintainer.eDown > 0) {
+      this._maintainer.state = 'jump';
+    } else if (this._maintainer.eDown < 0) {
+      this._maintainer.state = 'fall';
+    } else if (this._maintainer.state === 'jump' || this._maintainer.state === 'fall') {
+      this._maintainer.state = 'idle';
     }
   }
 }

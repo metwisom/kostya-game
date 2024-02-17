@@ -3,63 +3,48 @@ import {ItemWithStates} from '../../Engine/ItemWithStates';
 import {Engine} from '../../Engine/Engine';
 import {IEffect} from '../IEffect';
 
-
 interface Inertial {
   momentum: number;
   hasGround: boolean;
 }
 
-class Inertia extends IEffect {
+class Inertia implements IEffect {
+  protected readonly _maintainer;
 
-  protected readonly maintainer: ItemWithStates & Inertial;
-
-  constructor(maintainer: typeof Inertia.prototype.maintainer) {
-    super(maintainer);
+  constructor(maintainer: ItemWithStates & Inertial) {
+    this._maintainer = maintainer;
   }
-
   update(delta: number) {
-
-
-    if (this.maintainer.momentum != 0) {
-
+    if (this._maintainer.momentum != 0) {
       let inter: D2Updatable[] = [];
-
-      const xCollision = this.maintainer.physBox.prop(this.maintainer.momentum * delta, 0);
-      if (this.maintainer.physBox.hasCollision) {
-        inter = Engine.checkCollision(xCollision, this.maintainer.id);
+      const xCollision = this._maintainer.physBox.prop(this._maintainer.momentum * delta, 0);
+      if (this._maintainer.physBox.hasCollision) {
+        inter = Engine.checkCollision(xCollision, this._maintainer.id);
       }
-
-      if (Math.abs(this.maintainer.momentum) < 0.001) {
-        this.maintainer.momentum = 0;
+      if (Math.abs(this._maintainer.momentum) < 0.001) {
+        this._maintainer.momentum = 0;
       }
-
       if (inter.length === 0) {
-        this.maintainer.x += this.maintainer.momentum * delta;
+        this._maintainer.x += this._maintainer.momentum * delta;
       }
-
       if (inter.length === 0) {
-        if (this.maintainer.hasGround)
-          this.maintainer.momentum -= (this.maintainer.momentum * 0.5);
+        if (this._maintainer.hasGround)
+          this._maintainer.momentum -= (this._maintainer.momentum * 0.5);
       } else {
-        this.maintainer.momentum = 0;
+        this._maintainer.momentum = 0;
       }
-
-
-      if (this.maintainer.momentum != 0) {
-
-        this.maintainer.state = 'run';
-        if (this.maintainer.momentum > 0) {
-          this.maintainer.faced = 'right';
+      if (this._maintainer.momentum != 0) {
+        this._maintainer.state = 'run';
+        if (this._maintainer.momentum > 0) {
+          this._maintainer.faced = 'right';
         } else {
-          if (this.maintainer.momentum < 0) {
-            this.maintainer.faced = 'left';
+          if (this._maintainer.momentum < 0) {
+            this._maintainer.faced = 'left';
           }
         }
       } else {
-        this.maintainer.state = 'idle';
+        this._maintainer.state = 'idle';
       }
-
-
     }
   }
 }
