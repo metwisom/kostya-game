@@ -36,7 +36,7 @@ const fpsMeter = () => {
     const fpsText = `FPS: ${recordedFPS}`;
     const frameTimeText = `Frame time: ${avgFrameTime} ms`;
 
-    graphic.font = '10px monospace';
+    graphic.font = '10px Press';
     graphic.drawText(`${fpsText}\n${frameTimeText}`, 20, 20);
   };
 };

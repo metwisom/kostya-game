@@ -1,18 +1,18 @@
-import {Gravitational} from './Gravity';
-import {D2Updatable} from '../../Engine/D2Updatable';
-import {IEffect} from '../IEffect';
+import {Gravitational} from "./Gravity";
+import {D2Updatable, D2UpdatableComponent} from "../../Engine/D2Updatable";
+import {IEffect} from "../IEffect";
 
-class AntiGravity implements IEffect {
-  private _maintainer;
 
-  constructor(maintainer: Gravitational & D2Updatable) {
-    this._maintainer = maintainer;
-    setTimeout(() => this._maintainer.effector.removeEffect(this), 500);
-  }
+const AntiGravity = function (maintainer: Gravitational & D2UpdatableComponent) {
+  const _maintainer = maintainer;
+  setTimeout(() => _maintainer.effector.removeEffect(this), 500);
+  const obj: IEffect = {
+    update(delta: number = 1) {
+      _maintainer.eDown -= 0.01 * delta;
+    }
+  };
+  return obj;
+};
 
-  update(delta: number = 1) {
-    this._maintainer.eDown -= 0.01 * delta;
-  }
-}
 
 export {AntiGravity};

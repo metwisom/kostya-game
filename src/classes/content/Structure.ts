@@ -15,9 +15,9 @@ class Structure extends D2Updatable {
 
     this.matrixPosX = x;
     this.matrixPosY = y;
-    this.physBox = new Box(0, 0, 50, 50, this);
+    this.physBox = Box(0, 0, 50, 50, this);
     this._physBox.hasCollision = true;
-    this.viewBox = new BoxTextured(0, 0, 50, 50, this);
+    this.viewBox = BoxTextured(0, 0, 50, 50, this);
     this.x = x * 50;
     this.y = y * 50;
     this.refreshSprite();
@@ -61,7 +61,7 @@ class Structure extends D2Updatable {
         }
       }
     }
-    if (this.viewBox.prop().texture == undefined) {
+    if (this.viewBox.prop(0,0).texture == undefined) {
 
     }
   }

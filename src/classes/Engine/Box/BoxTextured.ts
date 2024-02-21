@@ -1,46 +1,45 @@
-import {Texture} from '../Texture/Texture';
-import {TextureCollection} from '../Texture/TextureCollection';
-import {D2Drawable} from '../D2Drawable';
-import {Box, BoxArea} from './Box';
-import {TextureBlank} from '../Texture/TextureBlank';
+import {Texture} from "../Texture/Texture";
+import {TextureCollection} from "../Texture/TextureCollection";
+import {D2Drawable, D2DrawableComponent} from "../D2Drawable";
+import {Box, BoxArea, BoxComponent} from "./Box";
+import {TextureBlank} from "../Texture/TextureBlank";
 
 
 type ViewArea = BoxArea & {
   texture: Texture;
 }
 
-class BoxTextured extends Box {
-  protected _texture: Texture;
-
-  constructor(x: number, y: number, width: number, height: number, maintainer: D2Drawable, texture: TextureBlank = undefined) {
-    super(x, y, width, height, maintainer);
-    this._texture = texture;
-  }
-
-  set texture(newTexture: Texture) {
-    this._texture = newTexture;
-  }
-
-  get texture() {
-    return this._texture;
-  }
-
-  set state(newState: string) {
-    if (this.texture instanceof TextureCollection) {
-      this.texture.state = newState;
-    }
-  }
-
-  prop(): ViewArea {
-    return {
-      ...super.prop(),
-      texture: this.texture,
-    };
-  }
-
-  destroy() {
-    this.texture.destroy();
-  }
+type BoxTexturedComponent = Omit<BoxComponent, "prop"> & {
+  setTexture: (texture: Texture) => void
+  state: string
+  destroy: () => void
+  prop(x?: number, y?: number): ViewArea
 }
 
-export {BoxTextured, ViewArea};
+const BoxTextured = function (x: number, y: number, width: number, height: number, maintainer: D2DrawableComponent, texture: TextureBlank = undefined) {
+  let _texture: Texture = undefined;
+  const parent = Box(x, y, width, height, maintainer);
+  const obj: BoxTexturedComponent = {
+    ...parent,
+    setTexture(texture: Texture) {
+      _texture = texture;
+    },
+    set state(newState: string) {
+      if (_texture instanceof TextureCollection) {
+        _texture.state = newState;
+      }
+    },
+    prop(): ViewArea {
+      return {
+        ...parent.prop(0, 0),
+        texture: _texture,
+      };
+    },
+    destroy(): void {
+      _texture.destroy();
+    }
+  };
+  return Object.freeze(obj);
+};
+
+export {BoxTextured, BoxTexturedComponent, ViewArea};

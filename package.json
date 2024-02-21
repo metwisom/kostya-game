@@ -19,16 +19,14 @@
   },
   "homepage": "https://github.com/metwisom/kostya-game#readme",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/eslint-plugin": "7.0.1",
     "eslint": "^8.56.0",
     "ts-loader": "^9.5.1",
-    "webpack": "^5.90.1",
+    "webpack": "5.90.2",
     "webpack-cli": "^5.1.4",
-    "webpack-obfuscator": "^3.5.1"
-  },
-  "devtool": "source-map",
-  "dependencies": {
+    "webpack-obfuscator": "^3.5.1",
     "javascript-obfuscator": "^4.1.0",
     "typescript": "^5.3.3"
-  }
+  },
+  "devtool": "source-map"
 }

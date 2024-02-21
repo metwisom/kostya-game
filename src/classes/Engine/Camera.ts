@@ -1,15 +1,15 @@
-import {D2Drawable} from './D2Drawable';
+import {D2Drawable, D2DrawableComponent} from "./D2Drawable";
 
 type Camera = {
-  readonly target: D2Drawable
+  readonly target: D2DrawableComponent
   readonly x: number
   readonly y: number
-  attach(obj: D2Drawable): void
+  attach(obj: D2DrawableComponent): void
 }
 
 const Camera = (function () {
   const camera: Camera = Object.create(null);
-  let attached = new D2Drawable();
+  let attached = D2Drawable();
   Object.defineProperty(camera, 'target', {
     get: () => attached,
     enumerable: false,
@@ -25,7 +25,7 @@ const Camera = (function () {
     enumerable: false,
     configurable: false,
   });
-  camera.attach = (obj: D2Drawable) => {
+  camera.attach = (obj: D2DrawableComponent) => {
     attached = obj;
   };
   return Object.freeze(camera);

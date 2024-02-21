@@ -1,6 +1,7 @@
-import {GuiBox} from './GuiBox';
-import {D2Drawable} from '../D2Drawable';
-import {Engine} from '../Engine';
+import {D2Drawable, D2DrawableComponent} from "../D2Drawable";
+import {Engine} from "../Engine";
+import {BoxTexturedComponent, BoxTextured} from "../Box/BoxTextured";
+import {TextureBlank} from "../Texture/TextureBlank";
 
 
 export enum FloatX {
@@ -15,28 +16,29 @@ export enum FloatY {
   bottom,
 }
 
-export default class Element extends D2Drawable {
+type ElementComponent = D2Drawable & {
+  origX: number,
+  origY: number,
+  _floatX: number,
+  _floatY: number
+  x: number,
+  y: number,
+  floatX: number
+  floatY: number,
+  width: number
+  height: number
+}
 
-  protected _viewBox: GuiBox;
-  private _origX: number;
-  private _origY: number;
-  private _floatX: FloatX;
-  private _floatY: FloatY;
-
-  constructor(x: number, y: number, width: number, height: number) {
-    super(x, y);
-    this._viewBox = new GuiBox(0, 0, width, height, this);
-    this.floatX = FloatX.left;
-    this.floatY = FloatY.top;
-
-    window.addEventListener('resize', () => {
-      this.x = this._origX;
-    });
-  }
-
-  public set x(value: number) {
-    this._origX = value;
-    switch (this.floatX) {
+const Element = function (x: number, y: number, width: number, height: number) {
+  const obj: ElementComponent = {
+    ...D2Drawable(),
+    origX: 0,
+    origY: 0,
+    _floatX: FloatX.center,
+    _floatY: FloatY.center,
+    set x(value: number) {
+      this._origX = value;
+      switch (this.floatX) {
       case FloatX.center:
         this._x = value + Engine.display.width / 2 - this.width / 2;
         break;
@@ -45,16 +47,14 @@ export default class Element extends D2Drawable {
         break;
       default:
         this._x = value - this.width / 2;
-    }
-  }
-
-  public get x() {
-    return this._x;
-  }
-
-  public set y(value: number) {
-    this._origY = value;
-    switch (this.floatY) {
+      }
+    },
+    get x() {
+      return this._x;
+    },
+    set y(value: number) {
+      this._origY = value;
+      switch (this.floatY) {
       case FloatY.center:
         this._y = value + Engine.display.height / 2 - this.height / 2;
         break;
@@ -63,49 +63,40 @@ export default class Element extends D2Drawable {
         break;
       default:
         this._y = value - this.height / 2;
+      }
+    },
+    get y() {
+      return this._y;
+    },
+
+    set floatX(value: FloatX) {
+      this._floatX = value;
+      this.x = this._origX;
+    },
+    get floatX() {
+      return this._floatX;
+    },
+    set floatY(value: FloatY) {
+      this._floatY = value;
+      this.y = this._origY;
+    },
+    get floatY() {
+      return this._floatY;
+    },
+    set width(value: number) {
+      this.viewBox.width = value;
+    },
+    get width() {
+      return this.viewBox.width;
+    },
+    set height(value: number) {
+      this.viewBox.height = value;
+    },
+    get height() {
+      return this.viewBox.height;
     }
-  }
+  };
+  return obj;
+};
 
-  public get y() {
-    return this._y;
-  }
-
-  public set floatX(value: FloatX) {
-    this._floatX = value;
-    this.x = this._origX;
-  }
-
-  public get floatX() {
-    return this._floatX;
-  }
-
-  public set floatY(value: FloatY) {
-    this._floatY = value;
-    this.y = this._origY;
-  }
-
-  public get floatY() {
-    return this._floatY;
-  }
-
-  public set width(value: number) {
-    this.viewBox.width = value;
-  }
-
-  public get width() {
-    return this.viewBox.width;
-  }
-
-  public set height(value: number) {
-    this.viewBox.height = value;
-  }
-
-  public get height() {
-    return this.viewBox.height;
-  }
-
-  public update() {
-    return;
-  }
-
-}
+export {Element,ElementComponent};

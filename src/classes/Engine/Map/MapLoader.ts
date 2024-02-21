@@ -9,7 +9,7 @@ import {Camera} from '../Camera';
 import {InputController} from '../Input/InputController';
 import {Item} from '../../content/Item';
 import {FakeAnimate} from '../../content/FakeAnimate';
-import {Button} from '../Gui/Button';
+import {Button, Button} from "../Gui/Button";
 import {FloatX, FloatY} from '../Gui/Element';
 import {Mouse} from '../Input/Mouse';
 import {GameKeys} from '../Input/InputKey';
@@ -72,7 +72,7 @@ class _MapLoader {
       const button = new Button(item.x, item.y, item.width, item.height, item.text);
       button.floatX = FloatX[item.floatX];
       button.floatY = FloatY[item.floatY];
-      button.viewBox.texture.setFont('50px monospace');
+      // button.viewBox.texture.setFont('50px Press');
       Engine.addObject(button);
       Mouse.addObject(button);
       if (item.action.loadMap != undefined) {

@@ -8,7 +8,7 @@ const RainEngine = (() => {
 
   const create = (): void => {
     if (!isActive) return;
-    const rain = new Rain(Camera.y + 1000);
+    const rain = Rain(Camera.y + 1000);
     rainDrops.push(rain);
     Engine.addObject(rain);
     Engine.addObjectPhys(rain);

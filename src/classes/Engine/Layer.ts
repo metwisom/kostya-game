@@ -1,13 +1,13 @@
-import {D2Drawable} from './D2Drawable';
+import {D2Drawable, D2DrawableComponent} from "./D2Drawable";
 
 class Layer {
-  items: D2Drawable[] = [];
+  items: D2DrawableComponent[] = [];
 
-  addObject(obj: D2Drawable): void {
+  addObject(obj: D2DrawableComponent): void {
     this.items.push(obj);
   }
 
-  removeObject(obj: D2Drawable): boolean {
+  removeObject(obj: D2DrawableComponent): boolean {
     const index = this.items.indexOf(obj);
     if (index !== -1) {
       this.items.splice(index, 1);

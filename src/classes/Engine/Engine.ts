@@ -61,11 +61,10 @@ class _Engine {
     this.removeListU.length = 0;
   };
 
-  public checkCollision<T = D2Updatable>(hitBox: BoxArea, ignore = '', onlyType?: typeof D2Drawable): T[] {
+  public checkCollision<T = D2Updatable>(hitBox: BoxArea, ignore = ''): T[] {
     return this.objects.filter(e => {
-      const typeExact = onlyType != undefined ? e instanceof onlyType : true;
-      if (e.id !== ignore && e.physBox.hasCollision && typeExact) {
-        const testBox = e.physBox.prop();
+      if (e.id !== ignore && e.physBox.hasCollision) {
+        const testBox = e.physBox.prop(0,0);
         return intersectRect(testBox, hitBox);
       }
     }) as T[];
