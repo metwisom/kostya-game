@@ -1,15 +1,15 @@
-import {Texture} from "../Texture/Texture";
-import {TextureCollection} from "../Texture/TextureCollection";
-import {D2Drawable, D2DrawableComponent} from "../D2Drawable";
-import {Box, BoxArea, BoxComponent} from "./Box";
-import {TextureBlank} from "../Texture/TextureBlank";
+import {Texture} from '../Texture/Texture';
+import {TextureCollection} from '../Texture/TextureCollection';
+import {D2DrawableComponent} from '../D2Drawable';
+import {Box, BoxArea, BoxComponent} from './Box';
+import {TextureBlank} from '../Texture/TextureBlank';
 
 
 type ViewArea = BoxArea & {
   texture: Texture;
 }
 
-type BoxTexturedComponent = Omit<BoxComponent, "prop"> & {
+type BoxTexturedComponent = Omit<BoxComponent, 'prop'> & {
   setTexture: (texture: Texture) => void
   state: string
   destroy: () => void
@@ -37,7 +37,7 @@ const BoxTextured = function (x: number, y: number, width: number, height: numbe
     },
     destroy(): void {
       _texture.destroy();
-    }
+    },
   };
   return Object.freeze(obj);
 };

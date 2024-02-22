@@ -1,4 +1,4 @@
-import {D2Drawable, D2DrawableComponent} from "./D2Drawable";
+import {D2Drawable, D2DrawableComponent} from './D2Drawable';
 
 type Camera = {
   readonly target: D2DrawableComponent

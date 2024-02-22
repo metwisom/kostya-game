@@ -1,6 +1,6 @@
-import {D2Drawable, D2DrawableComponent} from "./D2Drawable";
-import {Effector} from "../effector/Effector";
-import {BoxComponent} from "./Box/Box";
+import {D2Drawable, D2DrawableComponent} from './D2Drawable';
+import {Effector} from '../effector/Effector';
+import {BoxComponent} from './Box/Box';
 
 
 type D2UpdatableComponent = D2DrawableComponent & {
@@ -29,7 +29,7 @@ const D2Updatable = function (x: number = 0, y: number = 0) {
 
     update(delta: number) {
       this.effector.run(delta);
-    }
+    },
   };
   return obj;
 };

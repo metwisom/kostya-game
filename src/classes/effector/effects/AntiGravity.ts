@@ -1,6 +1,6 @@
-import {Gravitational} from "./Gravity";
-import {D2Updatable, D2UpdatableComponent} from "../../Engine/D2Updatable";
-import {IEffect} from "../IEffect";
+import {Gravitational} from './Gravity';
+import {D2UpdatableComponent} from '../../Engine/D2Updatable';
+import {IEffect} from '../IEffect';
 
 
 const AntiGravity = function (maintainer: Gravitational & D2UpdatableComponent) {
@@ -9,7 +9,7 @@ const AntiGravity = function (maintainer: Gravitational & D2UpdatableComponent) 
   const obj: IEffect = {
     update(delta: number = 1) {
       _maintainer.eDown -= 0.01 * delta;
-    }
+    },
   };
   return obj;
 };

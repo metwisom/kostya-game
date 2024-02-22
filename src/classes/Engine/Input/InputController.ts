@@ -1,5 +1,5 @@
 import {Eventful} from '../interfaces/Eventful';
-import {InputKey, GameKeys} from './InputKey';
+import {GameKeys, InputKey} from './InputKey';
 
 
 export type InputMap = {

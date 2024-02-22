@@ -1,4 +1,4 @@
-import {Particle, ParticleComponent} from "./Particle";
+import {Particle, ParticleComponent} from './Particle';
 
 type ParticleFabric = {
   release(item: ParticleComponent): void

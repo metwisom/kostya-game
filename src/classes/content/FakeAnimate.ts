@@ -1,8 +1,4 @@
-import {BoxTextured} from "../Engine/Box/BoxTextured";
-import {Texture} from "../Engine/Texture/Texture";
-import {Box, BoxComponent} from "../Engine/Box/Box";
-import {D2Updatable, D2UpdatableComponent} from "../Engine/D2Updatable";
-import {D2DrawableComponent} from "../Engine/D2Drawable";
+import {D2Updatable, D2UpdatableComponent} from '../Engine/D2Updatable';
 
 
 const FakeAnimate = function () {
@@ -12,7 +8,7 @@ const FakeAnimate = function () {
     draw() {
       this.x += 0.9;
       return parent.draw();
-    }
+    },
   };
   return obj;
 };

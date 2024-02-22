@@ -15,19 +15,6 @@ class TextureBlank extends Texture {
     this.setSize(w, h);
   }
 
-  protected render() {
-    this.virtualScene.fillStyle = this.fillColor;
-    this.virtualScene.fillRect(0, 0, this.virtualCanvas.width, this.virtualCanvas.height);
-    // 16;
-
-    if (this.text != '') {
-      this.virtualScene.strokeStyle = this.textColor;
-      const text = this.virtualScene.measureText(this.text); // TextMetrics object
-      this.virtualScene.strokeText(this.text, this.virtualCanvas.width / 2 - text.width / 2, this.virtualCanvas.height / 2);
-    }
-    this.cacheImg.src = this.virtualCanvas.toDataURL();
-  }
-
   get(): HTMLImageElement {
     if (this.cacheImg == undefined) {
       super.get();
@@ -50,6 +37,19 @@ class TextureBlank extends Texture {
     this.text = text;
     this.textColor = color;
     this.render();
+  }
+
+  protected render() {
+    this.virtualScene.fillStyle = this.fillColor;
+    this.virtualScene.fillRect(0, 0, this.virtualCanvas.width, this.virtualCanvas.height);
+    // 16;
+
+    if (this.text != '') {
+      this.virtualScene.strokeStyle = this.textColor;
+      const text = this.virtualScene.measureText(this.text); // TextMetrics object
+      this.virtualScene.strokeText(this.text, this.virtualCanvas.width / 2 - text.width / 2, this.virtualCanvas.height / 2);
+    }
+    this.cacheImg.src = this.virtualCanvas.toDataURL();
   }
 }
 

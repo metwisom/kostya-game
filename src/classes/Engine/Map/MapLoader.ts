@@ -9,7 +9,7 @@ import {Camera} from '../Camera';
 import {InputController} from '../Input/InputController';
 import {Item} from '../../content/Item';
 import {FakeAnimate} from '../../content/FakeAnimate';
-import {Button, Button} from "../Gui/Button";
+import {Button} from '../Gui/Button';
 import {FloatX, FloatY} from '../Gui/Element';
 import {Mouse} from '../Input/Mouse';
 import {GameKeys} from '../Input/InputKey';

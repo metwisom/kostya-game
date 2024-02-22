@@ -17,6 +17,35 @@ class TextureButton extends Texture {
     this.setSize(w, h);
   }
 
+  get(): HTMLImageElement {
+    if (this.cacheImg == undefined) {
+      super.get();
+    }
+    return this.cacheImg;
+  }
+
+  setSize(w: number, h: number) {
+    this.virtualCanvas.width = w;
+    this.virtualCanvas.height = h;
+    this.render();
+  }
+
+  setFont(font: string) {
+    this.virtualScene.font = font;
+    this.render();
+  }
+
+  setColor(color: string) {
+    this.fillColor = color;
+    this.render();
+  }
+
+  setText(text: string, color: string) {
+    this.text = text;
+    this.textColor = color;
+    this.render();
+  }
+
   protected render() {
     this.virtualScene.fillStyle = this.fillColor;
 
@@ -54,35 +83,6 @@ class TextureButton extends Texture {
       this.virtualScene.strokeText(this.text, this.virtualCanvas.width / 2 - metrics.width / 2, this.virtualCanvas.height / 2 + lineHeight / 2 * 0.7);
     }
     this.cacheImg.src = this.virtualCanvas.toDataURL();
-  }
-
-  get(): HTMLImageElement {
-    if (this.cacheImg == undefined) {
-      super.get();
-    }
-    return this.cacheImg;
-  }
-
-  setSize(w: number, h: number) {
-    this.virtualCanvas.width = w;
-    this.virtualCanvas.height = h;
-    this.render();
-  }
-
-  setFont(font: string) {
-    this.virtualScene.font = font;
-    this.render();
-  }
-
-  setColor(color: string) {
-    this.fillColor = color;
-    this.render();
-  }
-
-  setText(text: string, color: string) {
-    this.text = text;
-    this.textColor = color;
-    this.render();
   }
 }
 

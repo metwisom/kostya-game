@@ -1,7 +1,7 @@
-import {D2Updatable, D2UpdatableComponent} from "../../Engine/D2Updatable";
-import {ItemWithStates, ItemWithStatesComponent} from "../../Engine/ItemWithStates";
-import {Engine} from "../../Engine/Engine";
-import {IEffect} from "../IEffect";
+import {D2UpdatableComponent} from '../../Engine/D2Updatable';
+import {ItemWithStatesComponent} from '../../Engine/ItemWithStates';
+import {Engine} from '../../Engine/Engine';
+import {IEffect} from '../IEffect';
 
 
 interface Gravitational {
@@ -36,17 +36,17 @@ const Gravity = function (maintainer: ItemWithStatesComponent & Gravitational) {
       }
 
       if (this._maintainer.eDown > 0) {
-        this._maintainer.state = "jump";
+        this._maintainer.state = 'jump';
       } else {
         if (this._maintainer.eDown < 0) {
-          this._maintainer.state = "fall";
+          this._maintainer.state = 'fall';
         } else {
-          if (this._maintainer.state === "jump" || this._maintainer.state === "fall") {
-            this._maintainer.state = "idle";
+          if (this._maintainer.state === 'jump' || this._maintainer.state === 'fall') {
+            this._maintainer.state = 'idle';
           }
         }
       }
-    }
+    },
   };
   return obj;
 };

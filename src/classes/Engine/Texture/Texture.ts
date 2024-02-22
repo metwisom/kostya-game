@@ -5,12 +5,11 @@ import {CanvasStore} from '../CanvasStore';
 class Texture {
 
   public referenceImage: HTMLImageElement;
+  protected virtualCanvas = CanvasStore.get();
+  protected virtualScene = this.virtualCanvas.getContext('2d');
   private cur = 0;
   private readonly speed: number;
   private readonly framesCount: number;
-
-  protected virtualCanvas = CanvasStore.get();
-  protected virtualScene = this.virtualCanvas.getContext('2d');
 
   constructor(src: string = undefined) {
     if (src != undefined) {
@@ -21,12 +20,6 @@ class Texture {
       this.virtualCanvas.height = this.referenceImage.height;
       this.render(0);
     }
-  }
-
-  protected render(position: number) {
-    const imagePos = this.virtualCanvas.width * position;
-    this.virtualScene.clearRect(0, 0, this.virtualCanvas.width, this.virtualCanvas.height);
-    this.virtualScene.drawImage(this.referenceImage, imagePos, 0, this.virtualCanvas.width, this.virtualCanvas.height, 0, 0, this.virtualCanvas.width, this.virtualCanvas.height);
   }
 
   get(): HTMLImageElement {
@@ -48,6 +41,12 @@ class Texture {
   destroy() {
     CanvasStore.release(this.virtualCanvas);
     this.virtualCanvas = undefined;
+  }
+
+  protected render(position: number) {
+    const imagePos = this.virtualCanvas.width * position;
+    this.virtualScene.clearRect(0, 0, this.virtualCanvas.width, this.virtualCanvas.height);
+    this.virtualScene.drawImage(this.referenceImage, imagePos, 0, this.virtualCanvas.width, this.virtualCanvas.height, 0, 0, this.virtualCanvas.width, this.virtualCanvas.height);
   }
 }
 

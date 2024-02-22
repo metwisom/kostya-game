@@ -1,4 +1,4 @@
-import {BoxTextured, BoxTexturedComponent, ViewArea} from "./Box/BoxTextured";
+import {BoxTexturedComponent, ViewArea} from './Box/BoxTextured';
 
 
 type D2DrawableComponent = {

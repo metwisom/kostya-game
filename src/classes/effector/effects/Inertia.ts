@@ -1,5 +1,5 @@
-import {D2Updatable, D2UpdatableComponent} from "../../Engine/D2Updatable";
-import {ItemWithStates, ItemWithStatesComponent} from "../../Engine/ItemWithStates";
+import {D2UpdatableComponent} from '../../Engine/D2Updatable';
+import {ItemWithStatesComponent} from '../../Engine/ItemWithStates';
 import {Engine} from '../../Engine/Engine';
 import {IEffect} from '../IEffect';
 
@@ -8,8 +8,8 @@ interface Inertial {
   hasGround: boolean;
 }
 
-const Inertia = function(maintainer: ItemWithStatesComponent & Inertial) {
-  const _maintainer = maintainer
+const Inertia = function (maintainer: ItemWithStatesComponent & Inertial) {
+  const _maintainer = maintainer;
   const obj: IEffect = {
     update(delta: number) {
       if (_maintainer.momentum != 0) {
@@ -43,11 +43,11 @@ const Inertia = function(maintainer: ItemWithStatesComponent & Inertial) {
           _maintainer.state = 'idle';
         }
       }
-    }
-  }
-  return Object.freeze(obj)
+    },
+  };
+  return Object.freeze(obj);
 
 
-}
+};
 
 export {Inertia, Inertial};

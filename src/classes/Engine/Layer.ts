@@ -1,4 +1,4 @@
-import {D2Drawable, D2DrawableComponent} from "./D2Drawable";
+import {D2DrawableComponent} from './D2Drawable';
 
 class Layer {
   items: D2DrawableComponent[] = [];

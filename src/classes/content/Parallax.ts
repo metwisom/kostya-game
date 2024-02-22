@@ -1,9 +1,9 @@
-import {BoxTextured, ViewArea} from "../Engine/Box/BoxTextured";
-import {Texture} from "../Engine/Texture/Texture";
-import {D2Updatable, D2UpdatableComponent} from "../Engine/D2Updatable";
-import {Camera} from "../Engine/Camera";
-import {Engine} from "../Engine/Engine";
-import {Box} from "../Engine/Box/Box";
+import {BoxTextured, ViewArea} from '../Engine/Box/BoxTextured';
+import {Texture} from '../Engine/Texture/Texture';
+import {D2Updatable, D2UpdatableComponent} from '../Engine/D2Updatable';
+import {Camera} from '../Engine/Camera';
+import {Engine} from '../Engine/Engine';
+import {Box} from '../Engine/Box/Box';
 
 
 type ParallaxComponent = D2UpdatableComponent & {
@@ -19,7 +19,7 @@ const Parallax = function (image: string, bias: number) {
   const _bias = bias;
   let _originX = 0;
 
-  const parent = D2Updatable()
+  const parent = D2Updatable();
   const obj: ParallaxComponent = {
     ...parent,
     setOriginX(x: number) {
@@ -38,7 +38,7 @@ const Parallax = function (image: string, bias: number) {
 
       return parent.draw();
 
-    }
+    },
   };
   obj.physBox = Box(0, 0, width, height, this);
   obj.viewBox = BoxTextured(0, 0, width, height, this);

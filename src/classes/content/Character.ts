@@ -1,15 +1,15 @@
-import {ItemWithStates, ItemWithStatesComponent} from "../Engine/ItemWithStates";
-import {BoxTextured} from "../Engine/Box/BoxTextured";
-import {TextureCollection} from "../Engine/Texture/TextureCollection";
-import {Texture} from "../Engine/Texture/Texture";
-import {Eventful, SomeEvent} from "../Engine/interfaces/Eventful";
-import {GameKeys} from "../Engine/Input/InputKey";
-import {Engine} from "../Engine/Engine";
-import {Box, BoxComponent} from "../Engine/Box/Box";
-import {Gravitational, Gravity} from "../effector/effects/Gravity";
-import {Inertia, Inertial} from "../effector/effects/Inertia";
-import {ParticleFabric} from "./ParticleFabric";
-import {ResourceLoader, SoundResource} from "../Engine/ResourceLoader/ResourceLoader";
+import {ItemWithStates, ItemWithStatesComponent} from '../Engine/ItemWithStates';
+import {BoxTextured} from '../Engine/Box/BoxTextured';
+import {TextureCollection} from '../Engine/Texture/TextureCollection';
+import {Texture} from '../Engine/Texture/Texture';
+import {Eventful, SomeEvent} from '../Engine/interfaces/Eventful';
+import {GameKeys} from '../Engine/Input/InputKey';
+import {Engine} from '../Engine/Engine';
+import {Box} from '../Engine/Box/Box';
+import {Gravitational, Gravity} from '../effector/effects/Gravity';
+import {Inertia, Inertial} from '../effector/effects/Inertia';
+import {ParticleFabric} from './ParticleFabric';
+import {ResourceLoader, SoundResource} from '../Engine/ResourceLoader/ResourceLoader';
 
 
 type CharacterComponent = ItemWithStatesComponent & {
@@ -17,7 +17,7 @@ type CharacterComponent = ItemWithStatesComponent & {
 } & Eventful & Gravitational & Inertial
 
 const Character = function (x: number, y: number) {
-  const audio = ResourceLoader.get<SoundResource>("step.wav").content;
+  const audio = ResourceLoader.get<SoundResource>('step.wav').content;
   audio.playbackRate = 1.8;
   audio.loop = true;
   let _state: string;
@@ -37,7 +37,7 @@ const Character = function (x: number, y: number) {
       }
     },
     set state(state: string) {
-      _state = this.faced + "_" + state;
+      _state = this.faced + '_' + state;
       this.viewBox.state = state;
     },
     destroy() {
@@ -87,7 +87,7 @@ const Character = function (x: number, y: number) {
           this.eDown = -1;
         }
       }
-    }
+    },
   };
   obj.physBox = Box(20, 82, 40, 82, this);
   obj.physBox.setCollision(true);
@@ -97,20 +97,20 @@ const Character = function (x: number, y: number) {
   obj.effector.addEffect(Gravity(this));
 
   const textures = new TextureCollection();
-  textures.addState("left_idle", new Texture("left_idle.png"));
-  textures.addState("right_idle", new Texture("right_idle.png"));
-  textures.addState("left_run", new Texture("left_run.png"));
-  textures.addState("right_run", new Texture("right_run.png"));
-  textures.addState("left_jump", new Texture("left_jump.png"));
-  textures.addState("right_jump", new Texture("right_jump.png"));
-  textures.addState("left_levitate", new Texture("left_levitate.png"));
-  textures.addState("right_levitate", new Texture("right_levitate.png"));
-  textures.addState("left_fall", new Texture("left_fall.png"));
-  textures.addState("right_fall", new Texture("right_fall.png"));
-  textures.addState("left_landing", new Texture("left_landing.png"));
-  textures.addState("right_landing", new Texture("right_landing.png"));
+  textures.addState('left_idle', new Texture('left_idle.png'));
+  textures.addState('right_idle', new Texture('right_idle.png'));
+  textures.addState('left_run', new Texture('left_run.png'));
+  textures.addState('right_run', new Texture('right_run.png'));
+  textures.addState('left_jump', new Texture('left_jump.png'));
+  textures.addState('right_jump', new Texture('right_jump.png'));
+  textures.addState('left_levitate', new Texture('left_levitate.png'));
+  textures.addState('right_levitate', new Texture('right_levitate.png'));
+  textures.addState('left_fall', new Texture('left_fall.png'));
+  textures.addState('right_fall', new Texture('right_fall.png'));
+  textures.addState('left_landing', new Texture('left_landing.png'));
+  textures.addState('right_landing', new Texture('right_landing.png'));
   obj.viewBox.setTexture(textures);
-  obj.state = "idle";
+  obj.state = 'idle';
 };
 
 

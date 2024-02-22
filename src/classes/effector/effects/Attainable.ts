@@ -1,8 +1,7 @@
 import {Engine} from '../../Engine/Engine';
 import {IEffect} from '../IEffect';
-import {Character, CharacterComponent} from "../../content/Character";
 import {Particle} from '../../content/Particle';
-import {ItemWithStates, ItemWithStatesComponent} from "../../Engine/ItemWithStates";
+import {ItemWithStatesComponent} from '../../Engine/ItemWithStates';
 import {Eventful} from '../../Engine/interfaces/Eventful';
 
 
@@ -12,8 +11,9 @@ class Attainable implements IEffect {
   constructor(maintainer: ItemWithStatesComponent & Eventful) {
     this._maintainer = maintainer;
   }
+
   update() {
-    const xCollision = this._maintainer.physBox.prop(0,0);
+    const xCollision = this._maintainer.physBox.prop(0, 0);
     const inter = Engine.checkCollision(xCollision, this._maintainer.id);
     if (inter.length !== 0) {
       this._maintainer.Event({taken: inter[0]});

@@ -15,43 +15,32 @@ import {intersectRect} from '../../utils/intersectRect';
 class _Engine {
 
 
+  public drawTime = 0;
   private removeListU: D2Updatable[] = [];
   private objects: D2Updatable[] = [];
-
   private removeList: D2Drawable[] = [];
-  private _layers: Layer[] = [];
   private gui: D2Drawable[] = [];
-  private _addons: DisplayAddons = new DisplayAddons();
   private graphic: Graphic = undefined;
-  public drawTime = 0;
 
-  private drawCollection(collection: D2Drawable[]) {
-    collection.map(item => {
-      if (!item.isActual()) {
-        return this.removeList.push(item);
-      }
-      const viewBox = item.draw();
-      this.graphic.drawImage(viewBox.texture.get(),
-        0, 0,
-        viewBox.texture.get().width,
-        viewBox.texture.get().height,
-        viewBox.x,
-        viewBox.y,
-        viewBox.width,
-        viewBox.height);
-    });
+  private _layers: Layer[] = [];
+
+  public get layers() {
+    return this._layers;
   }
 
+  private _addons: DisplayAddons = new DisplayAddons();
 
-  private removeObject = (obj: ItemWithStates) => {
-    if (this.objects.includes(obj)) {
-      this.objects.splice(this.objects.indexOf(obj), 1);
-    }
-  };
+  public get addons() {
+    return this._addons;
+  }
 
-  private toRemove = (obj: D2Updatable) => {
-    this.removeListU.push(obj);
-  };
+  public get display() {
+    return this.graphic.display;
+  }
+
+  get obj() {
+    return this.objects;
+  }
 
   public cleanUp() {
     this.removeList.map(item => this._layers.map(layer => layer.removeObject(item)));
@@ -64,14 +53,10 @@ class _Engine {
   public checkCollision<T = D2Updatable>(hitBox: BoxArea, ignore = ''): T[] {
     return this.objects.filter(e => {
       if (e.id !== ignore && e.physBox.hasCollision) {
-        const testBox = e.physBox.prop(0,0);
+        const testBox = e.physBox.prop(0, 0);
         return intersectRect(testBox, hitBox);
       }
     }) as T[];
-  }
-
-  public get layers() {
-    return this._layers;
   }
 
   public clearLayers() {
@@ -81,14 +66,6 @@ class _Engine {
   public clearGui() {
     this.gui.map(i => i.destroy());
     this.gui.length = 0;
-  }
-
-  public get addons() {
-    return this._addons;
-  }
-
-  public get display() {
-    return this.graphic.display;
   }
 
   public addObject(obj: D2Drawable, layer: number = 0) {
@@ -104,11 +81,6 @@ class _Engine {
 
   public attach(canvas: HTMLCanvasElement) {
     this.graphic = new Graphic(canvas);
-  }
-
-
-  get obj() {
-    return this.objects;
   }
 
   public addObjectPhys(obj: D2Updatable) {
@@ -148,6 +120,33 @@ class _Engine {
     };
     requestAnimationFrame(draw);
   }
+
+  private drawCollection(collection: D2Drawable[]) {
+    collection.map(item => {
+      if (!item.isActual()) {
+        return this.removeList.push(item);
+      }
+      const viewBox = item.draw();
+      this.graphic.drawImage(viewBox.texture.get(),
+        0, 0,
+        viewBox.texture.get().width,
+        viewBox.texture.get().height,
+        viewBox.x,
+        viewBox.y,
+        viewBox.width,
+        viewBox.height);
+    });
+  }
+
+  private removeObject = (obj: ItemWithStates) => {
+    if (this.objects.includes(obj)) {
+      this.objects.splice(this.objects.indexOf(obj), 1);
+    }
+  };
+
+  private toRemove = (obj: D2Updatable) => {
+    this.removeListU.push(obj);
+  };
 }
 
 const Engine = new _Engine();

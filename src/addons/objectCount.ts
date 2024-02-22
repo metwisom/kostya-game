@@ -1,7 +1,7 @@
-import { Engine } from '../classes/Engine/Engine';
-import { CanvasStore } from '../classes/Engine/CanvasStore';
-import { Graphic } from '../classes/Engine/Graphic';
-import { ParticleFabric } from '../classes/content/ParticleFabric';
+import {Engine} from '../classes/Engine/Engine';
+import {CanvasStore} from '../classes/Engine/CanvasStore';
+import {Graphic} from '../classes/Engine/Graphic';
+import {ParticleFabric} from '../classes/content/ParticleFabric';
 
 const objectCounter = () => {
   let skipCount = 0;
@@ -15,7 +15,7 @@ const objectCounter = () => {
 
     if (skipCount === 0) {
       let totalDrawCount = 0;
-      Engine.layers.map(layer => totalDrawCount += layer.items.length)
+      Engine.layers.map(layer => totalDrawCount += layer.items.length);
       drawCount = `Objects: ${totalDrawCount}`;
       physCount = `Physics: ${Engine.obj.length}`;
       canvasStoreCount = `Canvas: ${CanvasStore.count}`;
@@ -25,9 +25,9 @@ const objectCounter = () => {
     graphic.drawText(
       `${drawCount}\n${physCount}\n${canvasStoreCount}\n${particlesStoreCount}`,
       20,
-      60
+      60,
     );
   };
 };
 
-export { objectCounter };
+export {objectCounter};

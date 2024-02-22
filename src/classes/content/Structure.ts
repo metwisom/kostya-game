@@ -61,7 +61,7 @@ class Structure extends D2Updatable {
         }
       }
     }
-    if (this.viewBox.prop(0,0).texture == undefined) {
+    if (this.viewBox.prop(0, 0).texture == undefined) {
 
     }
   }

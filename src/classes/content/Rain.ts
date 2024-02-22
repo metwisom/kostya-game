@@ -1,15 +1,15 @@
-import {getRandom, getRandomFloat} from "../../utils/getRandom";
-import {Engine} from "../Engine/Engine";
-import {Camera} from "../Engine/Camera";
-import {TextureRain} from "../Engine/Texture/TextureRain";
-import {Box} from "../Engine/Box/Box";
-import {Gravitational, Gravity} from "../effector/effects/Gravity";
-import {BoxTexturedComponent, BoxTextured} from "../Engine/Box/BoxTextured";
-import {ItemWithStates, ItemWithStatesComponent} from "../Engine/ItemWithStates";
+import {getRandom, getRandomFloat} from '../../utils/getRandom';
+import {Engine} from '../Engine/Engine';
+import {Camera} from '../Engine/Camera';
+import {TextureRain} from '../Engine/Texture/TextureRain';
+import {Box} from '../Engine/Box/Box';
+import {Gravitational, Gravity} from '../effector/effects/Gravity';
+import {BoxTextured, BoxTexturedComponent} from '../Engine/Box/BoxTextured';
+import {ItemWithStates, ItemWithStatesComponent} from '../Engine/ItemWithStates';
 
 
 const textureRain = new TextureRain(5, 11);
-textureRain.setColor("#65ada0");
+textureRain.setColor('#65ada0');
 
 type RainComponent = ItemWithStatesComponent & Gravitational
 
@@ -36,7 +36,7 @@ const Rain = function (maxDepth: number) {
       if (this.y > Engine.display.height) {
         this.respawn();
       }
-    }
+    },
   };
 
   obj.effector.addEffect(Gravity(this));
@@ -47,4 +47,4 @@ const Rain = function (maxDepth: number) {
   return obj;
 };
 
-export {Rain,RainComponent};
+export {Rain, RainComponent};

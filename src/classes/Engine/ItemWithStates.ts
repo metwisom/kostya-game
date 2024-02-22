@@ -1,7 +1,7 @@
-import {D2Updatable, D2UpdatableComponent} from "./D2Updatable";
+import {D2Updatable, D2UpdatableComponent} from './D2Updatable';
 
 
-type FacedStates = "right" | "left";
+type FacedStates = 'right' | 'left';
 
 type ItemWithStatesComponent = D2UpdatableComponent & {
   state: string
@@ -10,10 +10,10 @@ type ItemWithStatesComponent = D2UpdatableComponent & {
 
 const ItemWithStates = function () {
 
-  let _state: string = "idle";
+  let _state: string = 'idle';
   const obj: ItemWithStatesComponent = {
     ...D2Updatable(),
-    faced: "right",
+    faced: 'right',
     set state(state: string) {
       if (_state == state) {
         return;
@@ -23,7 +23,7 @@ const ItemWithStates = function () {
     },
     get state() {
       return _state;
-    }
+    },
   };
 
   return obj;

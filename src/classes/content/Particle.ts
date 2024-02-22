@@ -1,10 +1,10 @@
-import {TextureBlank} from "../Engine/Texture/TextureBlank";
-import {Box} from "../Engine/Box/Box";
-import {D2Updatable, D2UpdatableComponent} from "../Engine/D2Updatable";
-import {ParticleFabric} from "./ParticleFabric";
+import {TextureBlank} from '../Engine/Texture/TextureBlank';
+import {Box} from '../Engine/Box/Box';
+import {D2Updatable, D2UpdatableComponent} from '../Engine/D2Updatable';
+import {ParticleFabric} from './ParticleFabric';
 
 
-type ParticleComponent = Omit<D2UpdatableComponent, "destroy" | "isActual"> & {
+type ParticleComponent = Omit<D2UpdatableComponent, 'destroy' | 'isActual'> & {
   isActual: () => boolean
   destroy: () => void
   unDestroy: () => void
@@ -60,14 +60,14 @@ const Particle = function (x: number, y: number, size = 1, speed = 0.05, destroy
     },
     unDestroy() {
       isDestroyed = false;
-    }
+    },
   };
   obj.physBox.setCollision(false);
   const texture = new TextureBlank(10, 10);
-  texture.setColor("#4b3c1a");
+  texture.setColor('#4b3c1a');
   obj.viewBox.setTexture(texture);
   return obj;
 };
 
 
-export {Particle,ParticleComponent};
+export {Particle, ParticleComponent};

@@ -8,6 +8,13 @@ class TextureRain extends TextureBlank {
     this.render();
   }
 
+  get(): HTMLImageElement {
+    if (this.cacheImg == undefined) {
+      super.get();
+    }
+    return this.cacheImg;
+  }
+
   protected render() {
     this.virtualScene.fillStyle = this.fillColor;
     const maxWidth = this.virtualCanvas.height - this.virtualCanvas.width;
@@ -15,13 +22,6 @@ class TextureRain extends TextureBlank {
       this.virtualScene.fillRect(this.virtualCanvas.width / 2 - this.virtualCanvas.width / 2 / maxWidth * i, i, this.virtualCanvas.width / maxWidth * i, this.virtualCanvas.width / maxWidth * i);
     }
     this.cacheImg.src = this.virtualCanvas.toDataURL();
-  }
-
-  get(): HTMLImageElement {
-    if (this.cacheImg == undefined) {
-      super.get();
-    }
-    return this.cacheImg;
   }
 
 }

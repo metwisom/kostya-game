@@ -1,4 +1,4 @@
-import {D2Drawable, D2DrawableComponent} from "../D2Drawable";
+import {D2DrawableComponent} from '../D2Drawable';
 
 
 interface BoxArea {
@@ -37,7 +37,7 @@ const Box = function (x: number, y: number, width: number, height: number, maint
         width: this.width,
         height: this.height,
       };
-    }
+    },
   };
   return Object.freeze(obj);
 };

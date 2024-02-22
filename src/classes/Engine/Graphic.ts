@@ -34,17 +34,6 @@ class Graphic {
     }
   }
 
-  private recalculateSceneSize() {
-    if (this._display != undefined) {
-      const {width, height} = this._display.getBoundingClientRect();
-      this._display.width = width;
-      this._display.height = height;
-      if (this.scene != undefined) {
-        this.scene.imageSmoothingEnabled = false;
-      }
-    }
-  }
-
   public centerTo(x: number, y: number) {
     this.scene.translate(
       this.display.width / 2 - x,
@@ -66,6 +55,17 @@ class Graphic {
       this.scene.fillText(textLine, x, y);
       y += lineHeight;
     });
+  }
+
+  private recalculateSceneSize() {
+    if (this._display != undefined) {
+      const {width, height} = this._display.getBoundingClientRect();
+      this._display.width = width;
+      this._display.height = height;
+      if (this.scene != undefined) {
+        this.scene.imageSmoothingEnabled = false;
+      }
+    }
   }
 }
 

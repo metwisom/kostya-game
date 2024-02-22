@@ -10,11 +10,15 @@ export enum GameKeys {
 class InputKey {
   _status = false;
   keyName: GameKeys;
-  private propagation: boolean = true;
   public position = {
     x: 0,
     y: 0,
   };
+  private propagation: boolean = true;
+
+  constructor(keyName: GameKeys) {
+    this.keyName = keyName;
+  }
 
   status(abs = false) {
     if (this.propagation || abs) {
@@ -22,11 +26,6 @@ class InputKey {
     }
     return false;
   }
-
-  constructor(keyName: GameKeys) {
-    this.keyName = keyName;
-  }
-
 
   set(newStatus: boolean, propagation = true) {
     this.propagation = propagation;
