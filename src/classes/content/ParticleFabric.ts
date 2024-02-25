@@ -1,19 +1,19 @@
-import {Particle} from './Particle';
+import {Particle, ParticleComponent} from './Particle';
 
 type ParticleFabric = {
-  release(item: Particle): void
-  getParticle(x: number, y: number, size?: number, speed ?: number, destroyTime?: number): Particle
+  release(item: ParticleComponent): void
+  getParticle(x: number, y: number, size?: number, speed ?: number, destroyTime?: number): ParticleComponent
   particle: number
 }
 
 const ParticleFabric = (() => {
   const fabric: ParticleFabric = Object.create(null);
 
-  const particles: Particle[] = [];
+  const particles: ParticleComponent[] = [];
 
   for (let i = 0; i < 100; i++) {
     setTimeout(() => {
-      particles.push(new Particle(0, 0));
+      particles.push(Particle(0, 0));
     }, i * 20);
   }
 
@@ -30,7 +30,7 @@ const ParticleFabric = (() => {
       generatorRunning = true;
       for (let i = 0; i < 100 - particles.length; i++) {
         setTimeout(() => {
-          particles.push(new Particle(0, 0));
+          particles.push(Particle(0, 0));
         }, i * 20);
       }
       setTimeout(() => {
@@ -38,7 +38,7 @@ const ParticleFabric = (() => {
       }, (100 - particles.length) * 20);
 
     }
-    const particle = particles.pop() || new Particle(x, y);
+    const particle = particles.pop() || Particle(x, y);
     particle.unDestroy();
     particle.x = x;
     particle.y = y;
@@ -48,7 +48,7 @@ const ParticleFabric = (() => {
     return particle;
   };
 
-  fabric.release = (item: Particle) => {
+  fabric.release = (item: ParticleComponent) => {
     particles.push(item);
   };
   return Object.freeze(fabric);

@@ -52,7 +52,7 @@ const ResourceLoader = (function () {
                   break;
                 case 'sound':
                   item.content = new Audio(item.path + item.file);
-                  item.content.addEventListener('canplaythrough', res.bind(undefined,item), {once: true});
+                  item.content.addEventListener('canplaythrough', res.bind(undefined, item), {once: true});
                   break;
               }
             })),

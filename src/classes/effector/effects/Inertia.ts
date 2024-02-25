@@ -1,67 +1,53 @@
-import {D2Updatable} from '../../Engine/D2Updatable';
-import {ItemWithStates} from '../../Engine/ItemWithStates';
+import {D2UpdatableComponent} from '../../Engine/D2Updatable';
+import {ItemWithStatesComponent} from '../../Engine/ItemWithStates';
 import {Engine} from '../../Engine/Engine';
 import {IEffect} from '../IEffect';
-
 
 interface Inertial {
   momentum: number;
   hasGround: boolean;
 }
 
-class Inertia extends IEffect {
-
-  protected readonly maintainer: ItemWithStates & Inertial;
-
-  constructor(maintainer: typeof Inertia.prototype.maintainer) {
-    super(maintainer);
-  }
-
-  update(delta: number) {
-
-
-    if (this.maintainer.momentum != 0) {
-
-      let inter: D2Updatable[] = [];
-
-      const xCollision = this.maintainer.physBox.prop(this.maintainer.momentum * delta, 0);
-      if (this.maintainer.physBox.hasCollision) {
-        inter = Engine.checkCollision(xCollision, this.maintainer.id);
-      }
-
-      if (Math.abs(this.maintainer.momentum) < 0.001) {
-        this.maintainer.momentum = 0;
-      }
-
-      if (inter.length === 0) {
-        this.maintainer.x += this.maintainer.momentum * delta;
-      }
-
-      if (inter.length === 0) {
-        if (this.maintainer.hasGround)
-          this.maintainer.momentum -= (this.maintainer.momentum * 0.5);
-      } else {
-        this.maintainer.momentum = 0;
-      }
-
-
-      if (this.maintainer.momentum != 0) {
-
-        this.maintainer.state = 'run';
-        if (this.maintainer.momentum > 0) {
-          this.maintainer.faced = 'right';
-        } else {
-          if (this.maintainer.momentum < 0) {
-            this.maintainer.faced = 'left';
-          }
+const Inertia = function (maintainer: ItemWithStatesComponent & Inertial) {
+  const _maintainer = maintainer;
+  const obj: IEffect = {
+    update(delta: number) {
+      if (_maintainer.momentum != 0) {
+        let inter: D2UpdatableComponent[] = [];
+        const xCollision = _maintainer.physBox.prop(_maintainer.momentum * delta, 0);
+        if (_maintainer.physBox.hasCollision) {
+          inter = Engine.checkCollision(xCollision, _maintainer.id);
         }
-      } else {
-        this.maintainer.state = 'idle';
+        if (Math.abs(_maintainer.momentum) < 0.001) {
+          _maintainer.momentum = 0;
+        }
+        if (inter.length === 0) {
+          _maintainer.x += _maintainer.momentum * delta;
+        }
+        if (inter.length === 0) {
+          if (_maintainer.hasGround)
+            _maintainer.momentum -= (_maintainer.momentum * 0.5);
+        } else {
+          _maintainer.momentum = 0;
+        }
+        if (_maintainer.momentum != 0) {
+          _maintainer.setState('run');
+          if (_maintainer.momentum > 0) {
+            _maintainer.faced = 'right';
+          } else {
+            if (_maintainer.momentum < 0) {
+              _maintainer.faced = 'left';
+            }
+          }
+        } else {
+          _maintainer.setState('idle');
+        }
       }
+    },
+  };
+  return Object.freeze(obj);
 
 
-    }
-  }
-}
+};
 
 export {Inertia, Inertial};

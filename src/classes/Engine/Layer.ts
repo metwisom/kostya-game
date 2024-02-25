@@ -1,20 +1,28 @@
-import {D2Drawable} from './D2Drawable';
+import {D2DrawableComponent} from './D2Drawable';
 
-class Layer {
-  items: D2Drawable[] = [];
-
-  addObject(obj: D2Drawable): void {
-    this.items.push(obj);
-  }
-
-  removeObject(obj: D2Drawable): boolean {
-    const index = this.items.indexOf(obj);
-    if (index !== -1) {
-      this.items.splice(index, 1);
-      return true;
-    }
-    return false;
-  }
+type LayerComponent = {
+  items: D2DrawableComponent[]
+  addObject(obj: D2DrawableComponent): void
+  removeObject(obj: D2DrawableComponent): boolean
 }
 
-export {Layer};
+const Layer = function () {
+
+  const obj: LayerComponent = {
+    items: [],
+    addObject(obj: D2DrawableComponent): void {
+      this.items.push(obj);
+    },
+    removeObject(obj: D2DrawableComponent): boolean {
+      const index = this.items.indexOf(obj);
+      if (index !== -1) {
+        this.items.splice(index, 1);
+        return true;
+      }
+      return false;
+    },
+  };
+  return obj;
+};
+
+export {Layer, LayerComponent};

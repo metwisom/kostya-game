@@ -293,5 +293,10 @@
     "type": "sound",
     "file": "step.wav",
     "path": "/resources/audio/"
+  },
+  {
+    "type": "sound",
+    "file": "taken.ogg",
+    "path": "/resources/audio/"
   }
 ]

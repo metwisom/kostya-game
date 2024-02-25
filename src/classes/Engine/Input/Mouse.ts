@@ -1,6 +1,6 @@
 import {GameKeys} from './InputKey';
 import {InputController} from './InputController';
-import Element from '../Gui/Element';
+import {ElementComponent} from '../Gui/Element';
 import {Eventful} from '../interfaces/Eventful';
 
 
@@ -8,7 +8,7 @@ const Mouse = (function () {
 
   const slave = InputController;
 
-  const objects: (Element & Eventful)[] = [];
+  const objects: (ElementComponent & Eventful)[] = [];
 
   const mouse: Record<string, GameKeys> = {
     'mousedown': GameKeys.LEFT_MOUSE,
@@ -25,8 +25,9 @@ const Mouse = (function () {
 
   const updateState = (state: boolean, e: MouseEvent) => {
     const buttons = objects.filter(obj => {
-        return obj.x <= x && obj.x + obj.width >= x &&
-          obj.y <= y && obj.y + obj.height >= y;
+        console.log(obj);
+        return obj.getX() <= x && obj.getX() + obj.viewBox.width >= x &&
+          obj.getY() <= y && obj.getY() + obj.viewBox.height >= y;
       },
     );
 
@@ -48,10 +49,10 @@ const Mouse = (function () {
   document.addEventListener('mousemove', move.bind(this));
 
   return Object.freeze({
-    addObject(obj: Eventful & Element) {
+    addObject(obj: Eventful & ElementComponent) {
       objects.push(obj);
     },
-    removeObject(obj: Eventful & Element) {
+    removeObject(obj: Eventful & ElementComponent) {
       objects.splice(objects.indexOf(obj), 1);
     },
   });

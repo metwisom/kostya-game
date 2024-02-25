@@ -7,31 +7,40 @@ export enum GameKeys {
   SHIFT
 }
 
-class InputKey {
-  _status = false;
-  keyName: GameKeys;
-  private propagation: boolean = true;
-  public position = {
-    x: 0,
-    y: 0,
-  };
-
-  status(abs = false) {
-    if (this.propagation || abs) {
-      return this._status;
-    }
-    return false;
+type InputKeyComponent = {
+  _status: boolean
+  keyName: GameKeys
+  position: {
+    x: number,
+    y: number,
   }
-
-  constructor(keyName: GameKeys) {
-    this.keyName = keyName;
-  }
-
-
-  set(newStatus: boolean, propagation = true) {
-    this.propagation = propagation;
-    this._status = newStatus;
-  }
+  propagation: boolean
+  status(abs: boolean): boolean
+  set(newStatus: boolean, propagation: boolean): void
 }
 
-export {InputKey};
+const InputKey = function (keyName: GameKeys) {
+
+  const obj: InputKeyComponent = {
+    _status: false,
+    position: {
+      x: 0,
+      y: 0,
+    },
+    keyName: keyName,
+    propagation: true,
+    status(abs = false) {
+      if (this.propagation || abs) {
+        return this._status;
+      }
+      return false;
+    },
+    set(newStatus: boolean, propagation = true) {
+      this.propagation = propagation;
+      this._status = newStatus;
+    },
+  };
+  return obj;
+};
+
+export {InputKey, InputKeyComponent};

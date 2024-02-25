@@ -1,33 +1,25 @@
-import {D2Drawable} from './D2Drawable';
-import {Effector} from '../effector/Effector';
-import {Box} from './Box/Box';
+import {D2Drawable, D2DrawableComponent} from './D2Drawable';
+import {Effector, EffectorComponent} from '../effector/Effector';
+import {BoxComponent} from './Box/Box';
 
 
-class D2Updatable extends D2Drawable {
-
-  protected _physBox: Box;
-
-  protected _effector: Effector = undefined;// = new effector(this);
-
-  public get effector() {
-    if (this._effector == undefined) {
-      this._effector = new Effector();
-    }
-    return this._effector;
-  }
-
-  public set physBox(newPhysBox) {
-    this._physBox = newPhysBox;
-  }
-
-  public get physBox() {
-    return this._physBox;
-  }
-
-  update(delta: number) {
-    this.effector.run(delta);
-  }
-
+type D2UpdatableComponent = D2DrawableComponent & {
+  physBox: BoxComponent
+  readonly effector: EffectorComponent
+  update: (delta: number) => void
 }
+const D2Updatable = function (x: number = 0, y: number = 0) {
+  const parent = D2Drawable(x, y);
+  const obj: D2UpdatableComponent = {
+    ...parent,
+    type: 'D2Updatable',
+    effector: Effector(),
+    physBox: undefined,
+    update(delta: number) {
+      this.effector.run(delta);
+    },
+  };
+  return obj;
+};
 
-export {D2Updatable};
+export {D2Updatable, D2UpdatableComponent};

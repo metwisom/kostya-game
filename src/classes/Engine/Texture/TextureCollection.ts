@@ -1,25 +1,25 @@
-import {Texture} from './Texture';
+import {Texture, TextureComponent} from './Texture';
 
-
-class TextureCollection extends Texture {
-  private states: Record<string, Texture> = {};
-  private currentState: string;
-
-  addState(stateName: string, texture: Texture) {
-    this.states[stateName] = texture;
-  }
-
-  get() {
-    return this.states[this.currentState].get();
-  }
-
-  set state(newState: string) {
-    if (this.states[newState] === undefined) {
-      console.trace('StateNotFound');
-      throw '';
-    }
-    this.currentState = newState;
-  }
+type TextureCollectionComponent = TextureComponent & {
+  states: Record<string, TextureComponent>
+  currentState: string
+  addState(stateName: string, texture: TextureComponent): void
 }
 
-export {TextureCollection};
+const TextureCollection = function () {
+  const parent = Texture();
+  const obj: TextureCollectionComponent = {
+    ...parent,
+    states: {},
+    currentState: 'left_idle',
+    addState(stateName: string, texture: TextureComponent) {
+      this.states[stateName] = texture;
+    },
+    get() {
+      return this.states[this.currentState].get();
+    },
+  };
+  return obj;
+};
+
+export {TextureCollectionComponent, TextureCollection};

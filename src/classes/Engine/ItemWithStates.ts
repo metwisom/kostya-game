@@ -1,29 +1,34 @@
-import {D2Updatable} from './D2Updatable';
+import {D2Updatable, D2UpdatableComponent} from './D2Updatable';
+
 
 type FacedStates = 'right' | 'left';
 
-class ItemWithStates extends D2Updatable {
-
-  _state: string = 'idle';
-
-  public faced: FacedStates = 'right';
-
-  constructor() {
-    super();
-    //this._viewBox = new BoxTextured(0, 0, 0, 0, this);
-  }
-
-  public set state(state: string) {
-    if (this._state == state) {
-      return;
-    }
-    this._state = state;
-    this.viewBox.state = state;
-  }
-
-  public get state() {
-    return this._state;
-  }
+type ItemWithStatesComponent = D2UpdatableComponent & {
+  getState(): string
+  setState(state: string): void
+  faced: FacedStates
 }
 
-export {ItemWithStates};
+const ItemWithStates = function () {
+
+  let _state: string = 'idle';
+  const obj: ItemWithStatesComponent = {
+    ...D2Updatable(),
+    type: 'ItemWithStates',
+    faced: 'right',
+    setState(state: string) {
+      if (_state == state) {
+        return;
+      }
+      _state = this.faced + '_' + state;
+      this.viewBox.setState(this.faced + '_' + state);
+    },
+    getState() {
+      return _state;
+    },
+  };
+
+  return obj;
+};
+
+export {ItemWithStates, ItemWithStatesComponent};

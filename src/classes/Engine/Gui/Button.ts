@@ -1,47 +1,40 @@
-import Element from './Element';
+import {Element, ElementComponent} from './Element';
 import {Eventful, SomeEvent} from '../interfaces/Eventful';
 import {TextureButton} from '../Texture/TextureButton';
-import {GuiBox} from './GuiBox';
+import {BoxTextured} from '../Box/BoxTextured';
 
 
-export class Button extends Element implements Eventful {
-
-  protected _viewBox: GuiBox & { texture: TextureButton };
-
-  public text: string;
-  protected _ownEvent: (event: SomeEvent) => void;
-
-  public set ownEvent(cb: (event: SomeEvent) => void) {
-    this._ownEvent = cb;
-  }
-
-  get viewBox() {
-    return this._viewBox;
-  }
-
-
-  public set viewBox(newViewBox: GuiBox & { texture: TextureButton }) {
-    this._viewBox = newViewBox;
-  }
-
-  public get ownEvent() {
-    return this._ownEvent;
-  }
-
-  readonly Event = (event: SomeEvent) => {
-    if (this._ownEvent != undefined) {
-      this.ownEvent(event);
-    }
-  };
-
-  constructor(x: number, y: number, width: number, height: number, text: string) {
-    super(x, y, width, height);
-    this.text = text;
-    const texture = new TextureButton('panel_brown.png', width, height);
-    texture.setText(text, '#ccc');
-    this.viewBox.texture = texture;
-  }
-
+type ButtonComponent = ElementComponent & Eventful & {
+  text: string
+  ownEvent(newCb: (event: SomeEvent) => void): void
 }
 
+function Button(x: number, y: number, width: number, height: number, text: string) {
+
+  const texture = TextureButton('panel_brown.png', width, height);
+  texture.setText(text, '#ccc');
+  let _ownEvent: (event: SomeEvent) => void = (_e) => {
+  };
+
+  const parent = Element(x, y, width, height);
+
+  parent.viewBox = BoxTextured(0, 0, width, height, parent);
+  parent.viewBox.setTexture(texture);
+  const obj: ButtonComponent = {
+    ...parent,
+    type: 'Button',
+    text: text,
+    ownEvent(newCb: (event: SomeEvent) => void) {
+      _ownEvent = newCb;
+    },
+    Event: (event: SomeEvent) => {
+      if (_ownEvent != undefined) {
+        _ownEvent(event);
+      }
+    },
+  };
+  return obj;
+}
+
+export {Button};
 

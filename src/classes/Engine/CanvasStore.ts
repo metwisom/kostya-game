@@ -25,7 +25,7 @@ const CanvasStore = (function () {
   Object.defineProperty(canvasStore, 'count', {
     get: function () {
       return store.length;
-    }
+    },
   });
 
   return Object.freeze(canvasStore);

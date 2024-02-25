@@ -1,6 +1,6 @@
 import {GameKeys} from './InputKey';
 import {InputController} from './InputController';
-import Element from '../Gui/Element';
+import {ElementComponent} from '../Gui/Element';
 import {Eventful} from '../interfaces/Eventful';
 
 
@@ -8,7 +8,7 @@ const Touch = (function () {
 
   const slave = InputController;
 
-  const objects: (Element & Eventful)[] = [];
+  const objects: (ElementComponent & Eventful)[] = [];
 
   const mouse: Record<string, GameKeys> = {
     'touchstart': GameKeys.LEFT_MOUSE,
@@ -32,8 +32,8 @@ const Touch = (function () {
       }
 
       const buttons = objects.filter(obj => {
-          return obj.x <= x && obj.x + obj.width >= x &&
-            obj.y <= y && obj.y + obj.height >= y;
+          return obj.x <= x && obj.x + obj.getWidth() >= x &&
+            obj.y <= y && obj.y + obj.getHeight() >= y;
         },
       );
 
@@ -55,7 +55,7 @@ const Touch = (function () {
   document.addEventListener('touchmove', move.bind(this));
 
   return Object.freeze({
-    addObject(obj: Eventful & Element) {
+    addObject(obj: Eventful & ElementComponent) {
       objects.push(obj);
     },
   });
