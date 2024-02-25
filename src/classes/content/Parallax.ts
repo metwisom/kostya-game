@@ -8,12 +8,13 @@ import {Box} from '../Engine/Box/Box';
 
 type ParallaxComponent = D2UpdatableComponent & {
   setOriginX(x: number): void
+  type: string
 }
 
 const Parallax = function (image: string, bias: number) {
 
-  const texture = new Texture(image);
-  const ratio = Engine.display.height / texture.referenceImage.height;
+  const texture = Texture(image);
+  const ratio = Engine.getDisplay().height / texture.referenceImage.height;
   const width = texture.referenceImage.width * ratio;
   const height = texture.referenceImage.height * ratio;
   const _bias = bias;
@@ -22,11 +23,12 @@ const Parallax = function (image: string, bias: number) {
   const parent = D2Updatable();
   const obj: ParallaxComponent = {
     ...parent,
+    type: 'Parallax',
     setOriginX(x: number) {
       _originX = x;
     },
     draw(): ViewArea {
-      this.y = -Camera.y - Engine.display.height / 2;
+      this.y = -Camera.y - Engine.getDisplay().height / 2;
 
 
       this.x = this.viewBox.width * Math.floor(Camera.x / this.viewBox.width);
@@ -34,14 +36,14 @@ const Parallax = function (image: string, bias: number) {
       this.x = this.x + (Camera.x * _bias / 20) % this.viewBox.width;
 
       this.x = (this.x + _originX);
-      this.y = Camera.y - Engine.display.height / 2 + Camera.target.viewBox.height / 2;
 
-      return parent.draw();
+      this.y = Camera.y - Engine.getDisplay().height / 2 + Camera.target.viewBox.height / 2;
+      return parent.draw.bind(this)();
 
     },
   };
-  obj.physBox = Box(0, 0, width, height, this);
-  obj.viewBox = BoxTextured(0, 0, width, height, this);
+  obj.physBox = Box(0, 0, width, height, obj);
+  obj.viewBox = BoxTextured(0, 0, width, height, obj);
   obj.viewBox.setTexture(texture);
   return obj;
 };

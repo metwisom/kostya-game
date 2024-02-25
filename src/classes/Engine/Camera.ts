@@ -1,4 +1,5 @@
-import {D2Drawable, D2DrawableComponent} from './D2Drawable';
+import {D2DrawableComponent} from './D2Drawable';
+import {FakeAnimate} from '../content/FakeAnimate';
 
 type Camera = {
   readonly target: D2DrawableComponent
@@ -9,7 +10,7 @@ type Camera = {
 
 const Camera = (function () {
   const camera: Camera = Object.create(null);
-  let attached = D2Drawable();
+  let attached: D2DrawableComponent = FakeAnimate();
   Object.defineProperty(camera, 'target', {
     get: () => attached,
     enumerable: false,

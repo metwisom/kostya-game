@@ -13,36 +13,36 @@ const Gravity = function (maintainer: ItemWithStatesComponent & Gravitational) {
   const _maintainer = maintainer;
   const obj: IEffect = {
     update(delta: number = 1) {
-      const {physBox, id} = this._maintainer;
+      const {physBox, id} = _maintainer;
       let inter: D2UpdatableComponent[] = [];
 
-      this._maintainer.eDown += 0.1;
-      const yCollision = physBox.prop(0, this._maintainer.eDown * delta);
+      _maintainer.eDown += 0.1;
+      const yCollision = physBox.prop(0, _maintainer.eDown * delta);
 
       if (physBox.hasCollision) {
         inter = Engine.checkCollision(yCollision, id);
       }
 
       if (inter.length === 0) {
-        this._maintainer.y += this._maintainer.eDown * delta;
-        this._maintainer.hasGround = false;
+        _maintainer.y += _maintainer.eDown * delta;
+        _maintainer.hasGround = false;
       } else {
         const {y} = inter[0];
-        if (this._maintainer.y !== y) {
-          this._maintainer.y = y;
-          this._maintainer.hasGround = true;
+        if (_maintainer.y !== y) {
+          _maintainer.y = y;
+          _maintainer.hasGround = true;
         }
-        this._maintainer.eDown = 0;
+        _maintainer.eDown = 0;
       }
 
-      if (this._maintainer.eDown > 0) {
-        this._maintainer.state = 'jump';
+      if (_maintainer.eDown > 0) {
+        _maintainer.setState('jump');
       } else {
-        if (this._maintainer.eDown < 0) {
-          this._maintainer.state = 'fall';
+        if (_maintainer.eDown < 0) {
+          _maintainer.setState('fall');
         } else {
-          if (this._maintainer.state === 'jump' || this._maintainer.state === 'fall') {
-            this._maintainer.state = 'idle';
+          if (_maintainer.getState() === 'jump' || _maintainer.getState() === 'fall') {
+            _maintainer.setState('idle');
           }
         }
       }

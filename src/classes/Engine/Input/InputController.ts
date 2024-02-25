@@ -1,28 +1,26 @@
 import {Eventful} from '../interfaces/Eventful';
-import {GameKeys, InputKey} from './InputKey';
+import {GameKeys, InputKey, InputKeyComponent} from './InputKey';
 
 
 export type InputMap = {
-  [value in GameKeys]: InputKey
+  [value in GameKeys]: InputKeyComponent
 }
 
 const InputController = (function () {
 
   const keyboard: InputMap = {
-    [GameKeys.A]: new InputKey(GameKeys.A),
-    [GameKeys.D]: new InputKey(GameKeys.D),
-    [GameKeys.C]: new InputKey(GameKeys.C),
-    [GameKeys.SHIFT]: new InputKey(GameKeys.SHIFT),
-    [GameKeys.Space]: new InputKey(GameKeys.Space),
-    [GameKeys.LEFT_MOUSE]: new InputKey(GameKeys.LEFT_MOUSE),
+    [GameKeys.A]: InputKey(GameKeys.A),
+    [GameKeys.D]: InputKey(GameKeys.D),
+    [GameKeys.C]: InputKey(GameKeys.C),
+    [GameKeys.SHIFT]: InputKey(GameKeys.SHIFT),
+    [GameKeys.Space]: InputKey(GameKeys.Space),
+    [GameKeys.LEFT_MOUSE]: InputKey(GameKeys.LEFT_MOUSE),
   };
 
   let slave: Eventful = undefined;
 
   return Object.freeze({
-    get keyboard() {
-      return keyboard;
-    },
+    keyboard,
     update() {
       if (slave !== undefined) {
         slave.Event({keyMap: keyboard});

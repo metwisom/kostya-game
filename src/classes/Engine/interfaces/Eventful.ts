@@ -5,7 +5,7 @@ import {Gravitational} from '../../effector/effects/Gravity';
 
 interface SomeEvent {
   keyMap?: InputMap;
-  taken?: Gravitational & D2UpdatableComponent;
+  taken?: D2UpdatableComponent | D2UpdatableComponent & Gravitational;
 }
 
 interface Eventful {

@@ -1,21 +1,28 @@
 import {IEffect} from './IEffect';
 
-class Effector {
-  private effects: IEffect[] = [];
-
-  addEffect(effect: IEffect) {
-    this.effects.push(effect);
-  }
-
-  removeEffect(effect: IEffect) {
-    this.effects.splice(this.effects.indexOf(effect), 1);
-  }
-
-  run(delta: number) {
-    this.effects.map(effect => effect.update(delta));
-  }
+type EffectorComponent = {
+  effects: IEffect[]
+  addEffect(effect: IEffect): void
+  removeEffect(effect: IEffect): void
+  run(delta: number): void
 }
 
-export {Effector};
+const Effector = function () {
+  const obj: EffectorComponent = {
+    effects: [],
+    addEffect(effect: IEffect) {
+      this.effects.push(effect);
+    },
+    removeEffect(effect: IEffect) {
+      this.effects.splice(this.effects.indexOf(effect), 1);
+    },
+    run(delta: number) {
+      this.effects.map((effect: { update: (arg0: number) => any; }) => effect.update(delta));
+    },
+  };
+  return obj;
+};
+
+export {Effector, EffectorComponent};
 
 

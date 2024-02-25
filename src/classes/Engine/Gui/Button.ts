@@ -4,59 +4,37 @@ import {TextureButton} from '../Texture/TextureButton';
 import {BoxTextured} from '../Box/BoxTextured';
 
 
-type ButtonComponent = ElementComponent & Eventful
+type ButtonComponent = ElementComponent & Eventful & {
+  text: string
+  ownEvent(newCb: (event: SomeEvent) => void): void
+}
 
 function Button(x: number, y: number, width: number, height: number, text: string) {
 
-  const texture = new TextureButton('panel_brown.png', width, height);
+  const texture = TextureButton('panel_brown.png', width, height);
   texture.setText(text, '#ccc');
+  let _ownEvent: (event: SomeEvent) => void = (_e) => {
+  };
 
+  const parent = Element(x, y, width, height);
+
+  parent.viewBox = BoxTextured(0, 0, width, height, parent);
+  parent.viewBox.setTexture(texture);
   const obj: ButtonComponent = {
-    ...Element(x, y, width, height),
+    ...parent,
+    type: 'Button',
     text: text,
-    _ownEvent: (cb: (event: SomeEvent) => void) => {
-      this._ownEvent = cb;
+    ownEvent(newCb: (event: SomeEvent) => void) {
+      _ownEvent = newCb;
     },
     Event: (event: SomeEvent) => {
-      if (this._ownEvent != undefined) {
-        this.ownEvent(event);
+      if (_ownEvent != undefined) {
+        _ownEvent(event);
       }
     },
   };
-  obj.viewBox = new BoxTextured(0, 0, width, height, obj);
   return obj;
 }
 
 export {Button};
-
-export class Button extends Element implements Eventful {
-
-  public text: string;
-
-  constructor(x: number, y: number, width: number, height: number, text: string) {
-    super(x, y, width, height);
-    this.text = text;
-    const texture = new TextureButton('panel_brown.png', width, height);
-    texture.setText(text, '#ccc');
-    this.viewBox.setTexture(texture);
-  }
-
-  protected _ownEvent: (event: SomeEvent) => void;
-
-  public get ownEvent() {
-    return this._ownEvent;
-  }
-
-  public set ownEvent(cb: (event: SomeEvent) => void) {
-    this._ownEvent = cb;
-  }
-
-  readonly Event = (event: SomeEvent) => {
-    if (this._ownEvent != undefined) {
-      this.ownEvent(event);
-    }
-  };
-
-}
-
 

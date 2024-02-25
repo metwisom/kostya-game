@@ -4,7 +4,8 @@ import {D2Updatable, D2UpdatableComponent} from './D2Updatable';
 type FacedStates = 'right' | 'left';
 
 type ItemWithStatesComponent = D2UpdatableComponent & {
-  state: string
+  getState(): string
+  setState(state: string): void
   faced: FacedStates
 }
 
@@ -13,15 +14,16 @@ const ItemWithStates = function () {
   let _state: string = 'idle';
   const obj: ItemWithStatesComponent = {
     ...D2Updatable(),
+    type: 'ItemWithStates',
     faced: 'right',
-    set state(state: string) {
+    setState(state: string) {
       if (_state == state) {
         return;
       }
-      _state = state;
-      this.viewBox.state = state;
+      _state = this.faced + '_' + state;
+      this.viewBox.setState(this.faced + '_' + state);
     },
-    get state() {
+    getState() {
       return _state;
     },
   };

@@ -4,36 +4,37 @@ import {Camera} from '../Engine/Camera';
 import {TextureRain} from '../Engine/Texture/TextureRain';
 import {Box} from '../Engine/Box/Box';
 import {Gravitational, Gravity} from '../effector/effects/Gravity';
-import {BoxTextured, BoxTexturedComponent} from '../Engine/Box/BoxTextured';
+import {BoxTextured} from '../Engine/Box/BoxTextured';
 import {ItemWithStates, ItemWithStatesComponent} from '../Engine/ItemWithStates';
 
 
-const textureRain = new TextureRain(5, 11);
-textureRain.setColor('#65ada0');
+const textureRain = TextureRain(5, 11);
+textureRain.textColor = '#65ada0';
 
-type RainComponent = ItemWithStatesComponent & Gravitational
+type RainComponent = ItemWithStatesComponent & Gravitational & {
+  respawn(): void
+}
 
-const Rain = function (maxDepth: number) {
-  let eDown = 1;
-  let hasGround = false;
+const Rain = function (_maxDepth: number) {
   let windAngle = Math.PI / 2 + getRandomFloat(-10, 10);
-  let maxDepth = maxDepth;
   let speed = 0.5;
-  let _viewBox: BoxTexturedComponent;
 
   const parent = ItemWithStates();
-  const obj = {
+  const obj: RainComponent = {
     ...parent,
+    type: 'Rain',
+    hasGround: false,
+    eDown: 1,
     respawn(): void {
-      eDown = 1;
-      this.x = getRandom(Camera.x - Engine.display.width / 2, Camera.x + Engine.display.width / 2);
+      this.eDown = 1;
+      this.x = getRandom(Camera.x - Engine.getDisplay().width / 2, Camera.x + Engine.getDisplay().width / 2);
       this.y = Camera.y - 1500;
       speed = getRandom(18, 40);
     },
     update(delta: number): void {
-      super.update(delta);
+      parent.update.bind(this)(delta);
       this.x += Math.cos(windAngle) * 4;
-      if (this.y > Engine.display.height) {
+      if (this.y > Engine.getDisplay().height) {
         this.respawn();
       }
     },

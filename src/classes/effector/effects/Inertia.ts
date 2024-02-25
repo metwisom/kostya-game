@@ -16,7 +16,7 @@ const Inertia = function (maintainer: ItemWithStatesComponent & Inertial) {
         let inter: D2UpdatableComponent[] = [];
         const xCollision = _maintainer.physBox.prop(_maintainer.momentum * delta, 0);
         if (_maintainer.physBox.hasCollision) {
-          inter = Engine.checkCollision(xCollision, this._maintainer.id);
+          inter = Engine.checkCollision(xCollision, _maintainer.id);
         }
         if (Math.abs(_maintainer.momentum) < 0.001) {
           _maintainer.momentum = 0;
@@ -31,16 +31,16 @@ const Inertia = function (maintainer: ItemWithStatesComponent & Inertial) {
           _maintainer.momentum = 0;
         }
         if (_maintainer.momentum != 0) {
-          _maintainer.state = 'run';
+          _maintainer.setState('run');
           if (_maintainer.momentum > 0) {
             _maintainer.faced = 'right';
           } else {
-            if (this._maintainer.momentum < 0) {
+            if (_maintainer.momentum < 0) {
               _maintainer.faced = 'left';
             }
           }
         } else {
-          _maintainer.state = 'idle';
+          _maintainer.setState('idle');
         }
       }
     },

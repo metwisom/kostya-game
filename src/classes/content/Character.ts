@@ -20,13 +20,15 @@ const Character = function (x: number, y: number) {
   const audio = ResourceLoader.get<SoundResource>('step.wav').content;
   audio.playbackRate = 1.8;
   audio.loop = true;
-  let _state: string;
+  let sprint = 1;
 
 
   const parent = ItemWithStates();
   const obj: CharacterComponent = {
+    ...parent,
     eDown: 0, hasGround: false, momentum: 0,
     ...parent,
+    type: 'Char',
     createStepParticle() {
       if (this.momentum != 0 && this.hasGround) {
 
@@ -36,17 +38,14 @@ const Character = function (x: number, y: number) {
 
       }
     },
-    set state(state: string) {
-      _state = this.faced + '_' + state;
-      this.viewBox.state = state;
-    },
+
     destroy() {
       parent.destroy();
-      this.audio.pause();
+      audio.pause();
     },
     x, y,
     update(delta: number) {
-      parent.update(delta);
+      parent.update.bind(this)(delta);
 
       this.createStepParticle();
 
@@ -55,62 +54,62 @@ const Character = function (x: number, y: number) {
         this.y = 0;
       }
 
-      if (this.momentum != 0 && this.audio.paused) {
-        this.audio.play().then();
+      if (this.momentum != 0 && audio.paused) {
+        audio.play().then();
       }
-      if (this.momentum == 0 && !this.audio.paused) {
-        this.audio.pause();
-        this.audio.currentTime = 0;
+      if (this.momentum == 0 && !audio.paused) {
+        audio.pause();
+        audio.currentTime = 0;
       }
     },
     Event(event: SomeEvent) {
       if (event.keyMap == undefined) {
         return;
       }
-      if (event.keyMap[GameKeys.A].status()) {
+      if (event.keyMap[GameKeys.A].status(false)) {
         if (this.hasGround) {
-          this.momentum = -0.55 * this.sprint;
+          this.momentum = -0.55 * sprint;
         }
       }
-      if (event.keyMap[GameKeys.D].status()) {
+      if (event.keyMap[GameKeys.D].status(false)) {
         if (this.hasGround) {
-          this.momentum = 0.55 * this.sprint;
+          this.momentum = 0.55 * sprint;
         }
       }
-      if (event.keyMap[GameKeys.SHIFT].status()) {
-        this.sprint = 1.3;
+      if (event.keyMap[GameKeys.SHIFT].status(false)) {
+        sprint = 1.3;
       } else {
-        this.sprint = 1;
+        sprint = 1;
       }
-      if (event.keyMap[GameKeys.Space].status()) {
+      if (event.keyMap[GameKeys.Space].status(false)) {
         if (this.hasGround) {
           this.eDown = -1;
         }
       }
     },
   };
-  obj.physBox = Box(20, 82, 40, 82, this);
+  obj.physBox = Box(20, 82, 40, 82, obj);
   obj.physBox.setCollision(true);
-  obj.viewBox = BoxTextured(25, 82, 50, 82, this);
+  obj.viewBox = BoxTextured(25, 82, 50, 82, obj);
 
-  obj.effector.addEffect(Inertia(this));
-  obj.effector.addEffect(Gravity(this));
+  obj.effector.addEffect(Inertia(obj));
+  obj.effector.addEffect(Gravity(obj));
 
-  const textures = new TextureCollection();
-  textures.addState('left_idle', new Texture('left_idle.png'));
-  textures.addState('right_idle', new Texture('right_idle.png'));
-  textures.addState('left_run', new Texture('left_run.png'));
-  textures.addState('right_run', new Texture('right_run.png'));
-  textures.addState('left_jump', new Texture('left_jump.png'));
-  textures.addState('right_jump', new Texture('right_jump.png'));
-  textures.addState('left_levitate', new Texture('left_levitate.png'));
-  textures.addState('right_levitate', new Texture('right_levitate.png'));
-  textures.addState('left_fall', new Texture('left_fall.png'));
-  textures.addState('right_fall', new Texture('right_fall.png'));
-  textures.addState('left_landing', new Texture('left_landing.png'));
-  textures.addState('right_landing', new Texture('right_landing.png'));
+  const textures = TextureCollection();
+  textures.addState('left_idle', Texture('left_idle.png'));
+  textures.addState('right_idle', Texture('right_idle.png'));
+  textures.addState('left_run', Texture('left_run.png'));
+  textures.addState('right_run', Texture('right_run.png'));
+  textures.addState('left_jump', Texture('left_jump.png'));
+  textures.addState('right_jump', Texture('right_jump.png'));
+  textures.addState('left_levitate', Texture('left_levitate.png'));
+  textures.addState('right_levitate', Texture('right_levitate.png'));
+  textures.addState('left_fall', Texture('left_fall.png'));
+  textures.addState('right_fall', Texture('right_fall.png'));
+  textures.addState('left_landing', Texture('left_landing.png'));
+  textures.addState('right_landing', Texture('right_landing.png'));
   obj.viewBox.setTexture(textures);
-  obj.state = 'idle';
+  return obj;
 };
 
 

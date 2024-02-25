@@ -1,4 +1,4 @@
-import {D2Drawable} from '../D2Drawable';
+import {D2Drawable, D2DrawableComponent} from '../D2Drawable';
 import {Engine} from '../Engine';
 
 
@@ -14,84 +14,93 @@ export enum FloatY {
   bottom,
 }
 
-type ElementComponent = D2Drawable & {
+type ElementComponent = D2DrawableComponent & {
   origX: number,
   origY: number,
   _floatX: number,
   _floatY: number
-  x: number,
-  y: number,
-  floatX: number
-  floatY: number,
-  width: number
-  height: number
+  getX(): number,
+  setX(value: number): void,
+  getY(): number,
+  setY(value: number): void,
+  _x: number,
+  _y: number,
+  setFloatX(value: FloatX): void
+  getFloatX(): number
+  setFloatY(value: FloatY): void
+  getFloatY(): number
+  getWidth(): number
+  setWidth(value: number): void
+  getHeight(): number
+  setHeight(value: number): void
 }
 
-const Element = function (x: number, y: number, width: number, height: number) {
+const Element = function (x: number, y: number, _width: number, _height: number) {
   const obj: ElementComponent = {
     ...D2Drawable(),
-    origX: 0,
-    origY: 0,
+    origX: x,
+    origY: y,
     _floatX: FloatX.center,
     _floatY: FloatY.center,
-    set x(value: number) {
+    _x: 0, _y: 0,
+    setX(value: number) {
       this._origX = value;
       switch (this.floatX) {
         case FloatX.center:
-          this._x = value + Engine.display.width / 2 - this.width / 2;
+          this._x = value + Engine.getDisplay().width / 2 - this.width / 2;
           break;
         case FloatX.right:
-          this._x = Engine.display.width - this.width / 2 - value;
+          this._x = Engine.getDisplay().width - this.width / 2 - value;
           break;
         default:
           this._x = value - this.width / 2;
       }
     },
-    get x() {
+    getX() {
       return this._x;
     },
-    set y(value: number) {
+    setY(value: number) {
       this._origY = value;
       switch (this.floatY) {
         case FloatY.center:
-          this._y = value + Engine.display.height / 2 - this.height / 2;
+          this._y = value + Engine.getDisplay().height / 2 - this.height / 2;
           break;
         case FloatY.bottom:
-          this._y = Engine.display.height - this.height / 2 - value;
+          this._y = Engine.getDisplay().height - this.height / 2 - value;
           break;
         default:
           this._y = value - this.height / 2;
       }
     },
-    get y() {
+    getY() {
       return this._y;
     },
 
-    set floatX(value: FloatX) {
+    setFloatX(value: FloatX) {
       this._floatX = value;
       this.x = this._origX;
     },
-    get floatX() {
+    getFloatX() {
       return this._floatX;
     },
-    set floatY(value: FloatY) {
+    setFloatY(value: FloatY) {
       this._floatY = value;
       this.y = this._origY;
     },
-    get floatY() {
+    getFloatY() {
       return this._floatY;
     },
-    set width(value: number) {
+    setWidth(value: number) {
       this.viewBox.width = value;
     },
-    get width() {
-      return this.viewBox.width;
+    getWidth() {
+      return this.viewBox?.width ?? 0;
     },
-    set height(value: number) {
+    setHeight(value: number) {
       this.viewBox.height = value;
     },
-    get height() {
-      return this.viewBox.height;
+    getHeight() {
+      return this.viewBox?.height ?? 0;
     },
   };
   return obj;

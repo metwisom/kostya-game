@@ -1,37 +1,35 @@
-import {Texture} from '../Texture/Texture';
-import {TextureCollection} from '../Texture/TextureCollection';
+import {TextureComponent} from '../Texture/Texture';
 import {D2DrawableComponent} from '../D2Drawable';
 import {Box, BoxArea, BoxComponent} from './Box';
-import {TextureBlank} from '../Texture/TextureBlank';
 
 
 type ViewArea = BoxArea & {
-  texture: Texture;
+  texture: TextureComponent;
 }
 
 type BoxTexturedComponent = Omit<BoxComponent, 'prop'> & {
-  setTexture: (texture: Texture) => void
-  state: string
+  setTexture: (texture: TextureComponent) => void
+  setState(newState: string): void
   destroy: () => void
   prop(x?: number, y?: number): ViewArea
 }
 
-const BoxTextured = function (x: number, y: number, width: number, height: number, maintainer: D2DrawableComponent, texture: TextureBlank = undefined) {
-  let _texture: Texture = undefined;
+const BoxTextured = function (x: number, y: number, width: number, height: number, maintainer: D2DrawableComponent, texture: TextureComponent = undefined) {
+  let _texture: TextureComponent = texture;
   const parent = Box(x, y, width, height, maintainer);
   const obj: BoxTexturedComponent = {
     ...parent,
-    setTexture(texture: Texture) {
+    setTexture(texture: TextureComponent) {
       _texture = texture;
     },
-    set state(newState: string) {
-      if (_texture instanceof TextureCollection) {
-        _texture.state = newState;
-      }
+    setState(_newState: string) {
+      // if (_texture instanceof TextureCollection) {
+      //   // _texture.state = newState;
+      // }
     },
     prop(): ViewArea {
       return {
-        ...parent.prop(0, 0),
+        ...parent.prop.bind(this)(0, 0),
         texture: _texture,
       };
     },
@@ -39,7 +37,7 @@ const BoxTextured = function (x: number, y: number, width: number, height: numbe
       _texture.destroy();
     },
   };
-  return Object.freeze(obj);
+  return obj;
 };
 
 export {BoxTextured, BoxTexturedComponent, ViewArea};

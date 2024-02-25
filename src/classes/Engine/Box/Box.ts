@@ -32,14 +32,14 @@ const Box = function (x: number, y: number, width: number, height: number, maint
     },
     prop(x: number = 0, y: number = 0): BoxArea {
       return {
-        x: this.maintainer.x - this._x + x,
-        y: this.maintainer.y - this._y + y,
+        x: this.maintainer.x - this.x + x,
+        y: this.maintainer.y - this.y + y,
         width: this.width,
         height: this.height,
       };
     },
   };
-  return Object.freeze(obj);
+  return obj;
 };
 
 export {BoxArea, BoxComponent, Box};

@@ -1,8 +1,8 @@
-import {Graphic} from '../classes/Engine/Graphic';
+import {GraphicComponent} from '../classes/Engine/Graphic';
+import {Engine} from '../classes/Engine/Engine';
 
 
 const fpsMeter = () => {
-  let lastFrameTime = performance.now();
   let fpsCounter = 0;
   let recordedFPS = 0;
   const frameTimeCache: number[] = [];
@@ -13,11 +13,8 @@ const fpsMeter = () => {
   };
   const recordData = () => {
     fpsCounter++;
-    const currentFrameTime = performance.now();
-    const frameTime = currentFrameTime - lastFrameTime;
-    lastFrameTime = currentFrameTime;
 
-    frameTimeCache.push(frameTime);
+    frameTimeCache.push(Engine.drawTime);
     if (frameTimeCache.length > 100) {
       frameTimeCache.shift();
     }
@@ -29,14 +26,14 @@ const fpsMeter = () => {
 
   setInterval(recordFPS, 1000);
 
-  return (graphic: Graphic) => {
+  return (graphic: GraphicComponent) => {
     recordData();
 
     const avgFrameTime = calculateAverageFrameTime();
     const fpsText = `FPS: ${recordedFPS}`;
     const frameTimeText = `Frame time: ${avgFrameTime} ms`;
 
-    graphic.font = '10px Press';
+    graphic.setFont('10px Press');
     graphic.drawText(`${fpsText}\n${frameTimeText}`, 20, 20);
   };
 };

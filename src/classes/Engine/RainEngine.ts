@@ -1,9 +1,9 @@
-import {Rain} from '../content/Rain';
+import {Rain, RainComponent} from '../content/Rain';
 import {Camera} from './Camera';
 import {Engine} from './Engine';
 
 const RainEngine = (() => {
-  let rainDrops: Rain[] = [];
+  let rainDrops: RainComponent[] = [];
   let isActive: boolean = false;
 
   const create = (): void => {
