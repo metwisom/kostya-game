@@ -119,14 +119,14 @@ const MapLoader = (function () {
 
       readyParallaxList.map((item, index) => {
         const plx0 = Parallax(item.image, readyParallaxList.length - 1 - index);
-        plx0.setOriginX(-plx0.draw().width);
+        plx0.originX = -plx0.draw().width;
         Engine.addObject(plx0, 0);
 
         const plx1 = Parallax(item.image, readyParallaxList.length - 1 - index);
         Engine.addObject(plx1, 0);
 
         const plx2 = Parallax(item.image, readyParallaxList.length - 1 - index);
-        plx2.setOriginX(plx1.draw().width);
+        plx2.originX = plx1.draw().width;
         Engine.addObject(plx2, 0);
       });
       // this.refreshTextures();

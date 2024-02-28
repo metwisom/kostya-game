@@ -7,6 +7,7 @@ A 2d game engine with a basic implementation of a platformer
 
 `npm install`  
 `npm run dev`  
+`bun build ./src/index.js --outfile dist/main.js`  
 `npm run build`  
 `npm run lint`  
 

@@ -14,7 +14,7 @@ const Attainable = function (maintainer: ItemWithStatesComponent & Eventful) {
   const obj: Attainables = {
     update(_delta: number = 1) {
       const xCollision = _maintainer.physBox.prop(0, 0);
-      const inter = Engine.checkCollision(xCollision, _maintainer.id);
+      const inter = Engine.checkCollision(xCollision, _maintainer.getId());
       if (inter.length !== 0) {
         _maintainer.Event({taken: inter[0]});
         this.createParticle();

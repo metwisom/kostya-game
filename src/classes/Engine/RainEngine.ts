@@ -14,26 +14,24 @@ const RainEngine = (() => {
     Engine.addObjectPhys(rain);
   };
 
-  const _rainEngine = Object.create(null);
-
-  _rainEngine.start = (): void => {
-    isActive = true;
-    for (let i = 0; i < 100; i++) {
-      create();
-    }
+  const obj = {
+    start() {
+      isActive = true;
+      for (let i = 0; i < 100; i++) {
+        create();
+      }
+    },
+    stop() {
+      isActive = false;
+      rainDrops.forEach(rain => rain.destroy());
+      rainDrops = [];
+    },
+    toggle() {
+      isActive ? obj.stop() : obj.start();
+    },
   };
 
-  _rainEngine.stop = (): void => {
-    isActive = false;
-    rainDrops.forEach(rain => rain.destroy());
-    rainDrops = [];
-  };
-
-  _rainEngine.toggle = (): void => {
-    isActive ? _rainEngine.stop() : _rainEngine.start();
-  };
-
-  return Object.freeze(_rainEngine);
+  return Object.freeze(obj);
 })();
 
 export {RainEngine};

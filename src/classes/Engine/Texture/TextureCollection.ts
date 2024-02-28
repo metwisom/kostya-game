@@ -10,6 +10,7 @@ const TextureCollection = function () {
   const parent = Texture();
   const obj: TextureCollectionComponent = {
     ...parent,
+    type: 'TextureCollection',
     states: {},
     currentState: 'left_idle',
     addState(stateName: string, texture: TextureComponent) {

@@ -13,6 +13,7 @@ const TextureBlank = function (w: number, h: number) {
 
   const obj = {
     ...parent,
+    type: 'TextureBlank',
     text: '',
     textColor: 'red',
     fillColor: 'black',

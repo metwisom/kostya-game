@@ -13,14 +13,13 @@ const fpsMeter = () => {
   };
   const recordData = () => {
     fpsCounter++;
-
     frameTimeCache.push(Engine.drawTime);
-    if (frameTimeCache.length > 100) {
+    if (frameTimeCache.length > 60) {
       frameTimeCache.shift();
     }
   };
 
-  const calculateAverageFrameTime = () => {
+  const averageFrameTime = () => {
     return (frameTimeCache.reduce(((p, i) => p + i), 0) / frameTimeCache.length).toFixed(1);
   };
 
@@ -29,9 +28,8 @@ const fpsMeter = () => {
   return (graphic: GraphicComponent) => {
     recordData();
 
-    const avgFrameTime = calculateAverageFrameTime();
     const fpsText = `FPS: ${recordedFPS}`;
-    const frameTimeText = `Frame time: ${avgFrameTime} ms`;
+    const frameTimeText = `Frame time: ${averageFrameTime()} ms`;
 
     graphic.setFont('10px Press');
     graphic.drawText(`${fpsText}\n${frameTimeText}`, 20, 20);

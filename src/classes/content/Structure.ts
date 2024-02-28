@@ -1,12 +1,12 @@
 import {MapLoader} from '../Engine/Map/MapLoader';
 import {D2Updatable, D2UpdatableComponent} from '../Engine/D2Updatable';
 import {BoxTextured} from '../Engine/Box/BoxTextured';
-import {Texture} from '../Engine/Texture/Texture';
 import {Box} from '../Engine/Box/Box';
+import {byteCalc} from '../../utils/byteCalc';
+import {Texture} from '../Engine/Texture/Texture';
 
 type StructureComponent = D2UpdatableComponent & {
   refreshSprite(): void
-  byteCalc(view: number, include: number[], exclude: number[]): boolean
 }
 
 //8   16  32
@@ -29,38 +29,28 @@ const Structure = function (x: number, y: number) {
       view += MapLoader.gets(matrixPosX + 1, matrixPosY - 1) ? 32 : 0;
       view += MapLoader.gets(matrixPosX + 1, matrixPosY) ? 64 : 0;
       view += MapLoader.gets(matrixPosX + 1, matrixPosY + 1) ? 128 : 0;
-      if (this.byteCalc(view, [32, 64], [16])) {
-        this.viewBox.setTexture(Texture('sub_corner_left.png'));
-      } else {
-        if (this.byteCalc(view, [8, 4], [16])) {
-          this.viewBox.setTexture(Texture('sub_corner_right.png'));
-        } else {
-          if (this.byteCalc(view, [1], [4, 16, 64])) {
-            this.viewBox.setTexture(Texture('block_one_foot.png'));
-          } else {
-            if (this.byteCalc(view, [4, 64], [16])) {
-              this.viewBox.setTexture(Texture('block.png'));
-            } else {
-              if (this.byteCalc(view, [4], [64])) {
-                this.viewBox.setTexture(Texture('block_right.png'));
-              } else {
-                if (this.byteCalc(view, [64], [4])) {
-                  this.viewBox.setTexture(Texture('block_left.png'));
-                } else {
-                  this.viewBox.setTexture(Texture('block_mouse.png'));
-                }
-              }
-            }
-          }
-        }
+      let textureSrc = 'block_mouse.png';
+      switch (true) {
+        case byteCalc(view, [32, 64], [16]):
+          textureSrc = 'sub_corner_left.png';
+          break;
+        case byteCalc(view, [8, 4], [16]):
+          textureSrc = 'sub_corner_right.png';
+          break;
+        case byteCalc(view, [1], [4, 16, 64]):
+          textureSrc = 'block_one_foot.png';
+          break;
+        case byteCalc(view, [4, 64], [16]):
+          textureSrc = 'block.png';
+          break;
+        case byteCalc(view, [4], [64]):
+          textureSrc = 'block_right.png';
+          break;
+        case byteCalc(view, [64], [4]):
+          textureSrc = 'block_left.png';
+          break;
       }
-      if (this.viewBox.prop(0, 0).texture == undefined) {
-
-      }
-    },
-    byteCalc(view: number, include: number[], exclude: number[]) {
-      return exclude.reduce((prev, curr) => ((view & curr) !== curr) && prev,
-        include.reduce((prev, curr) => ((view & curr) === curr) && prev, true));
+      this.viewBox.setTexture(Texture(textureSrc));
     },
   };
   obj.physBox = Box(0, 0, 50, 50, obj);

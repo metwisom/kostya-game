@@ -16,7 +16,7 @@ const Inertia = function (maintainer: ItemWithStatesComponent & Inertial) {
         let inter: D2UpdatableComponent[] = [];
         const xCollision = _maintainer.physBox.prop(_maintainer.momentum * delta, 0);
         if (_maintainer.physBox.hasCollision) {
-          inter = Engine.checkCollision(xCollision, _maintainer.id);
+          inter = Engine.checkCollision(xCollision, _maintainer.getId());
         }
         if (Math.abs(_maintainer.momentum) < 0.001) {
           _maintainer.momentum = 0;

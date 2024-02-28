@@ -13,14 +13,14 @@ const Gravity = function (maintainer: ItemWithStatesComponent & Gravitational) {
   const _maintainer = maintainer;
   const obj: IEffect = {
     update(delta: number = 1) {
-      const {physBox, id} = _maintainer;
+      const {physBox} = _maintainer;
       let inter: D2UpdatableComponent[] = [];
 
       _maintainer.eDown += 0.1;
       const yCollision = physBox.prop(0, _maintainer.eDown * delta);
 
       if (physBox.hasCollision) {
-        inter = Engine.checkCollision(yCollision, id);
+        inter = Engine.checkCollision(yCollision, _maintainer.getId());
       }
 
       if (inter.length === 0) {

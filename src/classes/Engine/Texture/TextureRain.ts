@@ -7,6 +7,7 @@ const TextureRain = function (w: number, h: number) {
   const parent = TextureBlank(w, h);
   const obj: TextureRainComponent = {
     ...parent,
+    type: 'TextureRain',
     get(): HTMLImageElement {
       if (this.cacheImg == undefined) {
         parent.get();

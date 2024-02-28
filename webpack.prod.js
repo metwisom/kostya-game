@@ -5,18 +5,13 @@ module.exports = {
   entry: "./src/index.ts",
   output: {
     filename: "main.js",
-    path: path.resolve(__dirname, "/../dist"),
+    path: path.resolve(__dirname, "dist"),
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: [{
-          loader: 'ts-loader',
-          options: {
-            configFile: "config/tsconfig.json"
-          }
-        }],
+        use: ['ts-loader'],
         exclude: /node_modules/,
       },
     ],

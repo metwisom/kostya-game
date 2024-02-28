@@ -3,7 +3,7 @@ import {BoxTexturedComponent, ViewArea} from './Box/BoxTextured';
 
 type D2DrawableComponent = {
   type: string
-  id: string,
+  getId(): string,
   x: number
   y: number
   viewBox?: BoxTexturedComponent
@@ -14,13 +14,15 @@ type D2DrawableComponent = {
 
 const D2Drawable = function (x: number = 0, y: number = 0) {
   let isDestroyed = false;
-  let id = Math.random().toString(16).slice(2);
-  let viewBox: BoxTexturedComponent = undefined;
+  const id = Math.random().toString(16).slice(2);
   const obj: D2DrawableComponent = {
     type: 'D2Drawable',
-    id,
-    x, y,
-    viewBox,
+    getId() {
+      return id;
+    },
+    x,
+    y,
+    viewBox: undefined,
     draw() {
       return this.viewBox.prop();
     },

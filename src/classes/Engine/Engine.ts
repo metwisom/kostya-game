@@ -60,7 +60,7 @@ const Engine = (function () {
     },
     checkCollision<T = D2UpdatableComponent>(hitBox: BoxArea, ignore = ''): T[] {
       return obj.objects.filter(e => {
-        if (e.id !== ignore && e.physBox.hasCollision) {
+        if (e.getId() !== ignore && e.physBox.hasCollision) {
           const testBox = e.physBox.prop(0, 0);
           return intersectRect(testBox, hitBox);
         }

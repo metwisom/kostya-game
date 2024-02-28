@@ -1,6 +1,7 @@
 import {TextureComponent} from '../Texture/Texture';
 import {D2DrawableComponent} from '../D2Drawable';
 import {Box, BoxArea, BoxComponent} from './Box';
+import {TextureCollectionComponent} from '../Texture/TextureCollection';
 
 
 type ViewArea = BoxArea & {
@@ -22,10 +23,10 @@ const BoxTextured = function (x: number, y: number, width: number, height: numbe
     setTexture(texture: TextureComponent) {
       _texture = texture;
     },
-    setState(_newState: string) {
-      // if (_texture instanceof TextureCollection) {
-      //   // _texture.state = newState;
-      // }
+    setState(newState: string) {
+      if (_texture.type == 'TextureCollection') {
+        (_texture as TextureCollectionComponent).currentState = newState;
+      }
     },
     prop(): ViewArea {
       return {

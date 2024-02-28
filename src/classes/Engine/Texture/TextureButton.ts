@@ -20,6 +20,7 @@ const TextureButton = function (src: string, w: number, h: number) {
 
   const obj: TextureButtonComponent = {
     ...parent,
+    type: 'TextureButton',
     text: '',
     textColor: 'red',
     fillColor: 'black',

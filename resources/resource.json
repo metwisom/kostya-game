@@ -95,7 +95,7 @@
     "path": "/resources/sprites/",
     "params": {
       "frames": 12,
-      "speed": 0.08
+      "speed": 0.06
     }
   },
   {
@@ -104,7 +104,7 @@
     "path": "/resources/sprites/",
     "params": {
       "frames": 12,
-      "speed": 0.08
+      "speed": 0.06
     }
   },
   {

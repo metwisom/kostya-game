@@ -26,9 +26,10 @@ const Character = function (x: number, y: number) {
   const parent = ItemWithStates();
   const obj: CharacterComponent = {
     ...parent,
-    eDown: 0, hasGround: false, momentum: 0,
-    ...parent,
-    type: 'Char',
+    eDown: 0,
+    hasGround: false,
+    momentum: 0,
+    type: 'Character',
     createStepParticle() {
       if (this.momentum != 0 && this.hasGround) {
 
