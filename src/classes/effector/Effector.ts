@@ -17,7 +17,7 @@ const Effector = function () {
       this.effects.splice(this.effects.indexOf(effect), 1);
     },
     run(delta: number) {
-      this.effects.map((effect: { update: (arg0: number) => any; }) => effect.update(delta));
+      this.effects.map((effect: IEffect) => effect.update(delta));
     },
   };
   return obj;

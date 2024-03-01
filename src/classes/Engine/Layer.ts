@@ -22,7 +22,7 @@ const Layer = function () {
       return false;
     },
   };
-  return obj;
+  return Object.freeze(obj);
 };
 
 export {Layer, LayerComponent};

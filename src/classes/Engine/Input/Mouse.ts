@@ -25,11 +25,14 @@ const Mouse = (function () {
 
   const updateState = (state: boolean, e: MouseEvent) => {
     const buttons = objects.filter(obj => {
-        console.log(obj);
-        return obj.getX() <= x && obj.getX() + obj.viewBox.width >= x &&
-          obj.getY() <= y && obj.getY() + obj.viewBox.height >= y;
+
+      console.log(obj.getX());
+        return obj.getX() <= x && obj.getX() + obj.getWidth() >= x &&
+          obj.getY() <= y && obj.getY() + obj.getHeight() >= y;
       },
     );
+
+
 
 
     if (mouse[e.type]) {

@@ -5,13 +5,13 @@ import {ItemWithStatesComponent} from '../../Engine/ItemWithStates';
 import {Eventful} from '../../Engine/interfaces/Eventful';
 
 
-type Attainables = IEffect & {
+type PickedUp = IEffect & {
   createParticle(): void
 }
 
-const Attainable = function (maintainer: ItemWithStatesComponent & Eventful) {
+const Pickup = function (maintainer: ItemWithStatesComponent & Eventful) {
   const _maintainer = maintainer;
-  const obj: Attainables = {
+  const obj: PickedUp = {
     update(_delta: number = 1) {
       const xCollision = _maintainer.physBox.prop(0, 0);
       const inter = Engine.checkCollision(xCollision, _maintainer.getId());
@@ -35,4 +35,4 @@ const Attainable = function (maintainer: ItemWithStatesComponent & Eventful) {
 };
 
 
-export {Attainable, Attainables};
+export {Pickup, PickedUp};

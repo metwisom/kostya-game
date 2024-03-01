@@ -1,23 +1,23 @@
-import {Texture, TextureComponent} from './Texture';
+import {TextureDynamic, TextureDynamicComponent} from './TextureDynamic';
 
-type TextureCollectionComponent = TextureComponent & {
-  states: Record<string, TextureComponent>
+type TextureCollectionComponent = TextureDynamicComponent & {
+  states: Record<string, TextureDynamicComponent>
   currentState: string
-  addState(stateName: string, texture: TextureComponent): void
+  addState(stateName: string, texture: TextureDynamicComponent): void
 }
 
 const TextureCollection = function () {
-  const parent = Texture();
+  const parent = TextureDynamic();
   const obj: TextureCollectionComponent = {
     ...parent,
     type: 'TextureCollection',
     states: {},
     currentState: 'left_idle',
-    addState(stateName: string, texture: TextureComponent) {
+    addState(stateName: string, texture: TextureDynamicComponent) {
       this.states[stateName] = texture;
     },
-    get() {
-      return this.states[this.currentState].get();
+    get(delta: number = 1) {
+      return this.states[this.currentState].get(delta);
     },
   };
   return obj;

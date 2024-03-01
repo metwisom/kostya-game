@@ -44,48 +44,49 @@ const Element = function (x: number, y: number, _width: number, _height: number)
     _floatY: FloatY.center,
     _x: 0, _y: 0,
     setX(value: number) {
-      this._origX = value;
+      this.origX = value;
       switch (this.floatX) {
         case FloatX.center:
-          this._x = value + Engine.getDisplay().width / 2 - this.width / 2;
+          this._x = value + Engine.getDisplay().width / 2 - this.getWidth() / 2;
           break;
         case FloatX.right:
-          this._x = Engine.getDisplay().width - this.width / 2 - value;
+          this._x = Engine.getDisplay().width - this.getWidth() / 2 - value;
           break;
         default:
-          this._x = value - this.width / 2;
+          this._x = value - this.getWidth() / 2;
       }
+
+      console.log('set' , this._x)
     },
     getX() {
       return this._x;
     },
     setY(value: number) {
-      this._origY = value;
+      this.origY = value;
       switch (this.floatY) {
         case FloatY.center:
-          this._y = value + Engine.getDisplay().height / 2 - this.height / 2;
+          this._y = value + Engine.getDisplay().height / 2 - this.getHeight() / 2;
           break;
         case FloatY.bottom:
-          this._y = Engine.getDisplay().height - this.height / 2 - value;
+          this._y = Engine.getDisplay().height - this.getHeight() / 2 - value;
           break;
         default:
-          this._y = value - this.height / 2;
+          this._y = value - this.getHeight() / 2;
       }
     },
     getY() {
       return this._y;
     },
-
     setFloatX(value: FloatX) {
       this._floatX = value;
-      this.x = this._origX;
+      this.setX(this.origX);
     },
     getFloatX() {
       return this._floatX;
     },
     setFloatY(value: FloatY) {
       this._floatY = value;
-      this.y = this._origY;
+      this.setY(this.origY);
     },
     getFloatY() {
       return this._floatY;

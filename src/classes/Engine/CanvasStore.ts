@@ -9,6 +9,12 @@ const CanvasStore = (function () {
 
   const canvasStore: CanvasStore = Object.create(null);
 
+  Object.defineProperty(canvasStore, 'count', {
+    get: function () {
+      return store.length;
+    },
+  });
+
   canvasStore.get = (): HTMLCanvasElement => {
     if (store.length < 100) {
       for (let i = 0; i < 100 - store.length; i++) {
@@ -22,11 +28,6 @@ const CanvasStore = (function () {
     store.push(element);
   };
 
-  Object.defineProperty(canvasStore, 'count', {
-    get: function () {
-      return store.length;
-    },
-  });
 
   return Object.freeze(canvasStore);
 })();

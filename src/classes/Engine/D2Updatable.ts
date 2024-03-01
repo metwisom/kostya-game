@@ -4,10 +4,11 @@ import {BoxComponent} from './Box/Box';
 
 
 type D2UpdatableComponent = D2DrawableComponent & {
-  physBox: BoxComponent
   readonly effector: EffectorComponent
+  physBox: BoxComponent
   update: (delta: number) => void
 }
+
 const D2Updatable = function (x: number = 0, y: number = 0) {
   const parent = D2Drawable(x, y);
   const obj: D2UpdatableComponent = {

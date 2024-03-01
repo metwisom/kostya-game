@@ -3,7 +3,7 @@ import {D2Updatable, D2UpdatableComponent} from '../Engine/D2Updatable';
 import {BoxTextured} from '../Engine/Box/BoxTextured';
 import {Box} from '../Engine/Box/Box';
 import {byteCalc} from '../../utils/byteCalc';
-import {Texture} from '../Engine/Texture/Texture';
+import {TextureDynamic} from '../Engine/Texture/TextureDynamic';
 
 type StructureComponent = D2UpdatableComponent & {
   refreshSprite(): void
@@ -50,7 +50,7 @@ const Structure = function (x: number, y: number) {
           textureSrc = 'block_left.png';
           break;
       }
-      this.viewBox.setTexture(Texture(textureSrc));
+      this.viewBox.setTexture(TextureDynamic(textureSrc));
     },
   };
   obj.physBox = Box(0, 0, 50, 50, obj);

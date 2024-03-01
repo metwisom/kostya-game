@@ -1,9 +1,10 @@
 import {BoxTextured, ViewArea} from '../Engine/Box/BoxTextured';
-import {Texture} from '../Engine/Texture/Texture';
+import {TextureDynamic} from '../Engine/Texture/TextureDynamic';
 import {D2Updatable, D2UpdatableComponent} from '../Engine/D2Updatable';
 import {Camera} from '../Engine/Camera';
 import {Engine} from '../Engine/Engine';
 import {Box} from '../Engine/Box/Box';
+import {TextureStatic} from '../Engine/Texture/TextureStatic';
 
 
 type ParallaxComponent = D2UpdatableComponent & {
@@ -12,10 +13,10 @@ type ParallaxComponent = D2UpdatableComponent & {
 
 const Parallax = function (image: string, bias: number) {
 
-  const texture = Texture(image);
-  const ratio = Engine.getDisplay().height / texture.referenceImage.height;
-  const width = texture.referenceImage.width * ratio;
-  const height = texture.referenceImage.height * ratio;
+  const texture = TextureStatic(image);
+  const ratio = Engine.getDisplay().height / texture.reference.content.height;
+  const width = texture.reference.content.width * ratio;
+  const height = texture.reference.content.height * ratio;
 
   const parent = D2Updatable();
   const obj: ParallaxComponent = {

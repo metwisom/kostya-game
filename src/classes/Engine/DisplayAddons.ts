@@ -1,24 +1,21 @@
 import {GraphicComponent} from './Graphic';
 
 type DisplayAddonsComponent = {
-  postCb: CallableFunction[]
   add(postCb: CallableFunction): void
   run(scene: GraphicComponent): void
 }
 
 const DisplayAddons = function () {
+  const postCb: ((scene: GraphicComponent) => void)[] = [];
   const obj: DisplayAddonsComponent = {
-    postCb: [],
-    add(postCb: CallableFunction) {
-      this.postCb.push((scene: GraphicComponent) => postCb(scene));
+    add(cb: (scene: GraphicComponent) => void) {
+      postCb.push(cb);
     },
     run(scene: GraphicComponent) {
-      this.postCb.map((cb: (arg0: GraphicComponent) => any) => cb(scene));
+      postCb.map((cb) => cb(scene));
     },
   };
-  return obj;
-
-
+  return Object.freeze(obj);
 };
 
 export {DisplayAddons, DisplayAddonsComponent};

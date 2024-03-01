@@ -29,7 +29,7 @@ type EngineComponent = {
   attach(canvas: HTMLCanvasElement): void
   addObjectPhys(obj: D2UpdatableComponent): void
   start(): void
-  drawCollection(collection: D2DrawableComponent[]): void
+  drawCollection(collection: D2DrawableComponent[],delta:number): void
   removeObject(obj: ItemWithStatesComponent): void
   toRemove(obj: D2UpdatableComponent): void
 }
@@ -90,15 +90,15 @@ const Engine = (function () {
       this.objects.push(obj);
     },
     start() {
-      const drawWorld = () => {
+      const drawWorld = (delta: number) => {
         this.graphic.centerTo(Camera.x, Camera.y + Camera.target.viewBox.height / 2);
-        obj.layers.map(({items}) => this.drawCollection(items));
+        obj.layers.map(({items}) => this.drawCollection(items, delta));
       };
 
 
-      const drawGui = () => {
+      const drawGui = (delta:number) => {
         this.graphic.resetTransform();
-        this.drawCollection(this.gui);
+        this.drawCollection(this.gui,delta);
         this.addons.run(this.graphic);
       };
       const draw = (time: number) => {
@@ -114,24 +114,24 @@ const Engine = (function () {
         });
 
 
-        drawWorld();
-        drawGui();
+        drawWorld(delta);
+        drawGui(delta);
         requestAnimationFrame(draw.bind(undefined, [performance.now()]));
         this.cleanUp();
         this.drawTime = performance.now() - startDraw;
       };
       requestAnimationFrame(draw);
     },
-    drawCollection(collection: D2DrawableComponent[]) {
+    drawCollection(collection: D2DrawableComponent[],delta:number) {
       collection.map(item => {
         if (!item.isActual()) {
           return this.removeList.push(item);
         }
         const viewBox = item.draw();
-        this.graphic.drawImage(viewBox.texture.get(),
+        this.graphic.drawImage(viewBox.texture.get(delta),
           0, 0,
-          viewBox.texture.get().width,
-          viewBox.texture.get().height,
+          viewBox.texture.get(delta).width,
+          viewBox.texture.get(delta).height,
           viewBox.x,
           viewBox.y,
           viewBox.width,

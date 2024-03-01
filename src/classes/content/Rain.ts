@@ -1,15 +1,14 @@
 import {getRandom, getRandomFloat} from '../../utils/getRandom';
 import {Engine} from '../Engine/Engine';
 import {Camera} from '../Engine/Camera';
-import {TextureRain} from '../Engine/Texture/TextureRain';
 import {Box} from '../Engine/Box/Box';
 import {Gravitational, Gravity} from '../effector/effects/Gravity';
 import {BoxTextured} from '../Engine/Box/BoxTextured';
 import {ItemWithStates, ItemWithStatesComponent} from '../Engine/ItemWithStates';
+import {TextureStatic} from '../Engine/Texture/TextureStatic';
 
 
-const textureRain = TextureRain(5, 11);
-textureRain.textColor = '#65ada0';
+const textureRain = TextureStatic('waterdrop.png');
 
 type RainComponent = ItemWithStatesComponent & Gravitational & {
   respawn(): void

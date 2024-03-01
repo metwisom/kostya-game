@@ -1,12 +1,13 @@
 import {D2Updatable, D2UpdatableComponent} from '../Engine/D2Updatable';
 import {BoxTextured} from '../Engine/Box/BoxTextured';
-import {Texture} from '../Engine/Texture/Texture';
+import {TextureDynamic} from '../Engine/Texture/TextureDynamic';
 import {Box} from '../Engine/Box/Box';
+import {TextureFake} from '../Engine/Texture/TextureFake';
 
 
 const FakeAnimate = function () {
   const parent: D2UpdatableComponent = D2Updatable();
-  const obj = {
+  const obj: D2UpdatableComponent = {
     ...parent,
     type: 'FakeAnimate',
     x: 0,
@@ -18,7 +19,7 @@ const FakeAnimate = function () {
   };
   obj.physBox = Box(0, 0, 0, 0, obj);
   obj.viewBox = BoxTextured(0, 0, 0, 0, obj);
-  obj.viewBox.setTexture(Texture());
+  obj.viewBox.setTexture(TextureFake());
   return obj;
 };
 

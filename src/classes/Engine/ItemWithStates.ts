@@ -10,21 +10,22 @@ type ItemWithStatesComponent = D2UpdatableComponent & {
 }
 
 const ItemWithStates = function () {
-  let _state: string = 'right_idle';
+  let state: string = 'right_idle';
   const parent = D2Updatable();
   const obj: ItemWithStatesComponent = {
     ...parent,
     type: 'ItemWithStates',
     faced: 'right',
-    setState(state: string) {
-      if (_state == state) {
+    setState(newState: string) {
+      const newStateFull = this.faced + '_' + newState
+      if (state == newStateFull) {
         return;
       }
-      _state = this.faced + '_' + state;
-      this.viewBox.setState(_state);
+      state = newStateFull
+      this.viewBox.setState(newStateFull);
     },
     getState() {
-      return _state;
+      return state;
     },
   };
 
