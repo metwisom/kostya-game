@@ -8,7 +8,7 @@ import {ItemWithStates, ItemWithStatesComponent} from '../Engine/ItemWithStates'
 import {TextureStatic} from '../Engine/Texture/TextureStatic';
 
 
-const textureRain = TextureStatic('waterdrop.png');
+const textureRain = TextureStatic('raindrop.png');
 
 type RainComponent = ItemWithStatesComponent & Gravitational & {
   respawn(): void

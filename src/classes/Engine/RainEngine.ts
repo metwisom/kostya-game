@@ -4,10 +4,9 @@ import {Engine} from './Engine';
 
 const RainEngine = (() => {
   let rainDrops: RainComponent[] = [];
-  let isActive: boolean = false;
+  let isActive = false;
 
-  const create = (): void => {
-    if (!isActive) return;
+  const createRain = (): void => {
     const rain = Rain(Camera.y + 1000);
     rainDrops.push(rain);
     Engine.addObject(rain);
@@ -16,12 +15,14 @@ const RainEngine = (() => {
 
   const obj = {
     start() {
+      if (isActive) return;
       isActive = true;
       for (let i = 0; i < 100; i++) {
-        create();
+        createRain();
       }
     },
     stop() {
+      if (!isActive) return;
       isActive = false;
       rainDrops.forEach(rain => rain.destroy());
       rainDrops = [];

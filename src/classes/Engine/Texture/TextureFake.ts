@@ -7,7 +7,8 @@ const TextureFake = function () {
   const resource: ImageResource = undefined;
 
   const img = document.createElement('img');
-  img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAAtJREFUGFdjYAACAAAFAAGq1chRAAAAAElFTkSuQmCC';
+  // noinspection SpellCheckingInspection
+  img.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAAtJREFUGFdjYAACAAAFAAGq1chRAAAAAElFTkSuQmCC";
 
   const obj: TextureFakeComponent = {
     type: 'TextureFake',
@@ -16,7 +17,6 @@ const TextureFake = function () {
       return img;
     },
     destroy() {
-      this.resource = undefined;
     },
   };
   return obj;

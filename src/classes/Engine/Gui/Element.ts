@@ -17,14 +17,14 @@ export enum FloatY {
 type ElementComponent = D2DrawableComponent & {
   origX: number,
   origY: number,
-  _floatX: number,
-  _floatY: number
+  floatX: number,
+  floatY: number
   getX(): number,
   setX(value: number): void,
   getY(): number,
   setY(value: number): void,
-  _x: number,
-  _y: number,
+  x: number,
+  y: number,
   setFloatX(value: FloatX): void
   getFloatX(): number
   setFloatY(value: FloatY): void
@@ -40,56 +40,54 @@ const Element = function (x: number, y: number, _width: number, _height: number)
     ...D2Drawable(),
     origX: x,
     origY: y,
-    _floatX: FloatX.center,
-    _floatY: FloatY.center,
-    _x: 0, _y: 0,
+    floatX: FloatX.center,
+    floatY: FloatY.center,
+    x: 0, y: 0,
     setX(value: number) {
       this.origX = value;
       switch (this.floatX) {
         case FloatX.center:
-          this._x = value + Engine.getDisplay().width / 2 - this.getWidth() / 2;
+          this.x = value + Engine.getDisplay().width / 2 - this.getWidth() / 2;
           break;
         case FloatX.right:
-          this._x = Engine.getDisplay().width - this.getWidth() / 2 - value;
+          this.x = Engine.getDisplay().width - this.getWidth() / 2 - value;
           break;
         default:
-          this._x = value - this.getWidth() / 2;
+          this.x = value - this.getWidth() / 2;
       }
-
-      console.log('set' , this._x)
     },
     getX() {
-      return this._x;
+      return this.x;
     },
     setY(value: number) {
       this.origY = value;
       switch (this.floatY) {
         case FloatY.center:
-          this._y = value + Engine.getDisplay().height / 2 - this.getHeight() / 2;
+          this.y = value + Engine.getDisplay().height / 2 - this.getHeight() / 2;
           break;
         case FloatY.bottom:
-          this._y = Engine.getDisplay().height - this.getHeight() / 2 - value;
+          this.y = Engine.getDisplay().height - this.getHeight() / 2 - value;
           break;
         default:
-          this._y = value - this.getHeight() / 2;
+          this.y = value - this.getHeight() / 2;
       }
     },
     getY() {
-      return this._y;
+      return this.y;
     },
     setFloatX(value: FloatX) {
-      this._floatX = value;
+      this.floatX = value;
       this.setX(this.origX);
     },
     getFloatX() {
-      return this._floatX;
+      return this.floatX;
     },
     setFloatY(value: FloatY) {
-      this._floatY = value;
+      this.floatY = value;
       this.setY(this.origY);
     },
     getFloatY() {
-      return this._floatY;
+      return this.floatY;
     },
     setWidth(value: number) {
       this.viewBox.width = value;

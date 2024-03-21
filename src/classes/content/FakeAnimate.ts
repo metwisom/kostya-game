@@ -1,6 +1,5 @@
 import {D2Updatable, D2UpdatableComponent} from '../Engine/D2Updatable';
 import {BoxTextured} from '../Engine/Box/BoxTextured';
-import {TextureDynamic} from '../Engine/Texture/TextureDynamic';
 import {Box} from '../Engine/Box/Box';
 import {TextureFake} from '../Engine/Texture/TextureFake';
 

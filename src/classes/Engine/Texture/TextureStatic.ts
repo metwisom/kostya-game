@@ -12,7 +12,7 @@ const TextureStatic = function (src: string) {
   const obj: TextureStaticComponent = {
     type: 'TextureStatic',
     reference: resource,
-    get(delta: number = 1): HTMLImageElement {
+    get(_: number = 1): HTMLImageElement {
       return this.reference.content;
     },
     destroy(){

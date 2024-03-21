@@ -1,5 +1,4 @@
 import {BoxTextured, ViewArea} from '../Engine/Box/BoxTextured';
-import {TextureDynamic} from '../Engine/Texture/TextureDynamic';
 import {D2Updatable, D2UpdatableComponent} from '../Engine/D2Updatable';
 import {Camera} from '../Engine/Camera';
 import {Engine} from '../Engine/Engine';

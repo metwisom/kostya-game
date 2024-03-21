@@ -1,4 +1,3 @@
-import {ImageResource, ResourceLoader} from '../ResourceLoader/ResourceLoader';
 import {CanvasStore} from '../CanvasStore';
 import {TextureStatic, TextureStaticComponent} from './TextureStatic';
 

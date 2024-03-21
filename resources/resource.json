@@ -280,7 +280,7 @@
   },
   {
     "type": "image",
-    "file": "waterdrop.png",
+    "file": "raindrop.png",
     "path": "/resources/sprites/",
     "params": {
       "frames": 1,

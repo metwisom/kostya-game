@@ -18,8 +18,6 @@ function Button(x: number, y: number, width: number, height: number, text: strin
 
   const parent = Element(x, y, width, height);
 
-  parent.viewBox = BoxTextured(0, 0, width, height, parent);
-  parent.viewBox.setTexture(texture);
   const obj: ButtonComponent = {
     ...parent,
     type: 'Button',
@@ -33,6 +31,9 @@ function Button(x: number, y: number, width: number, height: number, text: strin
       }
     },
   };
+  obj.viewBox = BoxTextured(0, 0, width, height, obj);
+  obj.viewBox.setTexture(texture);
+
   return obj;
 }
 

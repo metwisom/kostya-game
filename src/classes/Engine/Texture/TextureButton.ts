@@ -56,7 +56,6 @@ const TextureButton = function (src: string, w: number, h: number) {
       this.render();
     },
     render() {
-      console.log('render button');
 
       this.virtualScene.drawImage(this.reference.content, 0, 0, 6, 6,
         0, 0, 6, 6);
