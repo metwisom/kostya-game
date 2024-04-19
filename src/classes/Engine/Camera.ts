@@ -2,33 +2,29 @@ import {D2DrawableComponent} from './D2Drawable';
 import {FakeAnimate} from '../content/FakeAnimate';
 
 type Camera = {
-  readonly target: D2DrawableComponent
-  readonly x: number
-  readonly y: number
-  attach(obj: D2DrawableComponent): void
-}
+  readonly target: D2DrawableComponent;
+  readonly x: number;
+  readonly y: number;
+  attach(obj: D2DrawableComponent): void;
+};
 
-const Camera = (function () {
-  const camera: Camera = Object.create(null);
+const Camera = (() => {
   let attached: D2DrawableComponent = FakeAnimate();
-  Object.defineProperty(camera, 'target', {
-    get: () => attached,
-    enumerable: false,
-    configurable: false,
-  });
-  Object.defineProperty(camera, 'x', {
-    get: () => attached.x,
-    enumerable: false,
-    configurable: false,
-  });
-  Object.defineProperty(camera, 'y', {
-    get: () => attached.y,
-    enumerable: false,
-    configurable: false,
-  });
-  camera.attach = (obj: D2DrawableComponent) => {
-    attached = obj;
+  const camera: Camera = {
+    get target(): D2DrawableComponent {
+      return attached;
+    },
+    get x(): number {
+      return attached.x;
+    },
+    get y(): number {
+      return attached.y;
+    },
+    attach(obj: D2DrawableComponent): void {
+      attached = obj;
+    },
   };
+
   return Object.freeze(camera);
 })();
 

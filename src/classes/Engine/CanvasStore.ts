@@ -1,35 +1,30 @@
 type CanvasStore = {
-  readonly count: number
-  get(): HTMLCanvasElement
-  release(element: HTMLCanvasElement): void
+  readonly count: number;
+  get(): HTMLCanvasElement;
+  release(element: HTMLCanvasElement): void;
 }
 
-const CanvasStore = (function () {
+const CanvasStore = (() => {
   const store: HTMLCanvasElement[] = [];
 
-  const canvasStore: CanvasStore = Object.create(null);
+  const canvasStore: CanvasStore = {} as CanvasStore;
 
   Object.defineProperty(canvasStore, 'count', {
-    get: function () {
-      return store.length;
-    },
+    get: () => store.length,
   });
 
   canvasStore.get = (): HTMLCanvasElement => {
     if (store.length < 100) {
-      for (let i = 0; i < 100 - store.length; i++) {
-        store.push(document.createElement('canvas'));
-      }
+      store.push(...new Array(100 - store.length).fill(null).map(() => document.createElement('canvas')));
     }
-    return store.shift() || document.createElement('canvas');
+    return store.shift() ?? document.createElement('canvas');
   };
 
   canvasStore.release = (element: HTMLCanvasElement) => {
     store.push(element);
   };
 
-
-  return Object.freeze(canvasStore);
+  return canvasStore as Readonly<CanvasStore>;
 })();
 
 export {CanvasStore};

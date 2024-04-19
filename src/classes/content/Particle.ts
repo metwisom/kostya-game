@@ -21,7 +21,7 @@ const Particle = function (x: number, y: number, newSize = 1, speed = 0.05, dest
   // let _speed = speed * size;
   let _destroyTime = destroyTime;
   let isDestroyed = false;
-  const obj:ParticleComponent = {
+  const obj: ParticleComponent = {
     ...D2Updatable(x, y),
     type: 'Particle',
     speed,
@@ -48,7 +48,7 @@ const Particle = function (x: number, y: number, newSize = 1, speed = 0.05, dest
     unDestroy() {
       isDestroyed = false;
       angle = Math.random() * Math.PI * 2;
-      _size = (Math.random() * 2 + 2) * newSize
+      _size = (Math.random() * 2 + 2) * newSize;
     },
   };
 

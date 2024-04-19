@@ -82,8 +82,6 @@ const TextureButton = function (src: string, w: number, h: number) {
         6, 6, this.virtualCanvas.width - 12, this.virtualCanvas.height - 12);
 
 
-      // 16;
-
       if (this.text != '') {
         this.virtualScene.strokeStyle = this.textColor;
         const metrics = this.virtualScene.measureText(this.text); // TextMetrics object

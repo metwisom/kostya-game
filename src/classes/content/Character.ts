@@ -84,6 +84,7 @@ const Character = function (x: number, y: number) {
       }
       if (event.keyMap[GameKeys.Space].status(false)) {
         if (this.hasGround) {
+          this.hasGround = false;
           this.eDown = -1;
         }
       }

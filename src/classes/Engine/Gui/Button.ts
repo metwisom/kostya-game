@@ -6,7 +6,7 @@ import {BoxTextured} from '../Box/BoxTextured';
 
 type ButtonComponent = ElementComponent & Eventful & {
   text: string
-  ownEvent(newCb: (event: SomeEvent) => void): void
+  onClick(newCb: (event: SomeEvent) => void): void
 }
 
 function Button(x: number, y: number, width: number, height: number, text: string) {
@@ -22,7 +22,7 @@ function Button(x: number, y: number, width: number, height: number, text: strin
     ...parent,
     type: 'Button',
     text: text,
-    ownEvent(newCb: (event: SomeEvent) => void) {
+    onClick(newCb: (event: SomeEvent) => void) {
       _ownEvent = newCb;
     },
     Event: (event: SomeEvent) => {

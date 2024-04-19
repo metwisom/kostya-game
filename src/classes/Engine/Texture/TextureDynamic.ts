@@ -24,7 +24,7 @@ const TextureDynamic = function (src: string = undefined) {
       this.virtualScene.clearRect(0, 0, this.virtualCanvas.width, this.virtualCanvas.height);
       this.virtualScene.drawImage(this.reference.content, imagePos, 0, this.virtualCanvas.width, this.virtualCanvas.height, 0, 0, this.virtualCanvas.width, this.virtualCanvas.height);
     },
-    get(delta:number = 1): HTMLImageElement {
+    get(delta: number = 1): HTMLImageElement {
       if (this.reference.params.speed != 0 && this.reference.params.speed != undefined) {
         const prevCur = Math.floor(cur);
         cur += this.reference.params.speed * delta;

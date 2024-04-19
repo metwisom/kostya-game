@@ -83,7 +83,7 @@ const MapLoader = (function () {
         Engine.addObject(button);
         Mouse.addObject(button);
         if (item.action.loadMap != undefined) {
-          button.ownEvent(async (e) => {
+          button.onClick(async (e) => {
             if (e.keyMap[GameKeys.LEFT_MOUSE].status(true)) {
               RainEngine.stop();
               Engine.clearLayers();

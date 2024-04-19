@@ -29,7 +29,7 @@ type EngineComponent = {
   attach(canvas: HTMLCanvasElement): void
   addObjectPhys(obj: D2UpdatableComponent): void
   start(): void
-  drawCollection(collection: D2DrawableComponent[],delta:number): void
+  drawCollection(collection: D2DrawableComponent[], delta: number): void
   removeObject(obj: ItemWithStatesComponent): void
   toRemove(obj: D2UpdatableComponent): void
 }
@@ -95,10 +95,9 @@ const Engine = (function () {
         obj.layers.map(({items}) => this.drawCollection(items, delta));
       };
 
-
-      const drawGui = (delta:number) => {
+      const drawGui = (delta: number) => {
         this.graphic.resetTransform();
-        this.drawCollection(this.gui,delta);
+        this.drawCollection(this.gui, delta);
         this.addons.run(this.graphic);
       };
       const draw = (time: number) => {
@@ -113,7 +112,6 @@ const Engine = (function () {
           object.update(Math.min(delta, 100));
         });
 
-
         drawWorld(delta);
         drawGui(delta);
         requestAnimationFrame(draw.bind(undefined, [performance.now()]));
@@ -122,7 +120,7 @@ const Engine = (function () {
       };
       requestAnimationFrame(draw);
     },
-    drawCollection(collection: D2DrawableComponent[],delta:number) {
+    drawCollection(collection: D2DrawableComponent[], delta: number) {
       collection.map(item => {
         if (!item.isActual()) {
           return this.removeList.push(item);

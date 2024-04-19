@@ -31,8 +31,6 @@ const Mouse = (function () {
     );
 
 
-
-
     if (mouse[e.type]) {
       if (buttons.length > 0) {
         slave.updateState(GameKeys.LEFT_MOUSE, state, false, {x: x, y: y});

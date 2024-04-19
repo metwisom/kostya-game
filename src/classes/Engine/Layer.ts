@@ -1,13 +1,12 @@
 import {D2DrawableComponent} from './D2Drawable';
 
 type LayerComponent = {
-  items: D2DrawableComponent[]
-  addObject(obj: D2DrawableComponent): void
-  removeObject(obj: D2DrawableComponent): boolean
-}
+  items: D2DrawableComponent[];
+  addObject(obj: D2DrawableComponent): void;
+  removeObject(obj: D2DrawableComponent): boolean;
+};
 
-const Layer = function () {
-
+const Layer = () => {
   const obj: LayerComponent = {
     items: [],
     addObject(obj: D2DrawableComponent): void {
@@ -22,7 +21,7 @@ const Layer = function () {
       return false;
     },
   };
-  return Object.freeze(obj);
+  return obj as Readonly<LayerComponent>;
 };
 
 export {Layer, LayerComponent};

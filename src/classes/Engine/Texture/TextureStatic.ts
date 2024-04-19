@@ -15,9 +15,9 @@ const TextureStatic = function (src: string) {
     get(_: number = 1): HTMLImageElement {
       return this.reference.content;
     },
-    destroy(){
-      this.reference = undefined
-    }
+    destroy() {
+      this.reference = undefined;
+    },
   };
   return obj;
 };

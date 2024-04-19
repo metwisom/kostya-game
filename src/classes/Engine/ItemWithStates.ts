@@ -17,11 +17,11 @@ const ItemWithStates = function () {
     type: 'ItemWithStates',
     faced: 'right',
     setState(newState: string) {
-      const newStateFull = this.faced + '_' + newState
+      const newStateFull = this.faced + '_' + newState;
       if (state == newStateFull) {
         return;
       }
-      state = newStateFull
+      state = newStateFull;
       this.viewBox.setState(newStateFull);
     },
     getState() {
