@@ -40,7 +40,6 @@ const Gravity = function (maintainer: ItemWithStatesComponent & Gravitational) {
         if (maintainer.eDown < 0) {
           maintainer.setState('fall');
         } else {
-          console.log(maintainer.getState())
           if (maintainer.getState().includes('jump') || maintainer.getState() === 'fall') {
             maintainer.setState('idle');
           }
