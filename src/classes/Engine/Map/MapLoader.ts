@@ -15,6 +15,7 @@ import {Mouse} from '../Input/Mouse';
 import {GameKeys} from '../Input/InputKey';
 import {RainEngine} from '../RainEngine';
 import {loadFile} from '../../../utils/loadFile';
+import {SoundManager} from '../Sound/SoundManager';
 
 type MapLoaderComponent = {
   Map: Array<D2DrawableComponent[]>
@@ -92,6 +93,10 @@ const MapLoader = (function () {
               Mouse.removeObject(button);
               setTimeout(() => {
                 this.load('/resources/' + item.action.loadMap);
+                const audio = SoundManager.create('jungle.ogg');
+                audio.setRate(1.2);
+                audio.setVolume(0.2);
+                audio.play();
               }, 1);
 
             }

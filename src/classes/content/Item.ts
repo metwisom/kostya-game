@@ -5,16 +5,16 @@ import {Eventful, SomeEvent} from '../Engine/interfaces/Eventful';
 import {Box} from '../Engine/Box/Box';
 import {Pickup} from '../effector/effects/Pickup';
 import {AntiGravity} from '../effector/effects/AntiGravity';
-import {ResourceLoader, SoundResource} from '../Engine/ResourceLoader/ResourceLoader';
 import {D2UpdatableComponent} from '../Engine/D2Updatable';
 import {Gravitational} from '../effector/effects/Gravity';
+import {SoundManager} from '../Engine/Sound/SoundManager';
 
 
 type ItemComponent = ItemWithStatesComponent & Eventful
 
 const Item = function (x: number, y: number) {
 
-  const audio = ResourceLoader.get<SoundResource>('taken.ogg');
+  const audio = SoundManager.create('taken.ogg');
 
   const parent = ItemWithStates();
   const obj: ItemComponent = {
@@ -23,7 +23,7 @@ const Item = function (x: number, y: number) {
     type: 'Item',
     Event(event: SomeEvent) {
       if (event.taken != undefined) {
-        audio.content.play().then();
+        audio.play();
         event.taken.effector.addEffect(AntiGravity(event.taken as D2UpdatableComponent & Gravitational));
       }
     },

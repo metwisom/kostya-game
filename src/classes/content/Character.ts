@@ -9,7 +9,7 @@ import {Box} from '../Engine/Box/Box';
 import {Gravitational, Gravity} from '../effector/effects/Gravity';
 import {Inertia, Inertial} from '../effector/effects/Inertia';
 import {ParticleFabric} from './ParticleFabric';
-import {ResourceLoader, SoundResource} from '../Engine/ResourceLoader/ResourceLoader';
+import {SoundManager} from '../Engine/Sound/SoundManager';
 
 
 type CharacterComponent = ItemWithStatesComponent & {
@@ -17,9 +17,9 @@ type CharacterComponent = ItemWithStatesComponent & {
 } & Eventful & Gravitational & Inertial
 
 const Character = function (x: number, y: number) {
-  const audio = ResourceLoader.get<SoundResource>('step.wav').content;
-  audio.playbackRate = 1.8;
-  audio.loop = true;
+  const audio = SoundManager.create('step.wav');
+  audio.setRate(1.8);
+
   let sprint = 1;
 
 
@@ -42,7 +42,7 @@ const Character = function (x: number, y: number) {
 
     destroy() {
       parent.destroy();
-      audio.pause();
+      audio.stop();
     },
     x, y,
     update(delta: number) {
@@ -56,11 +56,10 @@ const Character = function (x: number, y: number) {
       }
 
       if (this.momentum != 0 && audio.paused) {
-        audio.play().then();
+        audio.play();
       }
       if (this.momentum == 0 && !audio.paused) {
-        audio.pause();
-        audio.currentTime = 0;
+        audio.stop();
       }
     },
     Event(event: SomeEvent) {

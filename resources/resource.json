@@ -315,5 +315,10 @@
     "type": "sound",
     "file": "taken.ogg",
     "path": "/resources/audio/"
+  },
+  {
+    "type": "sound",
+    "file": "jungle.ogg",
+    "path": "/resources/audio/"
   }
 ]
