@@ -23,7 +23,7 @@ const Item = function (x: number, y: number) {
     type: 'Item',
     Event(event: SomeEvent) {
       if (event.taken != undefined) {
-        audio.play();
+        audio.setLoop(false).play();
         event.taken.effector.addEffect(AntiGravity(event.taken as D2UpdatableComponent & Gravitational));
       }
     },
