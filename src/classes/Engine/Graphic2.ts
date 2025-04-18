@@ -1,208 +1,200 @@
-import { CanvasStore } from './CanvasStore';
-import { mat4 } from 'gl-matrix'; // Импортируем матричные функции
-
-
-// Шейдеры для отрисовки изображения
-const vertexShaderSource = `
-  attribute vec4 a_position;
-  attribute vec2 a_texcoord;
-  uniform mat4 u_matrix;
-  varying vec2 v_texcoord;
-  void main() {
-    gl_Position = u_matrix * a_position;
-    v_texcoord = a_texcoord;
-  }
-`;
-
-const fragmentShaderSource = `
-  precision mediump float;
-  varying vec2 v_texcoord;
-  uniform sampler2D u_texture;
-  void main() {
-    gl_FragColor = texture2D(u_texture, v_texcoord);
-  }
-`;
+import {CanvasStore} from './CanvasStore';
 
 type GraphicComponent = {
   display: HTMLCanvasElement,
-  gl: WebGLRenderingContext,
-  program: WebGLProgram,
-  getFont(): string,
-  setFont(font: string): void,
-  centerTo(x: number, y: number): void,
-  resetTransform(): void,
-  drawImage(image: CanvasImageSource, sx: number, sy: number, sw: number, sh: number, dx: number, dy: number, dw: number, dh: number): void,
-  drawText(text: string, x: number, y: number): void,
+  scene: WebGLRenderingContext,
+  getFont(): string
+  setFont(font: string): void
+  centerTo(x: number, y: number): void
+  resetTransform(): void
+  drawImage(image: CanvasImageSource, sx: number, sy: number, sw: number, sh: number, dx: number, dy: number, dw: number, dh: number): void
+  drawText(text: string, x: number, y: number): void
   recalculateSceneSize(): void
-};
+}
 
-const Graphic = function (element: HTMLCanvasElement = undefined): GraphicComponent {
-  const canvas = element || CanvasStore.get();
-  const gl = canvas.getContext('webgl');
+const Graphic = function (element: HTMLCanvasElement = undefined) {
+  let currentFont = '10px sans-serif';
+  let transformMatrix = new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+  let program: WebGLProgram;
+  let vertexBuffer: WebGLBuffer;
+  const textureCache = new Map<CanvasImageSource, {texture: WebGLTexture, version: number}>();
+  const textCache = new Map<string, {canvas: HTMLCanvasElement, width: number, height: number}>();
 
-  if (!gl) {
+  const obj: GraphicComponent = {
+    display: element,
+    scene: undefined,
+
+    getFont() {
+      return currentFont;
+    },
+    setFont(newFont: string) {
+      if (currentFont !== newFont) {
+        currentFont = newFont;
+        textCache.clear();
+      }
+    },
+    centerTo(x: number, y: number) {
+      const translateX = this.display.width / 2 - x;
+      const translateY = this.display.height / 2 - y;
+      transformMatrix = new Float32Array([
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        translateX, translateY, 0, 1
+      ]);
+      this.scene.uniformMatrix4fv(this.scene.getUniformLocation(program, 'u_transform'), false, transformMatrix);
+    },
+    resetTransform() {
+      transformMatrix = new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+      this.scene.uniformMatrix4fv(this.scene.getUniformLocation(program, 'u_transform'), false, transformMatrix);
+    },
+    drawImage(image: CanvasImageSource, sx: number, sy: number, sw: number, sh: number, dx: number, dy: number, dw: number, dh: number) {
+      const imgWidth = (image as HTMLImageElement).width || (image as HTMLCanvasElement).width;
+      const imgHeight = (image as HTMLImageElement).height || (image as HTMLCanvasElement).height;
+
+      if (!imgWidth || !imgHeight) {
+        console.error('Cannot determine image dimensions');
+        return;
+      }
+
+      // Clamp texture coordinates to avoid edge artifacts
+      sx = Math.max(0, Math.min(sx, imgWidth));
+      sy = Math.max(0, Math.min(sy, imgHeight));
+      sw = Math.min(sw, imgWidth - sx);
+      sh = Math.min(sh, imgHeight - sy);
+
+      // Check texture cache with versioning
+      let cacheEntry = textureCache.get(image);
+      const imageVersion = (image as any)._version || 0; // Custom version for dynamic images
+      if (!cacheEntry || cacheEntry.version !== imageVersion) {
+        const texture = this.scene.createTexture();
+        this.scene.bindTexture(this.scene.TEXTURE_2D, texture);
+        this.scene.texImage2D(this.scene.TEXTURE_2D, 0, this.scene.RGBA, this.scene.RGBA, this.scene.UNSIGNED_BYTE, image);
+        this.scene.texParameteri(this.scene.TEXTURE_2D, this.scene.TEXTURE_MIN_FILTER, this.scene.NEAREST);
+        this.scene.texParameteri(this.scene.TEXTURE_2D, this.scene.TEXTURE_MAG_FILTER, this.scene.NEAREST);
+        this.scene.texParameteri(this.scene.TEXTURE_2D, this.scene.TEXTURE_WRAP_S, this.scene.CLAMP_TO_EDGE);
+        this.scene.texParameteri(this.scene.TEXTURE_2D, this.scene.TEXTURE_WRAP_T, this.scene.CLAMP_TO_EDGE);
+        cacheEntry = {texture, version: imageVersion};
+        textureCache.set(image, cacheEntry);
+      } else {
+        this.scene.bindTexture(this.scene.TEXTURE_2D, cacheEntry.texture);
+      }
+
+      // Update vertex buffer
+      const vertices = new Float32Array([
+        dx, dy, sx / imgWidth, sy / imgHeight,
+        dx + dw, dy, (sx + sw) / imgWidth, sy / imgHeight,
+        dx, dy + dh, sx / imgWidth, (sy + sh) / imgHeight,
+        dx + dw, dy + dh, (sx + sw) / imgWidth, (sy + sh) / imgHeight
+      ]);
+      this.scene.bindBuffer(this.scene.ARRAY_BUFFER, vertexBuffer);
+      this.scene.bufferData(this.scene.ARRAY_BUFFER, vertices, this.scene.STATIC_DRAW);
+
+      const positionLoc = this.scene.getAttribLocation(program, 'a_position');
+      const texCoordLoc = this.scene.getAttribLocation(program, 'a_texCoord');
+      this.scene.enableVertexAttribArray(positionLoc);
+      this.scene.enableVertexAttribArray(texCoordLoc);
+      this.scene.vertexAttribPointer(positionLoc, 2, this.scene.FLOAT, false, 4 * 4, 0);
+      this.scene.vertexAttribPointer(texCoordLoc, 2, this.scene.FLOAT, false, 4 * 4, 2 * 4);
+
+      this.scene.drawArrays(this.scene.TRIANGLE_STRIP, 0, 4);
+    },
+    drawText(text: string, x: number, y: number) {
+      let textData = textCache.get(text);
+      if (!textData) {
+        const textCanvas = document.createElement('canvas');
+        const textCtx = textCanvas.getContext('2d');
+        textCtx.font = currentFont;
+        textCtx.fillStyle = '#000';
+        const metrics = textCtx.measureText(text.split('\n')[0]);
+        const lineHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+        const lines = text.split('\n');
+        textCanvas.width = Math.max(...lines.map(line => textCtx.measureText(line).width)) + 10;
+        textCanvas.height = lineHeight * lines.length + 10;
+        textCtx.font = currentFont;
+        textCtx.fillStyle = '#000';
+        lines.forEach((line, index) => {
+          textCtx.fillText(line, 5, 5 + lineHeight * (index + 1));
+        });
+        textData = {canvas: textCanvas, width: textCanvas.width, height: textCanvas.height};
+        textCache.set(text, textData);
+      }
+
+      this.drawImage(textData.canvas, 0, 0, textData.width, textData.height, x, y, textData.width, textData.height);
+    },
+    recalculateSceneSize() {
+      if (this.display) {
+        const {width, height} = this.display.getBoundingClientRect();
+        this.display.width = width;
+        this.display.height = height;
+        this.scene.viewport(0, 0, width, height);
+        const projectionMatrix = new Float32Array([
+          2 / width, 0, 0, 0,
+          0, -2 / height, 0, 0,
+          0, 0, 1, 0,
+          -1, 1, 0, 1
+        ]);
+        this.scene.uniformMatrix4fv(this.scene.getUniformLocation(program, 'u_projection'), false, projectionMatrix);
+      }
+    },
+  };
+
+  // Initialize WebGL
+  if (element !== undefined) {
+    obj.display = element;
+    window.removeEventListener('resize', obj.recalculateSceneSize.bind(obj));
+    window.addEventListener('resize', obj.recalculateSceneSize.bind(obj));
+  } else {
+    obj.display = CanvasStore.get();
+  }
+
+  obj.scene = obj.display.getContext('webgl', {premultipliedAlpha: true});
+  if (!obj.scene) {
     throw new Error('WebGL not supported');
   }
 
-  // Компиляция шейдера
-  function createShader(gl: WebGLRenderingContext, type: number, source: string): WebGLShader {
-    const shader = gl.createShader(type);
-    gl.shaderSource(shader, source);
-    gl.compileShader(shader);
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      console.error('Shader compile error:', gl.getShaderInfoLog(shader));
-      gl.deleteShader(shader);
-      throw new Error('Shader compilation failed');
+  const vertexShaderSource = `
+    attribute vec2 a_position;
+    attribute vec2 a_texCoord;
+    uniform mat4 u_transform;
+    uniform mat4 u_projection;
+    varying vec2 v_texCoord;
+    void main() {
+      gl_Position = u_projection * u_transform * vec4(a_position, 0.0, 1.0);
+      v_texCoord = a_texCoord;
     }
-    return shader;
-  }
-
-  // Компиляция программы (шейдеров)
-  function createProgram(gl: WebGLRenderingContext, vertexShader: WebGLShader, fragmentShader: WebGLShader): WebGLProgram {
-    const program = gl.createProgram();
-    gl.attachShader(program, vertexShader);
-    gl.attachShader(program, fragmentShader);
-    gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.error('Program link error:', gl.getProgramInfoLog(program));
-      throw new Error('Program linking failed');
+  `;
+  const fragmentShaderSource = `
+    precision mediump float;
+    varying vec2 v_texCoord;
+    uniform sampler2D u_texture;
+    void main() {
+      gl_FragColor = texture2D(u_texture, v_texCoord);
     }
-    return program;
-  }
+  `;
 
-  const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-  const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
-  const program = createProgram(gl, vertexShader, fragmentShader);
+  const vertexShader = obj.scene.createShader(obj.scene.VERTEX_SHADER);
+  obj.scene.shaderSource(vertexShader, vertexShaderSource);
+  obj.scene.compileShader(vertexShader);
 
-  gl.useProgram(program);
+  const fragmentShader = obj.scene.createShader(obj.scene.FRAGMENT_SHADER);
+  obj.scene.shaderSource(fragmentShader, fragmentShaderSource);
+  obj.scene.compileShader(fragmentShader);
 
-  const obj: GraphicComponent = {
-    display: canvas,
-    gl: gl,
-    program: program,
+  program = obj.scene.createProgram();
+  obj.scene.attachShader(program, vertexShader);
+  obj.scene.attachShader(program, fragmentShader);
+  obj.scene.linkProgram(program);
+  obj.scene.useProgram(program);
 
-    getFont() {
-      // В WebGL текст будет отрисовываться через текстуру
-      return 'WebGL does not support direct font';
-    },
-    setFont(newFont: string) {
-      // Для WebGL шрифт не применяется напрямую
-    },
-    centerTo(x: number, y: number) {
-      // Трансформируем матрицу для центровки
-      const matrix = mat4.create();
-      mat4.translate(matrix, matrix, [x, y, 0]);
-      const matrixLocation = gl.getUniformLocation(program, 'u_matrix');
-      gl.uniformMatrix4fv(matrixLocation, false, matrix);
-    },
-    resetTransform() {
-      // Сбрасываем матрицу трансформации
-      const matrix = mat4.create();
-      const matrixLocation = gl.getUniformLocation(program, 'u_matrix');
-      gl.uniformMatrix4fv(matrixLocation, false, matrix);
-    },
-    drawImage(
-      image: CanvasImageSource,
-      sx: number,
-      sy: number,
-      sw: number,
-      sh: number,
-      dx: number,
-      dy: number,
-      dw: number,
-      dh: number
-    ) {
-      let imageWidth: number;
-      let imageHeight: number;
+  vertexBuffer = obj.scene.createBuffer();
 
-      // Приведение типа image к поддерживаемым типам с width и height
-      if (image instanceof HTMLImageElement || image instanceof HTMLCanvasElement || image instanceof ImageBitmap) {
-        imageWidth = image.width;
-        imageHeight = image.height;
-      } else if (image instanceof HTMLVideoElement) {
-        imageWidth = image.videoWidth;
-        imageHeight = image.videoHeight;
-      } else {
-        throw new Error('Unsupported image type');
-      }
-
-      // Загрузка изображения как текстуры и отрисовка
-      const texture = gl.createTexture();
-      gl.bindTexture(gl.TEXTURE_2D, texture);
-
-      // Загружаем текстуру
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-
-      // Устанавливаем параметры фильтрации
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-
-      // В зависимости от того, как изображение будет масштабироваться,
-      // используем либо LINEAR (для плавного) либо NEAREST (для четкого)
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); // Или gl.LINEAR
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST); // Или gl.LINEAR
-
-      // Задаем координаты вершин и текстур
-      const positionBuffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-      const positions = [
-        dx, dy,
-        dx + dw, dy,
-        dx, dy + dh,
-        dx + dw, dy + dh,
-      ];
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-
-      const texcoordBuffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, texcoordBuffer);
-      const texcoords = [
-        sx / imageWidth, sy / imageHeight,
-        (sx + sw) / imageWidth, sy / imageHeight,
-        sx / imageWidth, (sy + sh) / imageHeight,
-        (sx + sw) / imageWidth, (sy + sh) / imageHeight,
-      ];
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texcoords), gl.STATIC_DRAW);
-
-      // Активируем атрибуты для передачи данных в шейдеры
-      const positionLocation = gl.getAttribLocation(program, 'a_position');
-      gl.enableVertexAttribArray(positionLocation);
-      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-      gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-
-      const texcoordLocation = gl.getAttribLocation(program, 'a_texcoord');
-      gl.enableVertexAttribArray(texcoordLocation);
-      gl.bindBuffer(gl.ARRAY_BUFFER, texcoordBuffer);
-      gl.vertexAttribPointer(texcoordLocation, 2, gl.FLOAT, false, 0, 0);
-
-      // Отрисовка
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    }
-    ,
-
-    drawText(text: string, x: number, y: number) {
-      // В WebGL можно рисовать текст через текстуры
-      const textCanvas = document.createElement('canvas');
-      const ctx = textCanvas.getContext('2d');
-      ctx.font = '20px Arial';
-      ctx.fillText(text, 0, 20);
-
-      this.drawImage(textCanvas, 0, 0, textCanvas.width, textCanvas.height, x, y, textCanvas.width, textCanvas.height);
-    },
-    recalculateSceneSize() {
-      const { width, height } = this.display.getBoundingClientRect();
-      this.display.width = width;
-      this.display.height = height;
-      gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-    }
-  };
-
-  if (element !== undefined) {
-    window.removeEventListener('resize', obj.recalculateSceneSize.bind(obj));
-    window.addEventListener('resize', obj.recalculateSceneSize.bind(obj));
-    obj.recalculateSceneSize();
-  }
+  obj.scene.clearColor(1.0, 1.0, 1.0, 1.0);
+  obj.scene.enable(obj.scene.BLEND);
+  obj.scene.blendFunc(obj.scene.ONE, obj.scene.ONE_MINUS_SRC_ALPHA); // For premultiplied alpha
+  obj.recalculateSceneSize();
 
   return obj;
 };
 
-export { Graphic, GraphicComponent };
+export {Graphic, GraphicComponent};
