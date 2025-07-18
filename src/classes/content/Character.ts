@@ -4,7 +4,7 @@ import {TextureCollection} from '../Engine/Texture/TextureCollection';
 import {TextureDynamic} from '../Engine/Texture/TextureDynamic';
 import {Eventful, SomeEvent} from '../Engine/interfaces/Eventful';
 import {GameKeys} from '../Engine/Input/InputKey';
-import {Engine} from '../Engine/Engine';
+  import {Engine} from '../Engine/Core/Engine';
 import {Box} from '../Engine/Box/Box';
 import {Gravitational, Gravity} from '../effector/effects/Gravity';
 import {Inertia, Inertial} from '../effector/effects/Inertia';

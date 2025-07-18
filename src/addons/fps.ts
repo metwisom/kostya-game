@@ -1,5 +1,6 @@
-import {GraphicComponent} from '../classes/Engine/Graphic';
-import {Engine} from '../classes/Engine/Engine';
+import {GraphicComponent} from '../classes/Engine/Core/Graphic';
+import {Engine} from '../classes/Engine/Core/Engine';
+import {PerfTest} from "../utils/perfTest";
 
 
 const fpsMeter = () => {
@@ -13,7 +14,7 @@ const fpsMeter = () => {
   };
   const recordData = () => {
     fpsCounter++;
-    frameTimeCache.push(Engine.drawTime);
+    frameTimeCache.push(PerfTest.get());
     if (frameTimeCache.length > 60) {
       frameTimeCache.shift();
     }

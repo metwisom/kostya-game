@@ -1,29 +1,27 @@
-import {Layer, LayerComponent} from './Layer';
-import {requestAnimationFrame} from '../../utils/requestAnimationFrame';
-import {DisplayAddons, DisplayAddonsComponent} from './DisplayAddons';
-import {Camera} from './Camera';
-import {D2DrawableComponent} from './D2Drawable';
-import {Graphic, GraphicComponent} from './Graphic';
-import {D2UpdatableComponent} from './D2Updatable';
-import {InputController} from './Input/InputController';
-import {ItemWithStatesComponent} from './ItemWithStates';
-import {BoxArea} from './Box/Box';
-import {intersectRect} from '../../utils/intersectRect';
+import {Layer} from './Layer';
+import {requestAnimationFrame} from '../../../utils/requestAnimationFrame';
+import {DisplayAddons, DisplayAddonsComponent} from '../DisplayAddons';
+import {Camera} from '../Camera';
+import {D2DrawableComponent} from '../D2Drawable';
+import {Graphic, GraphicComponent} from './Graphic2';
+import {D2UpdatableComponent} from '../D2Updatable';
+import {InputController} from '../Input/InputController';
+import {ItemWithStatesComponent} from '../ItemWithStates';
+import {BoxArea} from '../Box/Box';
+import {intersectRect} from '../../../utils/intersectRect';
+import {Layers, LayersComponent} from "./Layers";
+import {PerfTest} from "../../../utils/perfTest";
 
 type EngineComponent = {
-  drawTime: number
+  layers: LayersComponent
   removeListU: D2UpdatableComponent[]
   objects: D2UpdatableComponent[]
   removeList: D2DrawableComponent[]
   gui: D2DrawableComponent[]
   graphic: GraphicComponent
-  layers: LayerComponent[]
   addons: DisplayAddonsComponent
-  getObj(): D2UpdatableComponent[]
   getDisplay(): HTMLCanvasElement
   cleanUp(): void
-  checkCollision<T = D2UpdatableComponent>(hitBox: BoxArea, ignore: string): T[]
-  clearLayers(): void
   clearGui(): void
   addObject(obj: D2DrawableComponent, layer?: number): void
   attach(canvas: HTMLCanvasElement): void
@@ -37,37 +35,22 @@ type EngineComponent = {
 const Engine = (function () {
 
   const obj: EngineComponent = {
-    drawTime: 0,
+    layers: Layers,
     removeListU: [],
     objects: [],
     removeList: [],
     gui: [],
     graphic: undefined,
-    layers: [],
     addons: DisplayAddons(),
-    getObj() {
-      return this.objects;
-    },
     getDisplay() {
       return this.graphic.display;
     },
     cleanUp() {
-      obj.removeList.map(item => obj.layers.map(layer => layer.removeObject(item)));
+      obj.removeList.map(item => obj.layers.each(layer => layer.removeObject(item)));
       this.removeList.length = 0;
 
       this.removeListU.map(this.removeObject);
       this.removeListU.length = 0;
-    },
-    checkCollision<T = D2UpdatableComponent>(hitBox: BoxArea, ignore = ''): T[] {
-      return obj.objects.filter(e => {
-        if (e.getId() !== ignore && e.physBox.hasCollision) {
-          const testBox = e.physBox.prop(0, 0);
-          return intersectRect(testBox, hitBox);
-        }
-      }) as T[];
-    },
-    clearLayers() {
-      obj.layers.map(i => i.items.map(i => i.destroy()));
     },
     clearGui() {
       obj.gui.map(i => i.destroy());
@@ -77,10 +60,7 @@ const Engine = (function () {
       if (obj.type == 'Button') {
         this.gui.push(obj);
       } else {
-        if (this.layers[layer] === undefined) {
-          this.layers[layer] = Layer();
-        }
-        this.layers[layer].addObject(obj);
+        this.layers.addObject(obj,layer);
       }
     },
     attach(canvas: HTMLCanvasElement) {
@@ -92,7 +72,7 @@ const Engine = (function () {
     start() {
       const drawWorld = (delta: number) => {
         this.graphic.centerTo(Camera.x, Camera.y + Camera.target.viewBox.height / 2);
-        obj.layers.map(({items}) => this.drawCollection(items, delta));
+        obj.layers.each(({items}) => this.drawCollection(items, delta));
       };
 
       const drawGui = (delta: number) => {
@@ -101,7 +81,7 @@ const Engine = (function () {
         this.addons.run(this.graphic);
       };
       const draw = (time: number) => {
-        const startDraw = performance.now();
+        PerfTest.start()
 
         InputController.update();
         const delta = performance.now() - time;
@@ -116,7 +96,8 @@ const Engine = (function () {
         drawGui(delta);
         requestAnimationFrame(draw.bind(undefined, [performance.now()]));
         this.cleanUp();
-        this.drawTime = performance.now() - startDraw;
+
+        PerfTest.stop();
       };
       requestAnimationFrame(draw);
     },

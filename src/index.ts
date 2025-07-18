@@ -1,4 +1,4 @@
-import {Engine} from './classes/Engine/Engine';
+import {Engine} from './classes/Engine/Core/Engine';
 import {fpsMeter} from './addons/fps';
 import {ResourceLoader} from './classes/Engine/ResourceLoader/ResourceLoader';
 import {MapLoader} from './classes/Engine/Map/MapLoader';

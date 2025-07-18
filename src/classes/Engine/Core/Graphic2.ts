@@ -1,4 +1,4 @@
-import {CanvasStore} from './CanvasStore';
+import {CanvasStore} from '../CanvasStore';
 
 type GraphicComponent = {
   display: HTMLCanvasElement,
@@ -100,6 +100,8 @@ const Graphic = function (element: HTMLCanvasElement = undefined) {
       this.scene.drawArrays(this.scene.TRIANGLE_STRIP, 0, 4);
     },
     drawText(text: string, x: number, y: number) {
+      // if(text.includes('FPS'))
+      // console.log(text)
       let textData = textCache.get(text);
       if (!textData) {
         const textCanvas = document.createElement('canvas');
@@ -188,6 +190,7 @@ const Graphic = function (element: HTMLCanvasElement = undefined) {
   obj.scene.useProgram(program);
 
   vertexBuffer = obj.scene.createBuffer();
+
 
   obj.scene.clearColor(1.0, 1.0, 1.0, 1.0);
   obj.scene.enable(obj.scene.BLEND);

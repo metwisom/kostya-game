@@ -1,4 +1,4 @@
-import {Engine} from '../../Engine/Engine';
+import {Engine} from '../../Engine/Core/Engine';
 import {IEffect} from '../IEffect';
 import {Particle} from '../../content/Particle';
 import {ItemWithStatesComponent} from '../../Engine/ItemWithStates';
@@ -13,13 +13,13 @@ const Pickup = function (maintainer: ItemWithStatesComponent & Eventful) {
   const _maintainer = maintainer;
   const obj: PickedUp = {
     update(_delta: number = 1) {
-      const xCollision = _maintainer.physBox.prop(0, 0);
-      const inter = Engine.checkCollision(xCollision, _maintainer.getId());
-      if (inter.length !== 0) {
-        _maintainer.Event({taken: inter[0]});
-        this.createParticle();
-        _maintainer.destroy();
-      }
+      // const xCollision = _maintainer.physBox.prop(0, 0);
+      // const inter = Engine.checkCollision(xCollision, _maintainer.getId());
+      // if (inter.length !== 0) {
+      //   _maintainer.Event({taken: inter[0]});
+      //   this.createParticle();
+      //   _maintainer.destroy();
+      // }
     },
     createParticle() {
       for (let i = 0; i < 10; i++) {

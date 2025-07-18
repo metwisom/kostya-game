@@ -3,7 +3,8 @@ import {TextureStatic, TextureStaticComponent} from './TextureStatic';
 
 type TextureDynamicComponent = TextureStaticComponent & {
   virtualCanvas: HTMLCanvasElement;
-  virtualScene: CanvasRenderingContext2D;
+  cacheCanvas: HTMLCanvasElement[];
+  virtualScene: CanvasRenderingContext2D
   render(position: number): void
 }
 
@@ -18,11 +19,21 @@ const TextureDynamic = function (src: string = undefined) {
     ...parent,
     type: 'TextureDynamic',
     virtualCanvas: canvas,
+    cacheCanvas: [],
     virtualScene: canvas.getContext('2d'),
     render(position: number) {
       const imagePos = this.virtualCanvas.width * position;
-      this.virtualScene.clearRect(0, 0, this.virtualCanvas.width, this.virtualCanvas.height);
-      this.virtualScene.drawImage(this.reference.content, imagePos, 0, this.virtualCanvas.width, this.virtualCanvas.height, 0, 0, this.virtualCanvas.width, this.virtualCanvas.height);
+      let canvased = this.cacheCanvas[imagePos]
+      if(canvased == undefined) {
+        canvased = CanvasStore.get()
+        canvased.width = obj.reference.content.width / obj.reference.params.frames;
+        canvased.height = obj.reference.content.height;
+        let scened = canvased.getContext('2d');
+        scened.clearRect(0, 0, this.virtualCanvas.width, this.virtualCanvas.height);
+        scened.drawImage(this.reference.content, imagePos, 0, this.virtualCanvas.width, this.virtualCanvas.height, 0, 0, this.virtualCanvas.width, this.virtualCanvas.height);
+        this.cacheCanvas[imagePos] = canvased
+      }
+      this.virtualCanvas = canvased;
     },
     get(delta: number = 1): HTMLImageElement {
       if (this.reference.params.speed != 0 && this.reference.params.speed != undefined) {

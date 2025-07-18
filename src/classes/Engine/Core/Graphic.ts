@@ -1,4 +1,4 @@
-import {CanvasStore} from './CanvasStore';
+import {CanvasStore} from '../CanvasStore';
 
 type GraphicComponent = {
   display: HTMLCanvasElement,

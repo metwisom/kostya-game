@@ -1,4 +1,4 @@
-import {GraphicComponent} from './Graphic';
+import {GraphicComponent} from './Core/Graphic';
 
 type DisplayAddonsComponent = {
   add(postCb: (scene: GraphicComponent) => void): void;

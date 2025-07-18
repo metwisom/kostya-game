@@ -36,7 +36,7 @@ const GameSound = () => {
       return resource.paused;
     },
     play() {
-      resource.play();
+      resource.play().then();
       return this;
     },
     stop() {

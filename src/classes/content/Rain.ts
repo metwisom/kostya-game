@@ -1,5 +1,5 @@
 import {getRandom, getRandomFloat} from '../../utils/getRandom';
-import {Engine} from '../Engine/Engine';
+import {Engine} from '../Engine/Core/Engine';
 import {Camera} from '../Engine/Camera';
 import {Box} from '../Engine/Box/Box';
 import {Gravitational, Gravity} from '../effector/effects/Gravity';

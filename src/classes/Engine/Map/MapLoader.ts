@@ -1,6 +1,6 @@
 import {BackgroundEntity, ButtonEntity, GameMap, MapEntity} from './iMap';
 import {Structure, StructureComponent} from '../../content/Structure';
-import {Engine} from '../Engine';
+import {Engine} from '../Core/Engine';
 import {Parallax} from '../../content/Parallax';
 import {D2DrawableComponent} from '../D2Drawable';
 import {D2UpdatableComponent} from '../D2Updatable';
@@ -87,7 +87,7 @@ const MapLoader = (function () {
           button.onClick(async (e) => {
             if (e.keyMap[GameKeys.LEFT_MOUSE].status(true)) {
               RainEngine.stop();
-              Engine.clearLayers();
+              Engine.layers.clear();
               Engine.clearGui();
               Engine.cleanUp();
               Mouse.removeObject(button);

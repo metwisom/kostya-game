@@ -1,7 +1,7 @@
 import {BoxTextured, ViewArea} from '../Engine/Box/BoxTextured';
 import {D2Updatable, D2UpdatableComponent} from '../Engine/D2Updatable';
 import {Camera} from '../Engine/Camera';
-import {Engine} from '../Engine/Engine';
+import {Engine} from '../Engine/Core/Engine';
 import {Box} from '../Engine/Box/Box';
 import {TextureStatic} from '../Engine/Texture/TextureStatic';
 

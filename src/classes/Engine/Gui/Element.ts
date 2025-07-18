@@ -1,5 +1,5 @@
 import {D2Drawable, D2DrawableComponent} from '../D2Drawable';
-import {Engine} from '../Engine';
+import {Engine} from '../Core/Engine';
 
 
 export enum FloatX {

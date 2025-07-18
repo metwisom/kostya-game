@@ -1,6 +1,6 @@
-import {Engine} from '../classes/Engine/Engine';
+import {Engine} from '../classes/Engine/Core/Engine';
 import {CanvasStore} from '../classes/Engine/CanvasStore';
-import {GraphicComponent} from '../classes/Engine/Graphic';
+import {GraphicComponent} from '../classes/Engine/Core/Graphic';
 import {ParticleFabric} from '../classes/content/ParticleFabric';
 
 const objectCounter = () => {
@@ -15,9 +15,9 @@ const objectCounter = () => {
 
     if (skipCount === 0) {
       let totalDrawCount = 0;
-      Engine.layers.map(layer => totalDrawCount += layer.items.length);
+      Engine.layers.each(layer => totalDrawCount += layer.items.length);
       drawCount = `Objects: ${totalDrawCount}`;
-      physCount = `Physics: ${Engine.getObj.length}`;
+      physCount = `Physics: ${Engine.objects.length}`;
       canvasStoreCount = `Canvas: ${CanvasStore.count}`;
       particlesStoreCount = `Particles: ${ParticleFabric.particle}`;
     }

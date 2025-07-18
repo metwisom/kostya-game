@@ -1,6 +1,6 @@
 import {D2UpdatableComponent} from '../../Engine/D2Updatable';
 import {ItemWithStatesComponent} from '../../Engine/ItemWithStates';
-import {Engine} from '../../Engine/Engine';
+import {Engine} from '../../Engine/Core/Engine';
 import {IEffect} from '../IEffect';
 
 
@@ -19,7 +19,7 @@ const Gravity = function (maintainer: ItemWithStatesComponent & Gravitational) {
       const yCollision = physBox.prop(0, maintainer.eDown * delta);
 
       if (physBox.hasCollision) {
-        inter = Engine.checkCollision(yCollision, maintainer.getId());
+        inter = [];//Engine.checkCollision(yCollision, maintainer.getId());
       }
 
       if (inter.length === 0) {
