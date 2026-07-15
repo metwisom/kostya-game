@@ -1,0 +1,7 @@
+services:
+  kostya:
+    build: .
+    container_name: kostya
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:23000:80"

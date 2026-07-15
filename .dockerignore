@@ -1,0 +1,23 @@
+# Dependencies and build output (rebuilt inside the image)
+node_modules
+dist
+
+# VCS / IDE
+.git
+.gitignore
+.idea
+.editorconfig
+
+# Docs and meta
+docs
+README.md
+
+# Docker files themselves
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Env and logs
+.env
+.env.*
+*.log
